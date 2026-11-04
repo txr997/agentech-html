@@ -1,0 +1,228 @@
+
+/*
+    02. utility
+*/
+
+
+/* 
+    margin-&-padding_variable-start
+*/
+
+
+@for $i from 1 through 40 {
+    .mt-#{5 * $i}{margin-top: 5px * $i;}
+}
+
+@for $i from 1 through 40 {
+    .mb-#{5 * $i}{margin-bottom: 5px *$i;}
+}
+
+@for $i from 1 through 40 {
+    .pt-#{5 * $i}{padding-top: 5px *$i;}
+}
+
+@for $i from 1 through 60 {
+    .pb-#{5 * $i}{padding-bottom: 5px *$i;}
+}
+
+/* 
+    margin-&-padding_variable-end
+*/
+.mb-24 {
+    margin-bottom: 24px;
+}
+.wa-fix {
+    overflow: hidden;
+}
+
+.wa-ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.wa-img-cover {
+    img {
+        width: 100%;
+        height: 100% !important;
+        object-fit: cover;
+    }
+}
+.wa-img-contain {
+    img {
+        width: 100%;
+        height: 100% !important;
+        object-fit: contain;
+    }
+}
+.wa-video-cover {
+    video {
+        width: 100%;
+        height: 100% ;
+        object-fit: cover;
+    }
+}
+
+.wa-bg-default {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.flaticon {
+    display: inline-block;
+    line-height: 0.65;
+}
+
+.wa-z-index-3 {
+    position: relative;
+    z-index: 3;
+}
+
+
+.wa-p-absolute {
+    position: absolute;
+}
+
+.wa-p-relative {
+    position: relative;
+    z-index: 1;
+}
+
+.z-index-3 {
+    position: relative;
+    z-index: 3;
+}
+
+.wa-origin-left {
+    transform-origin: left;
+}
+.wa-origin-right {
+    transform-origin: right;
+}
+
+.wa-fw-400 {
+    font-weight: 400;
+}
+
+.wa-fw-500 {
+    font-weight: 500;
+}
+
+.wa-fw-600 {
+    font-weight: 600;
+}
+
+.wa-fw-700 {
+    font-weight: 700;
+}
+
+.wa-fw-800 {
+    font-weight: 800;
+}
+
+.wa-fw-900 {
+    font-weight: 900;
+}
+
+.wa-ml-auto {
+    margin-left: auto;
+}
+
+.wa-mr-auto {
+    margin-right: auto;
+}
+
+
+.mr-0 {
+    margin-right: 0 !important;
+}
+
+.wa-line-limit {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+
+    &:is(.has-line-1) {
+        -webkit-line-clamp: 1; 
+        line-clamp: 1; 
+    }
+
+    &:is(.has-line-2) {
+        -webkit-line-clamp: 2; 
+        line-clamp: 2; 
+    }
+
+    &:is(.has-line-3) {
+        -webkit-line-clamp: 3; 
+        line-clamp: 3; 
+    }
+
+    &:is(.has-line-4) {
+        -webkit-line-clamp: 4; 
+        line-clamp: 4; 
+    }
+
+    &:is(.has-line-5) {
+        -webkit-line-clamp: 5; 
+        line-clamp: 5; 
+    }
+
+    &:is(.has-line-6) {
+        -webkit-line-clamp: 6; 
+        line-clamp: 6; 
+    }
+
+    &:is(.has-line-7) {
+        -webkit-line-clamp: 7; 
+        line-clamp: 7; 
+    }
+
+    &:is(.has-line-8) {
+        -webkit-line-clamp: 8; 
+        line-clamp: 8; 
+    }
+
+    &:is(.has-line-9) {
+        -webkit-line-clamp: 9; 
+        line-clamp: 9; 
+    }
+
+    &:is(.has-line-10) {
+        -webkit-line-clamp: 10; 
+        line-clamp: 10; 
+    }
+}
+
+
+.wa-will-change {
+    will-change: transform, opacity;
+}
+
+.wa-no-ani-tf {
+    transform: none !important;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.wa-parallax-img {
+    will-change: object-position;
+}
+
+.wa-parallax-bg {
+    will-change: background-position;
+}
+
+.wa-origin-center {
+    transform-origin: center;
+}
+
+// wa_text_effect (main-common.js): the soft edge that wipes the text in from the left,
+// --wa-text-reveal is where the edge starts, in % of the width
+.wa_text_effect_parked {
+    --wa-text-reveal: 6.4;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--wa-text-reveal) * 1%), rgb(0 0 0 / 86%) calc(var(--wa-text-reveal) * 1% + 1.6%), transparent calc(var(--wa-text-reveal) * 1% + 12.8%));
+    mask-image: linear-gradient(90deg, #000 calc(var(--wa-text-reveal) * 1%), rgb(0 0 0 / 86%) calc(var(--wa-text-reveal) * 1% + 1.6%), transparent calc(var(--wa-text-reveal) * 1% + 12.8%));
+}

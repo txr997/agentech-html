@@ -1,0 +1,383 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-testimonial-1-start
+*/
+// the head is on the left, the robot on the right (--ds is its size, --rx / --ry its place from the middle of the screen and the top, drawn on 1920).
+// The cards are a swiper that runs out to both edges of the screen. From 1200 up every card is 580 x 363 with the real outline (the top left corner and
+// the bottom right corner are cut, the photo sits over the cut). Below 1200 the cut is a polygon, the card grows with its text and the robot goes
+// between the head and the cards
+.ag-testimonial-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: 132px 0 134px;
+
+        @media #{$xxl} {
+            padding: 120px 0 110px;
+        }
+
+        @media #{$xl} {
+            padding: 110px 0 100px;
+        }
+
+        @media #{$lg} {
+            padding: 100px 0 90px;
+        }
+
+        @media #{$md} {
+            padding: 90px 0 80px;
+        }
+
+        @media #{$xs} {
+            padding: 64px 0;
+        }
+
+        @media #{$sm} {
+            padding: 80px 0 70px;
+        }
+
+        > .container {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    // background: the picture sits on the bottom edge and carries its own opacity, the fade covers its top
+    &-bg {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -2;
+        height: 1077px;
+        opacity: 0.44;
+        pointer-events: none;
+    }
+
+    &-fade {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        height: 457px;
+        background: linear-gradient(180deg, var(--ag-clr-bg-1) 0%, rgb(244 244 244 / 0%) 100%);
+        pointer-events: none;
+    }
+
+    // deco: the robot is 520 x 692, the disc and the rings are drawn round the middle of its head (the box of the biggest ring is 980 x 980,
+    // the rings inside it are 762, 582 and the white disc 464)
+    &-deco {
+        --ds: 1;
+        --rx: 185;
+        --ry: 46;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        pointer-events: none;
+
+        @media #{$xxl} {
+            --ds: 0.9;
+        }
+
+        @media #{$xl} {
+            --ds: 0.75;
+        }
+
+        @media #{$lg} {
+            --ds: 0.6;
+        }
+
+        @media #{$md,$sm,$xs} {
+            --ds: 0.577;
+            --rx: -260;
+            --ry: 0;
+            position: relative;
+            height: calc(692px * var(--ds));
+            margin-top: 40px;
+        }
+
+        @media #{$xs} {
+            --ds: 0.52;
+        }
+    }
+
+    &-robot {
+        position: absolute;
+        top: calc(var(--ry) * var(--ds) * 1px);
+        left: calc(50% + var(--rx) * var(--ds) * 1px);
+        width: calc(520px * var(--ds));
+        height: calc(692px * var(--ds));
+    }
+
+    &-shape {
+        position: absolute;
+        top: calc((var(--ry) - 258) * var(--ds) * 1px);
+        left: calc(50% + (var(--rx) - 293) * var(--ds) * 1px);
+        box-sizing: border-box;
+        width: calc(980px * var(--ds));
+        height: calc(980px * var(--ds));
+
+        // the three rings breathe all the time (they grow and shrink round the middle of the head), each one a little behind the one before
+        &::before,
+        .ring,
+        .disc {
+            position: absolute;
+            box-sizing: border-box;
+            border-radius: 50%;
+        }
+
+        &::before,
+        .ring {
+            animation: ag-testimonial-1-ring 6s ease-in-out infinite alternate;
+
+            @media (prefers-reduced-motion: reduce) {
+                animation: none;
+            }
+        }
+
+        // the biggest ring
+        &::before {
+            content: "";
+            inset: 0;
+            border: 1px solid rgb(7 0 14 / 4%);
+        }
+
+        .ring {
+            border: 1px solid rgb(7 0 14 / 8%);
+
+            &.is-1 {
+                inset: 11.12%;
+                animation-delay: -2s;
+            }
+
+            &.is-2 {
+                inset: 20.31%;
+                animation-delay: -4s;
+            }
+        }
+
+        .disc {
+            inset: 26.33%;
+            background-color: #fff;
+        }
+    }
+
+    // head
+    &-head {
+        max-width: 667px;
+
+        > .ag-subtitle-1 {
+            display: flex;
+            width: fit-content;
+        }
+
+        @media #{$lg} {
+            max-width: 500px;
+        }
+
+        @media #{$md,$sm,$xs} {
+            max-width: none;
+        }
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    &-text {
+        margin-top: 20px;
+    }
+
+    &-btn {
+        margin-top: 32px;
+    }
+
+    // slider
+    &-slider {
+        position: relative;
+        z-index: 2;
+        margin-top: 135px;
+
+        @media #{$xxl} {
+            margin-top: 110px;
+        }
+
+        @media #{$xl} {
+            margin-top: 90px;
+        }
+
+        @media #{$lg} {
+            margin-top: 70px;
+        }
+
+        @media #{$md,$sm,$xs} {
+            margin-top: 24px;
+        }
+
+        .swiper-slide {
+            width: 580px;
+            height: auto;
+
+            @media #{$lg} {
+                width: 520px;
+            }
+
+            @media #{$md} {
+                width: 480px;
+            }
+
+            @media #{$xs} {
+                width: min(calc(100vw - 72px), 520px);
+            }
+        }
+    }
+
+    // card: all the parts sit on a 580 x 363 box, the text is what holds the card open below 1200
+    &-card {
+        position: relative;
+        height: 363px;
+        padding: 199px 44px 0;
+
+        @media #{$lg,$md,$sm,$xs} {
+            height: auto;
+            min-height: 363px;
+            padding: 199px 44px 44px;
+        }
+
+        @media #{$xs} {
+            min-height: 0;
+            padding: 158px 22px 32px;
+        }
+
+        // the white card: its top left corner is cut at 39deg (179 x 146) and its bottom right corner at 45deg (66 x 66), 20px soft corners; two purple
+        // glows hang in the top right and the bottom left corner
+        &-bg {
+            position: absolute;
+            inset: 0;
+            background-color: #fff;
+            clip-path: path('M186.12 0 L560 0 A20 20 0 0 1 580 20 L580 288.72 A20 20 0 0 1 574.14 302.86 L519.86 357.14 A20 20 0 0 1 505.72 363 L20 363 A20 20 0 0 1 0 343 L0 155.5 A20 20 0 0 1 7.36 140 L173.48 4.5 A20 20 0 0 1 186.12 0 Z');
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                width: 122px;
+                height: 122px;
+                border-radius: 50%;
+            }
+
+            &::before {
+                top: -74px;
+                right: -71px;
+                background-color: #A234FD;
+                filter: blur(92px);
+            }
+
+            &::after {
+                bottom: -80px;
+                left: -90px;
+                background-color: var(--ag-clr-pr-1);
+                filter: blur(82px);
+            }
+
+            @media #{$lg,$md,$sm,$xs} {
+                overflow: hidden;
+                border-radius: 20px;
+                clip-path: polygon(179px 0, 100% 0, 100% calc(100% - 66px), calc(100% - 66px) 100%, 0 100%, 0 146px);
+            }
+
+            @media #{$xs} {
+                clip-path: polygon(145px 0, 100% 0, 100% calc(100% - 48px), calc(100% - 48px) 100%, 0 100%, 0 118px);
+            }
+        }
+
+        // the line of quotation marks under the photo (25px a mark, 499px at 580)
+        &-quote {
+            position: absolute;
+            top: 143px;
+            right: 40px;
+            left: 41px;
+            height: 24px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24' fill='none'%3E%3Cpath fill='%23EBEBEB' fill-rule='evenodd' d='M7.54561 14.3085C6.93775 15.1601 5.78878 16.0769 4.22459 16.8401C3.8181 17.0385 4.00148 17.6532 4.4502 17.5964C7.73672 17.1807 9.86689 15.7414 11.0301 13.6009C11.4628 12.8047 11.7346 11.9574 11.8794 11.0923C11.9748 10.522 12 10.094 12 9.59961C12 7.39047 10.2091 5.59961 8.00001 5.59961C5.79087 5.59961 4.00001 7.39047 4.00001 9.59961C4.00001 11.8087 5.81944 13.6009 7.91026 13.6009C7.79996 13.9037 7.77347 13.9893 7.54561 14.3085ZM16.3456 14.3085C15.7378 15.1601 14.5888 16.0769 13.0246 16.8401C12.6181 17.0385 12.8015 17.6532 13.2502 17.5964C16.5367 17.1807 18.6669 15.7414 19.8301 13.6009C20.2628 12.8047 20.5346 11.9574 20.6794 11.0923C20.7748 10.522 20.8 10.094 20.8 9.59961C20.8 7.39047 19.0091 5.59961 16.8 5.59961C14.5909 5.59961 12.8 7.39047 12.8 9.59961C12.8 11.8087 14.6194 13.6009 16.7103 13.6009C16.6 13.9037 16.5735 13.9893 16.3456 14.3085Z'/%3E%3C/svg%3E") repeat-x 0 0 / 25px 24px;
+
+            @media #{$xs} {
+                top: 112px;
+                right: 20px;
+                left: 20px;
+            }
+        }
+
+        // the photo: 123 x 157, its top left and bottom right corners are cut at 45deg, 5px soft corners
+        &-img {
+            position: absolute;
+            top: 0;
+            left: 40px;
+            width: 123px;
+            height: 157px;
+            clip-path: path('M44.07 0 L118 0 A5 5 0 0 1 123 5 L123 111.9 A5 5 0 0 1 121.5 115.47 L80.45 155.58 A5 5 0 0 1 76.97 157 L5 157 A5 5 0 0 1 0 152 L0 44.07 A5 5 0 0 1 1.46 40.54 L40.54 1.46 A5 5 0 0 1 44.07 0 Z');
+
+            @media #{$xs} {
+                left: 20px;
+                width: 100px;
+                height: 128px;
+                border-radius: 5px;
+                clip-path: polygon(35px 0, 100% 0, 100% calc(100% - 36px), calc(100% - 36px) 100%, 0 100%, 0 35px);
+            }
+        }
+
+        &-info {
+            position: absolute;
+            top: 47px;
+            right: 40px;
+            left: 192px;
+
+            @media #{$xs} {
+                top: 24px;
+                right: 20px;
+                left: 136px;
+            }
+        }
+
+        &-name {
+            font-size: 22px;
+            line-height: 28px;
+
+            @media #{$xs} {
+                font-size: 20px;
+                line-height: 26px;
+            }
+        }
+
+        &-role {
+            margin-top: 4px;
+            line-height: 30px;
+            opacity: 0.72;
+
+            @media #{$xs} {
+                font-size: 16px;
+                line-height: 24px;
+            }
+        }
+
+        &-text {
+            position: relative;
+        }
+    }
+}
+@keyframes ag-testimonial-1-ring {
+    0% {
+        transform: scale(0.94);
+    }
+
+    100% {
+        transform: scale(1.06);
+    }
+}
+/*
+    ag-testimonial-1-end
+*/

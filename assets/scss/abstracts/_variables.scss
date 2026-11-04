@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,100..1000;1,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+
+:root {
+  scroll-behavior: inherit;
+
+  --ag-font-1:  "DM Sans", sans-serif;
+  --ag-font-2:  "Space Grotesk", sans-serif;
+
+  --ag-clr-pr-1: #6D1BFB;
+  --ag-clr-pr-2: #A234FD;
+
+  --ag-clr-sd-1: #EC736C;
+
+  --ag-clr-bd-1: #EBEBEB;
+  --ag-clr-bd-2: #D9D9D9;
+
+  --ag-clr-h-1: #07000E;
+
+  --ag-clr-p-1: #565557;
+  --ag-clr-p-2: #716F73;
+
+  --ag-clr-bg-1: #F4F4F4;
+  --ag-clr-bg-2: #F0F2F4;
+  --ag-clr-bg-3: #EBE1FD;
+
+  --ag-clr-star-1: #EDB325;
+
+  // purple > coral: the buttons, the active nav link, the coloured words
+  --ag-clr-gd-1: linear-gradient(90deg, #6D1BFB 0%, #EC736C 100%);
+  // the fading lavender of the subtitle pill
+  --ag-clr-gd-2: linear-gradient(90deg, rgb(109 27 251 / 25%) 0%, rgb(109 27 251 / 0%) 100%);
+  // the same run backwards, it fades in over the buttons on hover
+  --ag-clr-gd-3: linear-gradient(90deg, #EC736C 0%, #6D1BFB 100%);
+
+  --ag-cube-1: all .4s cubic-bezier(.18,.82,.41,1);
+
+}
+
+$over: "(min-width: 1800px)";
+$xxxl: "only screen and (min-width: 1600px) and (max-width: 1799px)";
+$xxl: "only screen and (min-width: 1400px) and (max-width: 1599px)";
+$xl: "only screen and (min-width: 1200px) and (max-width: 1399px)";
+$lg: "only screen and (min-width: 992px) and (max-width: 1199px)";
+$md: "only screen and (min-width: 768px) and (max-width: 991px)";
+$sm: "only screen and (min-width: 576px) and (max-width: 767px)";
+$xs: "(max-width: 767px)";

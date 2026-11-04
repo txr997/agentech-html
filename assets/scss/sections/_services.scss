@@ -1,0 +1,378 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-services-1-start
+*/
+// dark section: the cards are a swiper that starts at the left edge of the container and runs out to the right edge of the screen,
+// the card under the pointer is the lit one (.is-active, set in main.js). The cut corners of the cards are a polygon, so they stay
+// 45deg at every card width
+.ag-services-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: 132px 0;
+        background-color: var(--ag-clr-h-1);
+
+        @media #{$xl} {
+            padding: 110px 0;
+        }
+
+        @media #{$lg} {
+            padding: 100px 0;
+        }
+
+        @media #{$md} {
+            padding: 90px 0;
+        }
+
+        @media #{$xs} {
+            padding: 64px 0;
+        }
+
+        @media #{$sm} {
+            padding: 80px 0;
+        }
+
+        > .container {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    // background: the picture carries no opacity of its own, the faded photo is masked to fade out into the dark
+    &-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+
+        &-main {
+            position: absolute;
+            inset: 0;
+        }
+
+        &-girl {
+            position: absolute;
+            top: 0;
+            left: -109px;
+            width: 569px;
+            height: 569px;
+            opacity: 0.32;
+            -webkit-mask-image: radial-gradient(closest-side, #000 37%, transparent 100%);
+            mask-image: radial-gradient(closest-side, #000 37%, transparent 100%);
+
+            .pic {
+                position: absolute;
+                top: calc(50% - 262px);
+                left: calc(50% - 308px);
+                width: 616px;
+                height: 524px;
+            }
+
+            @media #{$xs} {
+                left: -200px;
+            }
+        }
+
+        &-glow {
+            position: absolute;
+            width: 586px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(207px);
+
+            &.is-1 {
+                top: -268px;
+                left: -293px;
+                background: var(--ag-clr-pr-1);
+            }
+
+            &.is-2 {
+                right: -240px;
+                bottom: -167px;
+                background: var(--ag-clr-gd-1);
+            }
+        }
+
+        &-glass {
+            position: absolute;
+            top: -30px;
+            right: -78px;
+            width: 223px;
+            height: 247px;
+
+            @media #{$md,$sm,$xs} {
+                top: -20px;
+                right: -60px;
+                width: 150px;
+                height: 166px;
+            }
+        }
+
+        // the light corners: the end of the section before and the start of the one after
+        &-cut {
+            position: absolute;
+
+            &.is-1 {
+                top: 0;
+                left: 0;
+                width: 134px;
+                height: 134px;
+                background-color: #eaebec;
+                clip-path: polygon(0 0, 100% 0, 0 100%);
+
+                @media #{$md,$sm,$xs} {
+                    width: 72px;
+                    height: 72px;
+                }
+            }
+
+            &.is-2 {
+                right: 0;
+                bottom: 0;
+                width: 98px;
+                height: 98px;
+                background-color: var(--ag-clr-bg-1);
+                clip-path: polygon(100% 0, 100% 100%, 0 100%);
+
+                @media #{$md,$sm,$xs} {
+                    width: 56px;
+                    height: 56px;
+                }
+            }
+        }
+    }
+
+    // sec-title
+    &-sec-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 789px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    // slider: the right margin pulls the swiper to the right edge of the screen
+    &-slider {
+        margin-top: 48px;
+        margin-right: calc(50% - 50vw);
+
+        .swiper-slide {
+            width: 400px;
+            height: auto;
+
+            @media #{$xl} {
+                width: 380px;
+            }
+
+            @media #{$lg} {
+                width: 360px;
+            }
+
+            @media #{$md} {
+                width: 340px;
+            }
+
+            @media #{$xs} {
+                width: 300px;
+            }
+
+            @media #{$sm} {
+                width: 340px;
+            }
+        }
+    }
+
+    // card: --d is the cut of the top left and the bottom right corner
+    &-card {
+        --d: 84px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%;
+        min-height: 474px;
+        padding: 212px 40px 30px;
+        border-radius: 12px;
+        background-color: rgb(255 255 255 / 10%);
+        backdrop-filter: blur(20px);
+        clip-path: polygon(var(--d) 0, 100% 0, 100% calc(100% - var(--d)), calc(100% - var(--d)) 100%, 0 100%, 0 var(--d));
+        transition: var(--ag-cube-1);
+
+        @media #{$xs} {
+            --d: 64px;
+            min-height: 420px;
+            padding: 176px 28px 28px;
+        }
+
+        // the quarter circle behind the icon, a gradient lights up on it when the card is lit
+        &-disc {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 201px;
+            height: 201px;
+            border-bottom-left-radius: 100%;
+            background-color: rgb(255 255 255 / 6%);
+
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                border-radius: inherit;
+                background: linear-gradient(180deg, var(--ag-clr-pr-1) 0%, var(--ag-clr-sd-1) 100%);
+                opacity: 0;
+                transition: var(--ag-cube-1);
+            }
+
+            @media #{$xs} {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        &-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 411px;
+            opacity: 0.08;
+            transition: var(--ag-cube-1);
+        }
+
+        // the picture has its shadow in it (214 x 224), it sits flush with the right edge of the card
+        &-icon {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            width: 214px;
+            height: 224px;
+            filter: grayscale(1);
+            transition: var(--ag-cube-1);
+
+            @media #{$xs} {
+                top: 28px;
+                width: 160px;
+                height: 168px;
+            }
+        }
+
+        &-content {
+            position: relative;
+        }
+
+        &-title {
+            margin-bottom: 16px;
+            line-height: 1.1539;
+            text-transform: uppercase;
+        }
+
+        &-text {
+            min-height: 84px;
+            margin-bottom: 24px;
+            opacity: 0.72;
+        }
+
+        // the lit card shows the label next to the arrow
+        &-btn {
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            height: 48px;
+            padding: 0 21px;
+            border: 1px solid rgb(255 255 255 / 32%);
+            border-radius: 60px;
+            font-family: var(--ag-font-1);
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 1;
+            color: #fff;
+            transition: var(--ag-cube-1);
+
+            .text {
+                max-width: 0;
+                overflow: hidden;
+                white-space: nowrap;
+                opacity: 0;
+                transition: var(--ag-cube-1);
+            }
+
+            .icon {
+                display: flex;
+                flex: none;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                font-size: 20px;
+
+                i {
+                    display: block;
+                    line-height: 1;
+                }
+            }
+
+            &:hover {
+                color: var(--ag-clr-pr-1);
+            }
+        }
+
+        &:is(.is-active) {
+            background-color: var(--ag-clr-pr-1);
+
+            .ag-services-1-card-disc::after {
+                opacity: 1;
+            }
+
+            .ag-services-1-card-wave {
+                opacity: 0.38;
+            }
+
+            .ag-services-1-card-icon {
+                filter: none;
+            }
+
+            .ag-services-1-card-btn {
+                padding: 0 23px;
+                border-color: var(--ag-clr-h-1);
+                background-color: var(--ag-clr-h-1);
+
+                .text {
+                    max-width: 120px;
+                    margin-right: 2px;
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    // bottom: the paragraph on the left, the button on the right edge of the container
+    &-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px 40px;
+        margin-top: 48px;
+
+        @media #{$md,$sm,$xs} {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    &-text {
+        max-width: 673px;
+        opacity: 0.8;
+    }
+}
+/*
+    ag-services-1-end
+*/

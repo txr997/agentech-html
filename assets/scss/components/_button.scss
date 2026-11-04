@@ -1,0 +1,1527 @@
+/* 
+    button-start
+*/
+.ag-search-btn-1 {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    background: none;
+    font-family: var(--ag-font-1);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #fff;
+
+    svg {
+        flex: none;
+    }
+
+    .text {
+        color: rgb(255 255 255 / 52%);
+        transition: var(--ag-cube-1);
+    }
+
+    &:hover .text {
+        color: #fff;
+    }
+}
+
+// the purple pill of the header, a 3px ring around it, the purple > coral fades in over it on hover
+.ag-header-1-button {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 44px;
+    padding: 0 18px 0 16px;
+    border-radius: 100px;
+    background: var(--ag-clr-pr-1);
+    box-shadow: 0 0 0 3px rgb(255 255 255 / 20%);
+    font-family: var(--ag-font-2);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    color: #fff;
+
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        width: 22px;
+        height: 22px;
+        font-size: 22px;
+        line-height: 1;
+
+        i {
+            display: block;
+            line-height: 1;
+        }
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        background: var(--ag-clr-gd-1);
+        opacity: 0;
+        transition: var(--ag-cube-1);
+    }
+
+    &:hover {
+        color: #fff;
+
+        &::before {
+            opacity: 1;
+        }
+    }
+}
+
+// the gradient pill of the hero, same 3px ring, the reversed gradient fades in over it on hover
+.ag-pr-btn-1 {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 52px;
+    padding: 0 26px 0 24px;
+    border-radius: 100px;
+    background: var(--ag-clr-gd-1);
+    box-shadow: 0 0 0 3px rgb(255 255 255 / 20%);
+    font-family: var(--ag-font-2);
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    color: #fff;
+
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        width: 22px;
+        height: 22px;
+        font-size: 22px;
+        line-height: 1;
+
+        // the sparkle grows and shrinks all the time
+        i {
+            display: block;
+            line-height: 1;
+            animation: ag-pr-btn-1-icon 1.2s ease-in-out infinite alternate;
+
+            @media (prefers-reduced-motion: reduce) {
+                animation: none;
+            }
+        }
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        background: var(--ag-clr-gd-3);
+        opacity: 0;
+        transition: var(--ag-cube-1);
+    }
+
+    &:hover {
+        color: #fff;
+
+        &::before {
+            opacity: 1;
+        }
+    }
+}
+@keyframes ag-pr-btn-1-icon {
+    0% {
+        transform: scale(0.8);
+    }
+
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+.ag-offcanvas-btn-1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ag-clr-pr-1);
+    box-shadow: 0 0 0 3px rgb(255 255 255 / 20%);
+    font-size: 18px;
+    color: #fff;
+    transition: var(--ag-cube-1);
+
+    &:hover {
+        background: var(--ag-clr-sd-1);
+    }
+}
+
+.kf-search-btn-1 {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    background: none;
+    font-family: var(--kf-font-1);
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+
+    .text {
+        color: rgb(255 255 255 / 60%);
+        transition: var(--kf-cube-1);
+    }
+
+    &:hover .text {
+        color: #fff;
+    }
+}
+
+.kf-cart-btn-1 {
+    position: relative;
+    display: inline-block;
+    width: 35px;
+    height: 31px;
+    color: #fff;
+    transition: var(--kf-cube-1);
+
+    svg {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+
+        .smile {
+            stroke: var(--kf-clr-pr-1);
+        }
+    }
+
+    .count {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 19px;
+        height: 19px;
+        border-radius: 50%;
+        background: var(--kf-clr-sd-1);
+        font-family: var(--kf-font-1);
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 19px;
+        text-align: center;
+        color: #fff;
+    }
+
+    &:hover {
+        color: var(--kf-clr-sd-1);
+    }
+}
+
+.kf-header-1-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 25px;
+    border: 1px solid var(--kf-clr-pr-1);
+    border-radius: 50px;
+    background: var(--kf-clr-pr-1);
+    font-family: var(--kf-font-2);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    white-space: nowrap;
+    color: #fff;
+    transition: var(--kf-cube-1);
+
+    &:hover {
+        background: #fff;
+        color: var(--kf-clr-pr-1);
+    }
+}
+
+// the red of the pill buttons of the header 3 and the hero 3: a light top, the light on the left and the right edge comes from the two inner shadows
+%kf-pill-red {
+    border-radius: 100px;
+    background: linear-gradient(180deg, rgb(210 107 117 / 70%) 0%, rgb(163 40 52 / 0%) 65%), var(--kf-clr-pr-1);
+    box-shadow: inset 3.5px 0 7.5px rgb(255 255 255 / 20%), inset -1px 0 5px rgb(255 255 255 / 70%);
+}
+
+// red pill of the header 3 with a wine-dark disc on its right end
+.kf-header-3-button {
+    @extend %kf-pill-red;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding: 4px 4px 4px 20px;
+    font-family: var(--kf-font-2);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    white-space: nowrap;
+    color: #fff;
+
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #2D0105;
+        transition: var(--kf-cube-1);
+    }
+
+    &:hover {
+        background: #2D0105;
+        color: #fff;
+        .icon {
+            background: #fff;
+            color: var(--kf-clr-pr-1);
+        }
+    }
+}
+
+// radius of the wine that grows from the cart disc over the pill of the hero 3 (registered, so that it can be transitioned)
+@property --kf-pr-btn-3-fill {
+    syntax: "<length>";
+    inherits: false;
+    initial-value: 0px;
+}
+
+// the cart runs out of the disc to the right and comes back in from the left
+@keyframes kf-pr-btn-3-cart {
+    0% {
+        transform: translateX(0);
+    }
+
+    45% {
+        transform: translateX(180%);
+    }
+
+    46% {
+        transform: translateX(-180%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+// the same pill, 56px high, for the hero 3: the disc holds the cart
+.kf-pr-btn-3 {
+    @extend %kf-pill-red;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    height: 56px;
+    padding: 6px 6px 6px 26px;
+    // the wine disc sits at the centre of the cart disc (6px + 22px from the right edge), over the red and under the shadows
+    background:
+        radial-gradient(circle at calc(100% - 28px) 50%, #2D0105 var(--kf-pr-btn-3-fill), transparent calc(var(--kf-pr-btn-3-fill) + 1px)),
+        linear-gradient(180deg, rgb(210 107 117 / 70%) 0%, rgb(163 40 52 / 0%) 65%),
+        var(--kf-clr-pr-1);
+    font-family: var(--kf-font-2);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    color: #fff;
+    transition: --kf-pr-btn-3-fill .7s cubic-bezier(.18, .82, .41, 1);
+
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        width: 44px;
+        height: 44px;
+        overflow: hidden;
+        border-radius: 50%;
+        background: #2D0105;
+        font-size: 20px;
+        line-height: 1;
+        transition: var(--kf-cube-1);
+
+        i {
+            display: block;
+        }
+    }
+
+    &:hover,
+    &:focus-visible {
+        --kf-pr-btn-3-fill: 220px;
+        color: #fff;
+
+        .icon {
+            background: #fff;
+            color: var(--kf-clr-pr-1);
+
+            i {
+                animation: kf-pr-btn-3-cart .6s cubic-bezier(.18, .82, .41, 1);
+            }
+        }
+    }
+
+    // team 3: only the disc turns white with a red icon, as in the header 3 button (no wine fill, the icon stays put)
+    &.is-disc {
+        &:hover,
+        &:focus-visible {
+            --kf-pr-btn-3-fill: 0px;
+
+            .icon i {
+                animation: none;
+            }
+        }
+    }
+}
+
+// outline pill next to it, a red glow under it
+.kf-sd-btn-3 {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    padding: 0 32px;
+    overflow: hidden;
+    border: 2px solid rgb(255 255 255 / 40%);
+    border-radius: 100px;
+    font-family: var(--kf-font-2);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    color: #fff;
+    transition: color .5s cubic-bezier(.18, .82, .41, 1), border-color .5s cubic-bezier(.18, .82, .41, 1);
+
+    // the white wipes in from the left on hover and leaves to the right when the mouse goes
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        background: #fff;
+        transform: scaleX(0);
+        transform-origin: 100% 50%;
+        transition: transform .5s cubic-bezier(.18, .82, .41, 1);
+    }
+
+    &:hover,
+    &:focus-visible {
+        border-color: #fff;
+        color: var(--kf-clr-pr-1);
+
+        &::before {
+            transform: scaleX(1);
+            transform-origin: 0 50%;
+        }
+    }
+}
+
+.kf-offcanvas-btn-1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--kf-clr-pr-1);
+    font-size: 18px;
+    color: #fff;
+    transition: var(--kf-cube-1);
+
+    &:hover {
+        background: #fff;
+        color: var(--kf-clr-pr-1);
+    }
+}
+
+// two faces that roll: the front (red) turns up and away, the back (white) comes up from under it
+.kf-pr-btn-2 {
+    position: relative;
+    display: inline-block;
+    perspective: 500px;
+    font-family: var(--kf-font-2);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 24px;
+    white-space: nowrap;
+
+    .front,
+    .back {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        height: 56px;
+        padding: 0 28px;
+        border-radius: 90px;
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
+        // starts moving the moment the mouse is on it and settles slowly at the end
+        transition: transform .7s cubic-bezier(.16, 1, .3, 1);
+
+        svg {
+            flex-shrink: 0;
+        }
+    }
+
+    .front {
+        background: var(--kf-clr-pr-1);
+        color: #fff;
+        transform-origin: 50% 100%;
+        transform: translate3d(0, 0, 0) rotateX(0deg);
+    }
+
+    .back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #E59D06;
+        color: #fff;
+        transform-origin: 50% 0;
+        transform: translate3d(0, 100%, 0) rotateX(-90deg);
+    }
+
+    // dark front, for the buttons that sit on the red
+    &.dark .front {
+        background: var(--kf-clr-h-1);
+    }
+
+    &:hover,
+    &:focus-visible {
+        .front {
+            transform: translate3d(0, -100%, 0) rotateX(90deg);
+        }
+
+        .back {
+            transform: translate3d(0, 0, 0) rotateX(0deg);
+        }
+    }
+}
+
+.kf-pr-btn-1 {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding-right: 28px;
+    border-radius: 100px;
+    font-family: var(--kf-font-2);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 24px;
+    white-space: nowrap;
+    color: #fff;
+
+    // 1px stroke drawn over the edge, so the round icon keeps its full 56px
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid var(--kf-clr-pr-1);
+        border-radius: inherit;
+        pointer-events: none;
+    }
+
+    // the fill starts as the 56px circle behind the icon and grows over the whole button
+    .bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 56px;
+        height: 100%;
+        border-radius: 100px;
+        background: var(--kf-clr-pr-1);
+        transition: width .5s ease;
+    }
+
+    .icon {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: var(--kf-clr-pr-1);
+        color: #fff;
+        font-size: 24px;
+    }
+
+    .arrow {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        transition: transform .5s ease;
+    }
+
+    // dark red disc (the fold of the logo ribbon) that opens inside the icon
+    .circle {
+        position: absolute;
+        width: 90%;
+        height: 90%;
+        border-radius: 50%;
+        background: #6F1B23;
+        transform: scale(0);
+        transition: transform .5s ease;
+    }
+
+    .text {
+        position: relative;
+        z-index: 2;
+        transition: transform .5s ease, color .5s ease;
+    }
+
+    // dark text, it turns white once the fill has covered it
+    &.has-dark {
+        color: var(--kf-clr-h-1);
+    }
+
+    &:hover {
+        color: #fff;
+
+        .bg {
+            width: 100%;
+        }
+
+        .arrow {
+            transform: rotate(45deg);
+        }
+
+        .circle {
+            transform: scale(1);
+        }
+
+        .text {
+            transform: translateX(-5px);
+        }
+    }
+
+    // small one for the photos: 46px high, the button itself is a little see-through
+    &.is-sm {
+        gap: 10px;
+        padding-right: 20px;
+        background: rgb(255 255 255 / 6%);
+        backdrop-filter: blur(12px);
+
+        .bg {
+            width: 46px;
+        }
+
+        .icon {
+            width: 44px;
+            height: 44px;
+            margin: 1px;
+        }
+
+        .arrow {
+            font-size: 18px;
+        }
+
+        &:hover .bg {
+            width: 100%;
+        }
+    }
+}
+
+.kf-playbtn-1 {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--kf-font-1);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 32px;
+    color: var(--kf-clr-sd-1);
+    transition: var(--kf-cube-1);
+
+    svg {
+        display: block;
+        flex: none;
+        width: 32px;
+        height: 32px;
+    }
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+.sb-offcanvas-btn-1 {
+    width: 48px;
+    height: 48px;
+    background: #0A105F;
+    box-shadow: inset 0px 0px 7px rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 18px;
+    transition: var(--sb-cube-1);
+
+    &:hover {
+        background-color: var(--sb-clr-pr-1);
+    }
+}
+
+.sb-login-btn-1 {
+    font-family: var(--sb-font-1);
+    font-weight: 500;
+    color: #fff;
+    font-size: 16px;
+    color: var(--sb-clr-sd-1);
+    transition: var(--sb-cube-1);
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+
+.sb-signup-btn-1 {
+    font-family: var(--sb-font-1);
+    color: #fff;
+    letter-spacing: -1%;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    background: #0A105F;
+    box-shadow: inset 0px 0px 7px rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 12px 26px;
+    transition: var(--sb-cube-1);
+    position: relative;
+
+    &::after {
+        content: "";
+        inset: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(94.33deg, #6342F5 0%, rgba(80, 48, 224, 0.52) 39.42%, #E50FF2 100%);
+        filter: blur(2px);
+        border-radius: 8px;
+        z-index: -1;
+        opacity: .6;
+        transition: var(--sb-cube-1);
+    }
+    
+    &:hover {
+        background-color: var(--sb-clr-pr-1);
+        color: #fff;
+
+        &::after {
+            opacity: 0;
+        }
+    }
+}
+
+.sb-pr-btn-1 {
+    font-family: var(--sb-font-1);
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.5;
+    background-color: var(--sb-clr-pr-1);
+    padding: 13px 23px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid rgb(255 255 255 / 20%);
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    transition: var(--sb-cube-1);
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: -50px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 116px;
+        height: 66px;
+        background: #FFFFFF;
+        opacity: 0.6;
+        filter: blur(8px);
+        border-radius: 50%;
+        transition: var(--sb-cube-1);
+        z-index: -1;
+    }
+
+    &:hover {
+        color: #fff;
+        &::after {
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            transform: translateX(-50%) scale(2);
+            background-color: var(--sb-clr-pr-1);
+        }
+    }
+}
+
+@property --sb-btn-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes sb-btn-border-spin {
+    to {
+        --sb-btn-angle: 360deg;
+    }
+}
+
+.sb-pr-btn-2 {
+    display: inline-block;
+    font-family: var(--sb-font-1);
+    font-weight: 600;
+    color: #fff;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    padding: 16px 28px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    position: relative;
+    z-index: 1;
+    transition: var(--sb-cube-1);
+
+    // gradient border
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        padding: 1.5px;
+        background: conic-gradient(from var(--sb-btn-angle), #050221 0%, #050221 45%, #FE8165 60%, #D258F6 75%, #45ACFF 90%, #050221 100%);
+        animation: sb-btn-border-spin 3s linear infinite;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+    }
+
+    // inner gradient fill
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 4px;
+        border-radius: 8px;
+        background: linear-gradient(50deg, #FE8165 0%, #D258F6 30%, #45ACFF 50%);
+        background-size: 200% 100%;
+        background-position: 0 0;
+        // oversized inset shadow sits on top of the gradient, only its alpha changes on hover = plain fade
+        box-shadow: inset 0 0 0 100px rgb(5 2 33 / 0%);
+        z-index: -1;
+        transition: var(--sb-cube-1);
+    }
+
+    .text {
+        display: inline-block;
+        position: relative;
+        transition: var(--sb-cube-1);
+
+        // hover dot
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -16px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+            transform: translateY(-50%) scale(0);
+            opacity: 0;
+            transition: var(--sb-cube-1);
+        }
+    }
+
+    &:hover {
+        color: #fff;
+
+        &::after {
+            box-shadow: inset 0 0 0 100px var(--sb-clr-h-2);
+        }
+
+        .text {
+            transform: translateX(8px);
+
+            &::before {
+                transform: translateY(-50%) scale(1);
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.sb-sd-btn-2 {
+    display: inline-block;
+    font-family: var(--sb-font-1);
+    font-weight: 500;
+    color: #fff;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    padding: 12px 24px;
+    background: #050221;
+    border-radius: 8px;
+    box-shadow: inset 0 0 14px #45ACFF;
+    transition: var(--sb-cube-1);
+
+    .text {
+        display: inline-block;
+        position: relative;
+        transition: var(--sb-cube-1);
+
+        // hover dot
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -16px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+            transform: translateY(-50%) scale(0);
+            opacity: 0;
+            transition: var(--sb-cube-1);
+        }
+    }
+
+    &:hover {
+        color: #fff;
+        box-shadow: inset 0 0 80px #45ACFF;
+
+        .text {
+            transform: translateX(8px);
+
+            &::before {
+                transform: translateY(-50%) scale(1);
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.sb-pr-btn-3 {
+    display: inline-block;
+    font-family: var(--sb-font-1);
+    font-weight: 600;
+    color: #fff;
+    font-size: 16px;
+    line-height: 22px;
+    padding: 15px 24px;
+    background: linear-gradient(180deg, #22C298 0%, #14AE86 100%);
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+    transition: var(--sb-cube-1);
+
+    // 3px inner gradient stroke
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        padding: 3px;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #14AE86 0%, #22C298 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+    }
+
+    // hover colour, a darker green faded in over the button
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #14AE86 0%, #0B7A5D 100%);
+        opacity: 0;
+        z-index: -1;
+        transition: var(--sb-cube-1);
+    }
+
+    &:hover {
+        color: #fff;
+
+        &::after {
+            opacity: 1;
+        }
+    }
+}
+
+.sb-sd-btn-3 {
+    display: inline-block;
+    font-family: var(--sb-font-1);
+    font-weight: 500;
+    color: #575E60;
+    font-size: 16px;
+    line-height: 22px;
+    padding: 14px 22px;
+    border: 2px solid rgb(3 27 32 / 16%);
+    border-radius: 12px;
+    transition: var(--sb-cube-1);
+
+    &:hover {
+        color: #fff;
+        background: #031B20;
+        border-color: #031B20;
+    }
+}
+
+// header-3 buttons
+.sb-login-btn-3 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 23px;
+    font-family: var(--sb-font-1);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    color: var(--sb-clr-pr-3);
+    background: #F3F3F3;
+    border: 2px solid rgb(3 27 32 / 14%);
+    border-radius: 10px;
+    transition: var(--sb-cube-1);
+
+    &:hover {
+        color: #fff;
+        background: var(--sb-clr-pr-3);
+        border-color: var(--sb-clr-pr-3);
+    }
+}
+
+.sb-signup-btn-3 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    font-family: var(--sb-font-1);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: -0.01em;
+    color: var(--sb-clr-h-3);
+    position: relative;
+    isolation: isolate;
+    transition: var(--sb-cube-1);
+    box-shadow: 0 0 20px rgb(3 27 32 / 20%);
+    border-radius: 10px;
+
+    .inner-box {
+        padding: 4px 24px;
+        border: 2px solid var(--sb-clr-pr-3);
+        border-radius: 10px;
+        background: linear-gradient(180deg, #fff 0%, #B0E4D6 46%, #fff 100%);
+        transition: var(--sb-cube-1);
+    }
+
+    &:hover {
+        color: #fff;
+        .inner-box {
+            background: var(--sb-clr-pr-3);
+        }
+    }
+}
+
+// header-4 buttons
+.sb-login-btn-4 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 24px;
+    font-family: var(--sb-font-2);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    color: var(--sb-clr-pr-4);
+    border: 2px solid rgb(86 65 242 / 12%);
+    border-radius: 10px;
+    transition: var(--sb-cube-1);
+
+    &:hover {
+        color: #fff;
+        background: var(--sb-clr-pr-4);
+        border-color: var(--sb-clr-pr-4);
+    }
+}
+
+.sb-signup-btn-4,
+.sb-pr-btn-4 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 22px;
+    font-family: var(--sb-font-2);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    position: relative;
+    isolation: isolate;
+    transition: var(--sb-cube-1);
+
+    // 3px gradient lip under the button
+    &::before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        background: linear-gradient(90deg, var(--sb-clr-sd-4) 0%, var(--sb-clr-pr-4) 100%);
+        z-index: -2;
+        transition: var(--sb-cube-1);
+    }
+
+    .bg {
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        background: #000;
+        overflow: hidden;
+        z-index: -1;
+
+        // inner top highlight
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            box-shadow: inset 0px 5px 10px rgb(255 255 255 / 41%);
+        }
+
+        .glow {
+            position: absolute;
+            left: 18px;
+            width: 106px;
+            height: 34px;
+            border-radius: 50%;
+            filter: blur(15px);
+            transition: var(--sb-cube-1);
+
+            &.glow-1 {
+                top: 33px;
+                background: var(--sb-clr-sd-4);
+            }
+
+            &.glow-2 {
+                top: -32px;
+                background: var(--sb-clr-pr-4);
+            }
+        }
+    }
+
+    &:hover {
+        color: #fff;
+
+        &::before {
+            top: 4px;
+        }
+
+        .bg .glow {
+            filter: blur(5px);
+            &.glow-1 {
+                top: 22px;
+            }
+
+            &.glow-2 {
+                top: -22px;
+            }
+        }
+    }
+}
+
+// sign up button (header, "Contact Support"): same hover as .sb-pr-btn-4 below, on the 44px black button.
+// The cyan glow rises and the violet one drops, both grow wide enough to cover the button edge to edge, each one owns one half and they melt into each other around the middle line
+.sb-signup-btn-4:hover .bg .glow {
+    &.glow-1 {
+        top: 24px;
+        transform: scale(2.3, 1.5);
+    }
+
+    &.glow-2 {
+        top: -14px;
+        transform: scale(2.3, 1.5);
+    }
+}
+
+// header-5 buttons
+.sb-login-btn-5 {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--sb-font-2);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    transition: var(--sb-cube-1);
+
+    &:hover {
+        color: #FFA305;
+    }
+}
+
+.sb-free-btn-5 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 24px;
+    font-family: var(--sb-font-2);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    // top layer: solid orange, 0 high until hover
+    background:
+        linear-gradient(#FB6514 0 0) 0 0 / 100% 0 no-repeat,
+        linear-gradient(180deg, #FB6514 0%, #071727 35.8%, #071727 100%) 0 0 / 100% 100% no-repeat;
+    border-radius: 12px;
+    // top highlight + bottom-only stroke (tapers out at the corners)
+    box-shadow: inset 0px 4px 4px rgb(255 255 255 / 75%), inset 0px -1px 0px rgb(255 255 255 / 32%);
+    transition: var(--sb-cube-1);
+
+    &:hover {
+        color: #fff;
+        // orange wipes down from the top and fills the whole button
+        background-size: 100% 100%, 100% 100%;
+        box-shadow: inset 0px 4px 4px rgb(255 255 255 / 75%), inset 0px -1px 0px rgb(255 255 255 / 32%), 0px 0px 20px rgb(251 101 20 / 45%);
+    }
+}
+
+// hero-5 buttons
+.sb-pr-btn-5,
+.sb-sd-btn-5 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 52px;
+    padding: 0 24px;
+    font-family: var(--sb-font-2);
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    border-radius: 12px;
+    transition: var(--sb-cube-1);
+
+    .icon {
+        display: inline-flex;
+        flex-shrink: 0;
+
+        svg {
+            display: block;
+        }
+    }
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+// the colour inside .sb-pr-btn-5 keeps glowing: two wide soft lights slide through the button in opposite directions,
+// left and right on one clock and up and down on another, so they wander all over the inside and never leave it.
+// The lights are taller than the button, so their position can move up and down. The hover stops them
+@keyframes sb-pr-btn-5-glow-x {
+    0% {
+        background-position-x: 0%, 100%, 0;
+    }
+
+    100% {
+        background-position-x: 100%, 0%, 0;
+    }
+}
+
+@keyframes sb-pr-btn-5-glow-y {
+    0% {
+        background-position-y: 0%, 100%, 0;
+    }
+
+    100% {
+        background-position-y: 100%, 0%, 0;
+    }
+}
+
+.sb-pr-btn-5 {
+    font-weight: 600;
+    background:
+        radial-gradient(closest-side, rgb(255 208 70 / 85%), rgb(255 165 35 / 42%) 55%, rgb(255 165 35 / 0%)) 0% 0% / 140px 84px no-repeat,
+        radial-gradient(closest-side, rgb(255 150 50 / 80%), rgb(255 110 30 / 36%) 55%, rgb(255 110 30 / 0%)) 100% 100% / 170px 92px no-repeat,
+        linear-gradient(255deg, #FFC33B 0%, #FB6514 29.3%, #D93005 54.5%, #D94F04 82%, #FFC33B 100%) 0 0 / 100% 100% no-repeat;
+    // top highlight + bottom glow
+    box-shadow: inset 0px 4px 4px rgb(255 255 255 / 75%), inset 0px -4px 15px rgb(255 255 255 / 35%);
+    animation: sb-pr-btn-5-glow-x 2s ease-in-out infinite alternate, sb-pr-btn-5-glow-y 2.4s ease-in-out infinite alternate;
+
+    // the lights stand still where they are
+    &:hover {
+        box-shadow: inset 0px 4px 4px rgb(255 255 255 / 75%), inset 0px -4px 15px rgb(255 255 255 / 35%), 0px 0px 24px rgb(251 101 20 / 55%);
+        animation-play-state: paused;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
+}
+
+.sb-sd-btn-5 {
+    height: 53px;
+    font-weight: 500;
+    // top layer: the orange glow, 0 high on the bottom edge until hover. It is twice as tall as the button when it is open and
+    // fades out in its upper half, so the front of the rise is soft and the button ends up completely orange
+    background:
+        linear-gradient(0deg, #FB6514 0%, #FB6514 50%, rgb(251 101 20 / 0%) 100%) 0 100% / 100% 0 no-repeat,
+        linear-gradient(180deg, #071727 6.25%, #071727 27.9%, #35290E 57.2%, #975F03 100%) 0 0 / 100% 100% no-repeat;
+    // top highlight + bottom glow + bottom-only stroke
+    box-shadow: inset 0px 4px 4px rgb(255 255 255 / 75%), inset 0px -4px 15px rgb(255 255 255 / 35%), inset 0px -1px 0px rgb(255 255 255 / 32%);
+
+    &:hover {
+        // the bottom glow rises and fills the whole button
+        background-size: 100% 200%, 100% 100%;
+        box-shadow: inset 0px 4px 4px rgb(255 255 255 / 75%), inset 0px -4px 15px rgb(255 255 255 / 35%), inset 0px -1px 0px rgb(255 255 255 / 32%), 0px 0px 24px rgb(251 101 20 / 45%);
+    }
+}
+
+// hero-4 buttons, the primary one shares the glow + lip with .sb-signup-btn-4
+.sb-pr-btn-4 {
+    height: 50px;
+    color: #000;
+
+    &::before,
+    .bg,
+    .bg::after {
+        border-radius: 100px;
+    }
+
+    .bg {
+        background: #fff;
+
+        .glow {
+            left: 40px;
+        }
+    }
+
+    // hover: the cyan glow rises from the bottom and the violet one drops from the top, both grow wide enough to cover the button edge to edge.
+    // Each one owns one half and they melt into each other around the middle line, so neither colour wins
+    // (the violet one is painted on top, so the cyan one reaches a little further past the middle to make up for it)
+    &:hover {
+        color: #fff;
+
+        .bg .glow {
+            &.glow-1 {
+                top: 26px;
+                transform: scale(2.3, 1.5);
+            }
+
+            &.glow-2 {
+                top: -13px;
+                transform: scale(2.3, 1.5);
+            }
+        }
+    }
+}
+
+// dark version of the primary button, "Explore All Agents"
+.sb-pr-btn-4.has-dark {
+    color: #fff;
+
+    .bg {
+        background: #000;
+
+        &::after {
+            box-shadow: inset 0px 5px 10px #fff;
+        }
+    }
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+// core-features cards, "Get Started"
+.sb-card-btn-4 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 24px;
+    font-family: var(--sb-font-2);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 100px;
+    background: linear-gradient(238deg, #F6F7F8 0%, #E9E9E9 54%, #F6F7F8 100%);
+    transition: var(--sb-cube-1);
+
+    // 2px stroke, strongest in the middle of the top and bottom edge
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 2px;
+        background: linear-gradient(90deg, rgb(40 196 254 / 6%) 0%, rgb(40 196 254 / 55%) 50%, rgb(40 196 254 / 6%) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+    }
+
+    .text {
+        background: linear-gradient(90deg, #28C4FE 0%, #5641F2 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    &:hover {
+        box-shadow: 0 8px 20px rgb(40 196 254 / 25%);
+    }
+}
+
+.sb-sd-btn-4 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    padding: 0 22px;
+    font-family: var(--sb-font-2);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgb(0 0 0 / 80%);
+    background: #fff;
+    border-radius: 80px;
+    box-shadow: inset 0 0 10px #45ACFF;
+    transition: var(--sb-cube-1);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    // two blurred glows, they sit behind the text and stay hidden until hover (the blur would show at the edge, so they also fade)
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        z-index: -1;
+        width: 106px;
+        height: 34px;
+        margin-left: -53px;
+        border-radius: 50%;
+        filter: blur(15px);
+        opacity: 0;
+        pointer-events: none;
+        transition: var(--sb-cube-1);
+    }
+
+    &::before {
+        top: 60px;
+        background: var(--sb-clr-sd-4);
+    }
+
+    &::after {
+        top: -60px;
+        background: var(--sb-clr-pr-4);
+    }
+
+    // hover: same as the primary buttons, the cyan glow rises and the violet one drops, both grow wide enough to cover the button edge to edge,
+    // each one owns one half and they melt into each other around the middle line (the cyan one reaches a bit past it because the violet one is painted on top)
+    &:hover {
+        color: #fff;
+        box-shadow: inset 0 0 20px #45ACFF;
+
+        &::before,
+        &::after {
+            opacity: 1;
+            transform: scale(2.3, 1.5);
+            filter: blur(5px);
+        }
+
+        &::before {
+            top: 28px;
+        }
+
+        &::after {
+            top: -12px;
+        }
+    }
+}
+
+.sb-sd-btn-1 {
+    font-family: var(--sb-font-1);
+    line-height: 1.5;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    background: rgba(5, 2, 33, 0.16);
+    backdrop-filter: blur(6px);
+    border-radius: 10px;
+    padding: 14px 26px;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 10px;
+        background: linear-gradient(150deg, rgba(255, 255, 255, 0) 60%, rgba(229, 15, 242, 1) 100%);
+        padding: 2px;
+        z-index: -1;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        transition: var(--sb-cube-1);
+    }
+
+    &:hover {
+        color: var(--sb-clr-sd-1);
+        &::before {
+            background: var(--sb-clr-sd-1);
+        }
+    }
+}
+
+/* 
+    button-end
+*/

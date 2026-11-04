@@ -1,0 +1,169 @@
+/*
+    wow-plus-start
+*/
+
+/*
+    loop-animations
+*/
+@keyframes wa-rotated {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes wa-rotated-minus {
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes wa-fade-in-out {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/*
+    wow-entrance-animations
+*/
+@keyframes fadeInUp2 {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown2 {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft2 {
+    0% {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight2 {
+    0% {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInUp2 {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown2 {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp3 {
+    0% {
+        visibility: visible;
+        transform: translate3d(0, 100%, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.fadeInUp2,
+.fadeInDown2,
+.fadeInLeft2,
+.fadeInRight2 {
+    animation-duration: 700ms;
+    animation-timing-function: var(--kf-cube-1);
+    animation-fill-mode: both;
+}
+
+.slideInUp2,
+.slideInDown2,
+.animate__slideInUp3 {
+    animation-duration: 1000ms;
+    animation-timing-function: var(--kf-cube-1);
+    animation-fill-mode: both;
+}
+
+.fadeInUp2 {
+    animation-name: fadeInUp2;
+}
+
+.fadeInDown2 {
+    animation-name: fadeInDown2;
+}
+
+.fadeInLeft2 {
+    animation-name: fadeInLeft2;
+}
+
+.fadeInRight2 {
+    animation-name: fadeInRight2;
+}
+
+.slideInUp2 {
+    animation-name: slideInUp2;
+}
+
+.slideInDown2 {
+    animation-name: slideInDown2;
+}
+
+.animate__slideInUp3 {
+    animation-name: slideInUp3;
+}
+
+
+/*
+    wow-plus-end
+*/

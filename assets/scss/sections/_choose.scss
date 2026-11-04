@@ -1,0 +1,371 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-choose-1-start
+*/
+// dark section: the list of reasons on the left (485px at 1920), the head and the photo on the right. The container is 1400px wide at 1920,
+// --l and --g are the width of the list and the gap next to it; the photo takes what is left of the container plus the margin of the screen,
+// so it runs out to the right edge of the screen (and to the bottom edge of the section). It keeps its 1044 x 659 shape at every width
+// (aspect-ratio), so its two notches and the two stripes in its bottom left corner scale with it. Below 1200 everything is stacked
+.ag-choose-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: 145px 0 0;
+        background-color: var(--ag-clr-h-1);
+
+        @media #{$xxl} {
+            padding-top: 130px;
+        }
+
+        @media #{$xl} {
+            padding-top: 115px;
+        }
+
+        @media #{$lg} {
+            padding: 110px 0 100px;
+        }
+
+        @media #{$md} {
+            padding: 100px 0 90px;
+        }
+
+        @media #{$xs} {
+            padding: 76px 0 64px;
+        }
+
+        @media #{$sm} {
+            padding: 90px 0 80px;
+        }
+
+        > .container {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    // background: the picture carries its own opacity, the glow is the 2139 x 579 ellipse that hangs out of the bottom edge
+    &-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+
+        &-img {
+            position: absolute;
+            inset: 0;
+            opacity: 0.13;
+        }
+
+        &-glow {
+            position: absolute;
+            bottom: -183px;
+            left: -17.66%;
+            width: 111.4%;
+            height: 579px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, var(--ag-clr-pr-1) 0%, var(--ag-clr-sd-1) 100%);
+            opacity: 0.68;
+            filter: blur(167px);
+        }
+
+        // the light bar (the end of the section before): a bar with a flared end on each side, the ends are drawn in the svg above
+        &-cut {
+            --cw: 112px;
+            --ch: 44px;
+            position: absolute;
+            top: 0;
+            right: 148px;
+            left: 148px;
+            height: var(--ch);
+
+            @media #{$xxl} {
+                right: 100px;
+                left: 100px;
+            }
+
+            @media #{$xl} {
+                right: 60px;
+                left: 60px;
+            }
+
+            @media #{$lg} {
+                right: 40px;
+                left: 40px;
+            }
+
+            @media #{$md} {
+                --cw: 84px;
+                --ch: 33px;
+                right: 24px;
+                left: 24px;
+            }
+
+            @media #{$xs} {
+                --cw: 56px;
+                --ch: 22px;
+                right: 16px;
+                left: 16px;
+            }
+
+            @media #{$sm} {
+                --cw: 72px;
+                --ch: 28px;
+                right: 24px;
+                left: 24px;
+            }
+
+            // the bar runs 1px in under both ends, so there is no hairline between them
+            &-mid {
+                position: absolute;
+                top: 0;
+                right: calc(var(--cw) - 1px);
+                bottom: 0;
+                left: calc(var(--cw) - 1px);
+                background-color: var(--ag-clr-bg-1);
+            }
+
+            &-end {
+                position: absolute;
+                top: 0;
+                width: var(--cw);
+                height: var(--ch);
+                background-color: var(--ag-clr-bg-1);
+
+                &.is-l {
+                    left: 0;
+                    clip-path: url(#ag-choose-cut-l-clip);
+                }
+
+                &.is-r {
+                    right: 0;
+                    clip-path: url(#ag-choose-cut-r-clip);
+                }
+            }
+        }
+    }
+
+    // wrap: the list spans both rows, the head is on top of the photo
+    &-wrap {
+        --l: 485px;
+        --g: 131px;
+        display: grid;
+        grid-template-columns: var(--l) minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        column-gap: var(--g);
+        row-gap: 49px;
+
+        @media #{$xxl} {
+            --l: 440px;
+            --g: 80px;
+        }
+
+        @media #{$xl} {
+            --l: 400px;
+            --g: 60px;
+            row-gap: 40px;
+        }
+
+        @media #{$lg,$md,$sm,$xs} {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 52px;
+        }
+    }
+
+    // head
+    &-head {
+        grid-column: 2;
+        grid-row: 1;
+
+        > .ag-subtitle-1 {
+            display: flex;
+            width: fit-content;
+        }
+
+        @media #{$lg,$md,$sm,$xs} {
+            grid-column: 1;
+            grid-row: auto;
+        }
+    }
+
+    &-title {
+        max-width: 718px;
+        margin-top: 16px;
+    }
+
+    // the coloured words
+    &-hl {
+        color: var(--ag-clr-sd-1);
+    }
+
+    // features: the list sits 44px lower than the head, it ends 80px above the bottom of the photo
+    &-features {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        padding: 44px 0 80px;
+
+        @media #{$lg,$md} {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 40px 48px;
+        }
+
+        @media #{$lg,$md,$sm,$xs} {
+            grid-row: auto;
+            padding: 0;
+        }
+
+        @media #{$sm,$xs} {
+            gap: 32px;
+        }
+    }
+
+    // item: the dividing line is the bottom edge of the item, 32px under the text
+    &-item {
+        display: flex;
+        gap: 32px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid rgb(255 255 255 / 16%);
+
+        @media #{$xl} {
+            gap: 24px;
+        }
+
+        @media #{$xs} {
+            gap: 20px;
+            padding-bottom: 24px;
+        }
+
+        // the circle has a gradient fill and a 1px gradient stroke that runs the other way
+        &-icon {
+            position: relative;
+            display: flex;
+            flex: none;
+            align-items: center;
+            justify-content: center;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(0deg, #A234FD 0%, #0E0910 100%);
+            font-size: 28px;
+            color: #fff;
+
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                padding: 2px;
+                border-radius: inherit;
+                background: linear-gradient(0deg, #0E0910 0%, #A234FD 100%);
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                pointer-events: none;
+            }
+
+            i {
+                position: relative;
+                display: block;
+                line-height: 1;
+            }
+
+            @media #{$xs} {
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
+        }
+
+        &-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        &-title {
+            margin-bottom: 16px;
+        }
+
+        &-text {
+            opacity: 0.8;
+        }
+    }
+
+    // media: the right margin pulls the photo to the right edge of the screen (the percentage is the width of the column)
+    &-media {
+        position: relative;
+        grid-column: 2;
+        grid-row: 2;
+        margin-right: calc((100% + var(--l) + var(--g)) / 2 - 50vw);
+
+        @media #{$lg,$md,$sm,$xs} {
+            grid-column: 1;
+            grid-row: auto;
+            margin-right: 0;
+        }
+    }
+
+    &-img {
+        aspect-ratio: 1044 / 659;
+        clip-path: url(#ag-choose-img-clip);
+    }
+
+    // box: 16px in from the right and the bottom edge of the photo, the photo shows blurred through it
+    &-box {
+        position: absolute;
+        right: 16px;
+        bottom: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+        width: 488px;
+        padding: 28px;
+        border-radius: 16px;
+        background-color: rgb(7 0 14 / 30%);
+        backdrop-filter: blur(30px);
+
+        @media #{$xxl,$lg} {
+            gap: 28px;
+            width: 440px;
+            padding: 24px;
+        }
+
+        @media #{$xl} {
+            gap: 24px;
+            width: 400px;
+            padding: 24px;
+        }
+
+        // below 992 the box does not fit on the photo, it sits under it
+        @media #{$md,$sm,$xs} {
+            position: relative;
+            right: auto;
+            bottom: auto;
+            gap: 24px;
+            width: auto;
+            margin-top: 16px;
+            padding: 24px;
+            background-color: rgb(255 255 255 / 6%);
+        }
+
+        @media #{$xs} {
+            padding: 20px;
+        }
+
+        &-text {
+            @media #{$xl} {
+                font-size: 16px;
+                line-height: 24px;
+            }
+        }
+    }
+}
+/*
+    ag-choose-1-end
+*/

@@ -1,0 +1,431 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-about-1-start
+*/
+// the 1920 design: the text and the key features card on the left, the photo with the small card on the right. From 1400 up the parts sit
+// in a 822px tall box (the container) and are anchored to the left / the right, the key features card runs out to the left edge of the screen.
+// Below 1400 the parts flow: the text and the photo side by side (stacked from 992 down), the key features card under them
+.ag-about-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: 132px 0;
+        background-color: var(--ag-clr-bg-1);
+
+        @media #{$xl} {
+            padding: 100px 0;
+        }
+
+        @media #{$lg} {
+            padding: 90px 0;
+        }
+
+        @media #{$md} {
+            padding: 80px 0;
+        }
+
+        @media #{$xs} {
+            padding: 60px 0;
+        }
+
+        @media #{$sm} {
+            padding: 70px 0;
+        }
+    }
+
+    // background: the pictures carry their own opacity, they only have to be put where the design has them
+    &-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+
+        &-clr {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 663px;
+        }
+
+        &-img {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 658px;
+        }
+
+        &-shape-1 {
+            position: absolute;
+            top: 0;
+            left: -17px;
+            width: 330px;
+            height: 330px;
+        }
+
+        &-shape-2 {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 349px;
+            height: 607px;
+        }
+    }
+
+    &-wrap {
+        position: relative;
+        z-index: 1;
+        height: 822px;
+
+        @media #{$xl,$lg} {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 56px 40px;
+            height: auto;
+        }
+
+        @media #{$md,$sm,$xs} {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            height: auto;
+        }
+    }
+
+    // sec-title
+    &-sec-title {
+        position: absolute;
+        top: 29px;
+        left: 0;
+        width: 628px;
+
+        > .ag-subtitle-1 {
+            display: flex;
+            width: fit-content;
+        }
+
+        @media #{$xxl} {
+            width: 600px;
+        }
+
+        @media #{$xl,$lg} {
+            position: relative;
+            top: auto;
+            flex: 1 1 0;
+            width: auto;
+            min-width: 0;
+        }
+
+        @media #{$md,$sm,$xs} {
+            position: relative;
+            top: auto;
+            width: auto;
+        }
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    &-text {
+        margin-top: 20px;
+    }
+
+    &-btn {
+        margin-top: 32px;
+    }
+
+    // images: the photo and the small card are drawn on a 676 x 822 stage, --s scales the stage (and the box it takes)
+    &-images {
+        --s: 1;
+        position: absolute;
+        right: -68px;
+        bottom: 0;
+        width: calc(676px * var(--s));
+        height: calc(822px * var(--s));
+
+        @media #{$xxxl} {
+            --s: 0.9;
+        }
+
+        @media #{$xxl} {
+            --s: 0.8;
+            right: -40px;
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            right: auto;
+            bottom: auto;
+            flex: none;
+            margin-left: calc(37px * var(--s));
+        }
+
+        @media #{$xl} {
+            --s: 0.68;
+        }
+
+        @media #{$lg} {
+            --s: 0.58;
+        }
+
+        @media #{$md,$sm,$xs} {
+            align-self: center;
+        }
+
+        @media #{$md} {
+            --s: 0.9;
+        }
+
+        @media #{$xs} {
+            --s: 0.4;
+        }
+
+        @media #{$sm} {
+            --s: 0.7;
+        }
+
+        &-in {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 676px;
+            height: 822px;
+            transform: scale(var(--s));
+            transform-origin: 0 0;
+        }
+    }
+
+    // the photo: the top right corner is cut, the bottom left corner is carved out for the small card
+    &-img {
+        position: absolute;
+        inset: 0;
+        clip-path: url(#ag-about-img-clip);
+    }
+
+    // the small card: the top left and the bottom right corners are cut
+    &-card {
+        position: absolute;
+        top: 465px;
+        left: -37px;
+        width: 280px;
+        height: 356px;
+        background-color: #ebe1fd;
+        clip-path: url(#ag-about-card-clip);
+
+        &-wave {
+            position: absolute;
+            inset: 0;
+        }
+
+        &-pic {
+            position: absolute;
+            top: -28px;
+            left: 59px;
+            width: 256px;
+            height: 384px;
+        }
+
+        &-content {
+            position: absolute;
+            top: 198px;
+            left: 30px;
+            width: 155px;
+        }
+
+        // the stage is scaled as a whole, so the numbers keep the size of the design
+        &-num {
+            font-size: 48px;
+            line-height: 56px;
+        }
+
+        &-text {
+            margin-top: 14px;
+            font-size: 20px;
+            line-height: 26px;
+            letter-spacing: -0.02em;
+            color: #000;
+        }
+    }
+
+    // key features card: --k scales the card from its bottom left corner (1400 - 1599)
+    &-key {
+        --k: 1;
+        position: absolute;
+        bottom: 1px;
+        left: calc(50% - 50vw - 26px * var(--k));
+        width: 914px;
+        height: 393px;
+        background: linear-gradient(90deg, rgb(255 255 255 / 18%), rgb(255 255 255 / 85%));
+        clip-path: url(#ag-about-key-clip);
+        transform: scale(var(--k));
+        transform-origin: 0 100%;
+
+        @media #{$xxl} {
+            --k: 0.86;
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            bottom: auto;
+            left: auto;
+            width: 100%;
+            border-radius: 24px;
+            clip-path: none;
+            transform: none;
+        }
+
+        @media #{$xl,$lg} {
+            flex: 0 0 100%;
+        }
+
+        @media #{$md,$sm,$xs} {
+            flex: none;
+        }
+
+        @media #{$sm,$xs} {
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            padding-bottom: 32px;
+        }
+
+        &-face {
+            position: absolute;
+            top: -18px;
+            left: 60px;
+            width: 325px;
+            height: 495px;
+
+            @media #{$lg,$md} {
+                left: 20px;
+            }
+
+            @media #{$sm,$xs} {
+                position: relative;
+                top: auto;
+                left: auto;
+                flex: none;
+                width: 200px;
+                height: 305px;
+                margin: 24px auto 0;
+            }
+        }
+
+        // the left edge of the face is washed out into the card
+        &-fade {
+            position: absolute;
+            top: -1px;
+            left: 60px;
+            width: 96px;
+            height: 394px;
+            background: linear-gradient(90deg, #f6f6f6, rgb(246 246 246 / 0%));
+
+            @media #{$lg,$md} {
+                left: 20px;
+            }
+
+            @media #{$sm,$xs} {
+                display: none;
+            }
+        }
+
+        &-hand {
+            position: absolute;
+            top: 37px;
+            left: 650px;
+            width: 289px;
+            height: 199px;
+
+            @media #{$xl} {
+                right: -25px;
+                left: auto;
+            }
+
+            @media #{$lg} {
+                right: -40px;
+                left: auto;
+            }
+
+            @media #{$md,$sm,$xs} {
+                display: none;
+            }
+        }
+
+        &-ai {
+            position: absolute;
+            top: 278px;
+            left: 760px;
+            width: 133px;
+            height: 136px;
+
+            @media #{$xl,$lg,$md} {
+                right: 21px;
+                left: auto;
+            }
+
+            @media #{$sm,$xs} {
+                top: auto;
+                right: 21px;
+                bottom: -28px;
+                left: auto;
+            }
+        }
+
+        &-list {
+            position: absolute;
+            top: 86px;
+            left: 457px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            @media #{$lg,$md} {
+                left: 380px;
+            }
+
+            @media #{$sm,$xs} {
+                position: relative;
+                top: auto;
+                left: auto;
+                padding: 8px 28px 0;
+            }
+
+            li {
+                display: flex;
+                align-items: flex-start;
+            }
+
+            .icon {
+                display: flex;
+                flex: none;
+                align-items: center;
+                justify-content: center;
+                width: 18px;
+                height: 18px;
+                margin: 5px 12px 0 0;
+                font-size: 15px;
+                line-height: 1;
+                color: var(--ag-clr-pr-1);
+
+                i {
+                    display: block;
+                    line-height: 1;
+                }
+            }
+
+            .text {
+                color: var(--ag-clr-h-1);
+            }
+        }
+    }
+}
+/*
+    ag-about-1-end
+*/

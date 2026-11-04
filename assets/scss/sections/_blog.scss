@@ -1,0 +1,325 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-blog-1-start
+*/
+.ag-blog-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding-top: 80px;
+        padding-bottom: 135px;
+
+        
+        > .container {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    // background: the three pictures carry their own opacity
+    &-bg-clr,
+    &-bg-shape,
+    &-bg-line {
+        position: absolute;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        background-repeat: no-repeat;
+        pointer-events: none;
+    }
+
+    // the glow (1920 x 1162) sits on the bottom edge of the area, so its soft end is never cut when the area is lower than the picture
+    &-bg-clr {
+        top: 0;
+        bottom: 0;
+        background-position: center bottom;
+        background-size: cover;
+    }
+
+    // the waves (1920 x 484)
+    &-bg-shape {
+        top: 0;
+        height: 484px;
+        background-position: center top;
+        background-size: cover;
+    }
+
+    // the line band (1920 x 76) has the middle of the button in its middle: the button is 52px high and 135px (the padding of the area) under it
+    &-bg-line {
+        bottom: 123px;
+        height: 76px;
+        background-position: center;
+        background-repeat: repeat-x;
+        background-size: auto 100%;
+    }
+
+    // head
+    &-sec-title {
+        max-width: 760px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    // list
+    &-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
+        margin-top: 48px;
+
+        @media #{$xl} {
+            gap: 24px;
+        }
+
+        @media #{$lg} {
+            gap: 20px;
+        }
+
+        @media #{$md} {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+
+            .ag-blog-1-card:last-child {
+                grid-column: 1 / -1;
+                justify-self: center;
+                width: calc(50% - 12px);
+            }
+        }
+
+        @media #{$xs} {
+            grid-template-columns: minmax(0, 448px);
+            gap: 20px;
+            justify-content: center;
+            margin-top: 36px;
+        }
+
+        @media #{$sm} {
+            gap: 24px;
+        }
+    }
+
+    // card: the bottom right corner is cut at 60px, the other corners are 14px
+    &-card {
+        display: flex;
+        flex-direction: column;
+        border-radius: 14px;
+        background-color: #fff;
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 65.8px), calc(100% - 0.27px) calc(100% - 63.05px), calc(100% - 1.07px) calc(100% - 60.44px), calc(100% - 2.35px) calc(100% - 58.03px), calc(100% - 4.1px) calc(100% - 55.9px), calc(100% - 55.9px) calc(100% - 4.1px), calc(100% - 58.03px) calc(100% - 2.35px), calc(100% - 60.44px) calc(100% - 1.07px), calc(100% - 63.05px) calc(100% - 0.27px), calc(100% - 65.8px) 100%, 0 100%);
+
+        // the picture: 448 x 313, its bottom right corner is cut at 48px (the same soft ends as the card, scaled)
+        &-img {
+            flex: none;
+            aspect-ratio: 448 / 313;
+            border-radius: 14px;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 52.64px), calc(100% - 0.22px) calc(100% - 50.44px), calc(100% - 0.86px) calc(100% - 48.35px), calc(100% - 1.88px) calc(100% - 46.42px), calc(100% - 3.28px) calc(100% - 44.72px), calc(100% - 44.72px) calc(100% - 3.28px), calc(100% - 46.42px) calc(100% - 1.88px), calc(100% - 48.35px) calc(100% - 0.86px), calc(100% - 50.44px) calc(100% - 0.22px), calc(100% - 52.64px) 100%, 0 100%);
+        }
+
+        &-body {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            margin-top: -48px;
+            padding: 0 40px 40px;
+
+            @media #{$xxl} {
+                padding: 0 36px 36px;
+            }
+
+            @media #{$xl,$md} {
+                padding: 0 28px 28px;
+            }
+
+            @media #{$lg} {
+                padding: 0 24px 24px;
+            }
+
+            @media #{$xs} {
+                padding: 0 24px 24px;
+            }
+
+            @media #{$sm} {
+                padding: 0 32px 32px;
+            }
+        }
+
+        // date: a 80 x 78 purple tab with the light box (80 x 48) on its top, both have the top left and the bottom right corner cut at 45deg
+        &-date {
+            position: relative;
+            flex: none;
+            width: 80px;
+            height: 78px;
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 80px;
+            }
+
+            &::before {
+                height: 78px;
+                background-color: var(--ag-clr-pr-1);
+                clip-path: path('M80 64.3431C80 65.404 79.5786 66.4214 78.8284 67.1716L69.1716 76.8284C68.4214 77.5786 67.404 78 66.3431 78H4C1.79086 78 0 76.2091 0 74V13.6569C0 12.596 0.421427 11.5786 1.17157 10.8284L10.8284 1.17157C11.5786 0.421428 12.596 0 13.6569 0H76C78.2091 0 80 1.79086 80 4V64.3431Z');
+            }
+
+            &::after {
+                height: 48px;
+                background-color: var(--ag-clr-bg-1);
+                clip-path: path('M80 34.3431C80 35.404 79.5786 36.4214 78.8284 37.1716L69.1716 46.8284C68.4214 47.5786 67.404 48 66.3431 48H4C1.79086 48 0 46.2091 0 44V12.6569C0 11.596 0.421427 10.5786 1.17157 9.82843L9.82843 1.17157C10.5786 0.421429 11.596 0 12.6569 0H76C78.2091 0 80 1.79086 80 4V34.3431Z');
+            }
+
+            .day,
+            .month {
+                position: relative;
+                z-index: 1;
+                text-align: center;
+            }
+
+            .day {
+                z-index: 2;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 48px;
+                font-family: var(--ag-font-2);
+                font-weight: 700;
+                font-size: 36px;
+                line-height: 1;
+                color: var(--ag-clr-h-1);
+            }
+
+            .month {
+                z-index: 2;
+                display: block;
+                height: 30px;
+                font-family: var(--ag-font-1);
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 30px;
+                color: #fff;
+            }
+        }
+
+        &-title {
+            min-height: 64px;
+            margin: 24px 0;
+            font-size: 26px;
+            line-height: 32px;
+
+            @media #{$xxl} {
+                min-height: 60px;
+                font-size: 24px;
+                line-height: 30px;
+            }
+
+            @media #{$xl,$md} {
+                min-height: 56px;
+                font-size: 22px;
+                line-height: 28px;
+            }
+
+            @media #{$lg} {
+                min-height: 52px;
+                font-size: 20px;
+                line-height: 26px;
+            }
+
+            @media #{$xs} {
+                min-height: 56px;
+                font-size: 22px;
+                line-height: 28px;
+            }
+
+            @media #{$sm} {
+                min-height: 60px;
+                font-size: 24px;
+                line-height: 30px;
+            }
+
+            a {
+                color: inherit;
+                transition: var(--ag-cube-1);
+
+                &:hover {
+                    color: var(--ag-clr-pr-1);
+                }
+            }
+        }
+
+        // the line over the author is 24px from the title and 24px from the author
+        &-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px 30px;
+            margin-top: auto;
+            padding-top: 24px;
+            border-top: 1px solid #EDEDED;
+        }
+
+        &-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        &-avatar {
+            flex: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+
+        &-name {
+            font-weight: 500;
+        }
+
+        // the read time has a dot of 6px before it
+        &-time {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.72;
+
+            &::before {
+                content: "";
+                flex: none;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background-color: #202020;
+            }
+        }
+
+        @media #{$xs} {
+            &-name,
+            &-time {
+                font-size: 16px;
+            }
+        }
+    }
+
+    // button
+    &-btn {
+        display: flex;
+        justify-content: center;
+        margin-top: 60px;
+
+        @media #{$md,$sm,$xs} {
+            margin-top: 48px;
+        }
+    }
+}
+/*
+    ag-blog-1-end
+*/

@@ -1,0 +1,469 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-projects-1-start
+*/
+// the cards are a swiper: the one in the middle is the lit one (.swiper-slide-active, set by swiper), the two next to it are grey and
+// see-through. Every card is drawn on a 1280 x 640 stage: the picture with a notch in its top right and its bottom left corner, and the white
+// card (466 x 544, with the tab for the button) on it. From 1200 up --s scales the stage and the box it takes, --gap is the space between the
+// lit card and the arrows. Below 1200 the stage is taken apart: the picture is a banner, the white card hangs on it and the arrows go under
+// the slider
+.ag-projects-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: 132px 0;
+
+        @media #{$xl} {
+            padding: 110px 0;
+        }
+
+        @media #{$lg} {
+            padding: 100px 0;
+        }
+
+        @media #{$md} {
+            padding: 90px 0;
+        }
+
+        @media #{$xs} {
+            padding: 64px 0;
+        }
+
+        @media #{$sm} {
+            padding: 80px 0;
+        }
+    }
+
+    // background
+    &-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    // sec-title
+    &-sec-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 932px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    &-wrap {
+        --s: 1;
+        --gap: 60px;
+        position: relative;
+        margin-top: 50px;
+
+        @media #{$xxl} {
+            --s: 0.9;
+            --gap: 40px;
+        }
+
+        @media #{$xl} {
+            --s: 0.8;
+            --gap: 20px;
+        }
+
+        @media #{$lg,$md,$sm,$xs} {
+            margin-top: 40px;
+        }
+    }
+
+    // slider: the padding gives the glow of the lit card room, the swiper cuts everything at its edges
+    &-slider {
+        margin: -48px 0;
+        padding: 48px 0;
+
+        .swiper-slide {
+            width: calc(1280px * var(--s));
+            height: auto;
+
+            @media #{$lg} {
+                width: 640px;
+            }
+
+            @media #{$md} {
+                width: 600px;
+            }
+
+            @media #{$xs} {
+                width: calc(100vw - 80px);
+            }
+
+            @media #{$sm} {
+                width: 520px;
+            }
+        }
+    }
+
+    // card: grey and see-through, the lit one gets its colour and the purple glow back
+    &-card {
+        position: relative;
+        height: calc(640px * var(--s));
+        opacity: 0.32;
+        filter: grayscale(1) drop-shadow(0 0 48px rgb(109 27 251 / 0%));
+        transition: var(--ag-cube-1);
+
+        .swiper-slide-active & {
+            opacity: 1;
+            filter: grayscale(0) drop-shadow(0 0 48px rgb(109 27 251 / 20%));
+        }
+
+        @media #{$lg,$md,$sm,$xs} {
+            height: auto;
+        }
+
+        &-in {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1280px;
+            height: 640px;
+            transform: scale(var(--s));
+            transform-origin: 0 0;
+
+            @media #{$lg,$md,$sm,$xs} {
+                position: relative;
+                width: auto;
+                height: auto;
+                transform: none;
+            }
+        }
+
+        // the picture: 20px corners, the top right and the bottom left corner are notched (the slant and its two soft corners are 87 x 68)
+        &-img {
+            position: absolute;
+            inset: 0;
+            clip-path: path('M20 0 L971 0 Q982 0 989.6 7.95 L1039.4 60.05 Q1047 68 1058 68 L1260 68 A20 20 0 0 1 1280 88 L1280 620 A20 20 0 0 1 1260 640 L309 640 Q298 640 290.4 632.05 L240.6 579.95 Q233 572 222 572 L20 572 A20 20 0 0 1 0 552 L0 20 A20 20 0 0 1 20 0 Z');
+
+            @media #{$lg,$md,$sm,$xs} {
+                position: relative;
+                inset: auto;
+                height: 300px;
+                border-radius: 20px;
+                clip-path: none;
+            }
+
+            @media #{$md} {
+                height: 280px;
+            }
+
+            @media #{$xs} {
+                height: 220px;
+            }
+
+            @media #{$sm} {
+                height: 260px;
+            }
+        }
+
+        // the white card sits 48px in from the top left corner of the stage
+        &-box {
+            position: absolute;
+            top: 48px;
+            left: 48px;
+            width: 466px;
+            height: 544px;
+
+            @media #{$lg,$md,$sm,$xs} {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: auto;
+                height: auto;
+                margin: -56px 20px 0;
+                padding: 32px 28px 28px;
+            }
+
+            @media #{$xs} {
+                margin: -48px 14px 0;
+                padding: 24px 20px;
+            }
+        }
+
+        &-ring {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            pointer-events: none;
+
+            @media #{$lg,$md,$sm,$xs} {
+                display: none;
+            }
+        }
+
+        // the card with the tab for the button at the bottom right corner (a 45deg slant with soft corners)
+        &-shape {
+            position: absolute;
+            inset: 0;
+            background-color: #fff;
+            clip-path: path('M446 0 H20 C8.954 0 0 8.954 0 20 V456 C0 467.046 8.954 476 20 476 H202.716 C208.02 476 213.107 478.107 216.858 481.858 L273.142 538.142 C276.893 541.893 281.98 544 287.284 544 H446 C457.046 544 466 535.046 466 524 V20 C466 8.954 457.046 0 446 0 Z');
+
+            @media #{$lg,$md,$sm,$xs} {
+                border-radius: 20px;
+                box-shadow: 0 0 0 8px rgb(255 255 255 / 12%);
+                clip-path: none;
+            }
+        }
+
+        &-content {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            width: 386px;
+
+            @media #{$lg,$md,$sm,$xs} {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: auto;
+            }
+        }
+
+        &-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        &-title {
+            min-height: 88px;
+            margin-top: 24px;
+            font-size: 36px;
+            line-height: 44px;
+
+            a {
+                color: inherit;
+                transition: var(--ag-cube-1);
+
+                &:hover {
+                    color: var(--ag-clr-pr-1);
+                }
+            }
+
+            @media #{$lg,$md,$sm,$xs} {
+                min-height: 0;
+                margin-top: 20px;
+                font-size: 32px;
+                line-height: 38px;
+            }
+
+            @media #{$md} {
+                font-size: 30px;
+                line-height: 36px;
+            }
+
+            @media #{$xs} {
+                font-size: 24px;
+                line-height: 30px;
+            }
+
+            @media #{$sm} {
+                font-size: 28px;
+                line-height: 34px;
+            }
+        }
+
+        &-text {
+            min-height: 84px;
+            margin-top: 12px;
+
+            @media #{$lg,$md,$sm,$xs} {
+                min-height: 0;
+            }
+
+            @media #{$xs} {
+                font-size: 16px;
+                line-height: 24px;
+            }
+        }
+
+        // the two numbers: 105px high, a line between them that fades out at both ends
+        &-stats {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            box-sizing: border-box;
+            height: 105px;
+            margin-top: 24px;
+            padding-top: 18px;
+            border: 1px solid rgb(7 0 14 / 10%);
+            border-radius: 7px;
+            background-color: var(--ag-clr-bg-2);
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 14px;
+                left: 50%;
+                width: 1px;
+                height: 75px;
+                background: linear-gradient(180deg, var(--ag-clr-bg-2) 0%, #7D7D7D 50%, var(--ag-clr-bg-2) 100%);
+            }
+
+            @media #{$lg,$md,$sm,$xs} {
+                height: auto;
+                padding: 18px 8px 16px;
+            }
+        }
+
+        &-stat {
+            width: 136px;
+            margin: 0 auto;
+            text-align: center;
+
+            .num {
+                font-size: 34px;
+                line-height: 24px;
+            }
+
+            .label {
+                margin-top: 13px;
+            }
+
+            @media #{$lg,$md,$sm,$xs} {
+                width: 100%;
+                max-width: 136px;
+            }
+
+            @media #{$xs} {
+                .num {
+                    font-size: 28px;
+                }
+
+                .label {
+                    font-size: 14px;
+                    line-height: 20px;
+                }
+            }
+        }
+
+        // the button sits in the tab; only the lit card can be clicked, a click on a grey card brings it to the middle
+        &-btn {
+            position: absolute;
+            top: 476px;
+            left: 278px;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            height: 48px;
+            padding: 0 22px;
+            border-radius: 60px;
+            background-color: var(--ag-clr-p-1);
+            font-family: var(--ag-font-2);
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 24px;
+            white-space: nowrap;
+            color: #fff;
+            pointer-events: none;
+            transition: var(--ag-cube-1);
+
+            .swiper-slide-active & {
+                pointer-events: auto;
+            }
+
+            .icon {
+                display: flex;
+                flex: none;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                font-size: 20px;
+
+                i {
+                    display: block;
+                    line-height: 1;
+                }
+            }
+
+            &:hover {
+                background-color: var(--ag-clr-pr-1);
+                color: #fff;
+            }
+
+            @media #{$lg,$md,$sm,$xs} {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-top: 24px;
+            }
+        }
+    }
+
+    // arrows: they sit over the grey cards, --gap away from the lit one
+    &-nav {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+
+        @media #{$lg,$md,$sm,$xs} {
+            position: static;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 32px;
+        }
+    }
+
+    &-btn {
+        position: absolute;
+        top: calc(50% - 26px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background-color: #fff;
+        font-size: 20px;
+        color: #1E1E1E;
+        pointer-events: auto;
+        transition: var(--ag-cube-1);
+
+        i {
+            display: block;
+            line-height: 1;
+        }
+
+        &:hover {
+            background-color: var(--ag-clr-pr-1);
+            box-shadow: 6px 6px 18px rgb(109 27 251 / 40%);
+            color: #fff;
+        }
+
+        &.prev {
+            left: calc(50% - 640px * var(--s) - var(--gap) - 52px);
+        }
+
+        &.next {
+            left: calc(50% + 640px * var(--s) + var(--gap));
+        }
+
+        @media #{$lg,$md,$sm,$xs} {
+            position: relative;
+            top: auto;
+
+            &.prev,
+            &.next {
+                left: auto;
+            }
+        }
+    }
+}
+/*
+    ag-projects-1-end
+*/

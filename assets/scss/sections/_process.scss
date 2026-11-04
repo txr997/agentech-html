@@ -1,0 +1,299 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-process-1-start
+*/
+// the photo is the top of the section, the panel with the four steps hangs over its bottom edge and ends at the bottom of the section.
+// --t is where the panel starts, --o how far it hangs over the photo, --fs the size of the big title. The title is drawn on the photo
+// right above the panel (only its top is on show, the panel covers the rest). The panel is the container plus its padding (48px at 1920).
+// Four steps across from 1200, two across to 768, one below
+.ag-process-1 {
+    &-area {
+        --t: 625px;
+        --o: 204px;
+        --fs: 180px;
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding-top: var(--t);
+
+        @media #{$xxxl} {
+            --t: 580px;
+            --fs: 160px;
+        }
+
+        @media #{$xxl} {
+            --t: 520px;
+            --fs: 140px;
+        }
+
+        @media #{$xl} {
+            --t: 450px;
+            --fs: 120px;
+        }
+
+        @media #{$lg} {
+            --t: 390px;
+            --o: 160px;
+            --fs: 96px;
+        }
+
+        @media #{$md} {
+            --t: 330px;
+            --o: 160px;
+            --fs: 72px;
+        }
+
+        @media #{$xs} {
+            --t: 250px;
+            --o: 110px;
+            --fs: 40px;
+        }
+
+        @media #{$sm} {
+            --t: 290px;
+            --o: 130px;
+            --fs: 56px;
+        }
+
+        > .container {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    // background: the photo
+    &-bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -2;
+        height: calc(var(--t) + var(--o));
+        pointer-events: none;
+    }
+
+    // title: bold caps, white at the top and lavender towards the panel. The line box is the size of the font, so the top of the capitals
+    // is 0.146em under the top of the box and 0.45em of them (81px at 180px) are left on show above the panel
+    &-title {
+        position: absolute;
+        top: calc(var(--t) - 0.596 * var(--fs));
+        left: 50%;
+        z-index: -1;
+        margin: 0;
+        font-family: var(--ag-font-2);
+        font-weight: 700;
+        font-size: var(--fs);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        background: linear-gradient(180deg, #fff 29%, #BE9CF9 85%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+
+    // panel: the picture is a soft pink > white > lavender wash
+    &-panel {
+        margin: 0 -48px;
+        padding: 48px;
+        border-radius: 12px;
+        background-color: #fff;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        @media #{$xl} {
+            margin: 0 -24px;
+            padding: 24px;
+        }
+
+        @media #{$lg,$md,$sm} {
+            margin: 0 -12px;
+            padding: 24px;
+        }
+
+        @media #{$xs} {
+            margin: 0 -4px;
+            padding: 16px;
+        }
+    }
+
+    // cards
+    &-cards {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+
+        @media #{$lg,$md} {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @media #{$sm,$xs} {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 16px;
+        }
+    }
+
+    // card: a see-through white card with a 3px stroke that is coral in the top left corner and purple in the bottom right corner and
+    // disappears in between, faded to 25%. On hover the number and the icon change places
+    &-card {
+        position: relative;
+        display: flex;
+        min-height: 368px;
+        border-radius: 10px;
+        background-color: rgb(255 255 255 / 24%);
+
+        @media #{$sm,$xs} {
+            min-height: 0;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 3px;
+            border-radius: inherit;
+            background: linear-gradient(to bottom right, #ED5B53 0%, rgb(193 85 156 / 0%) 33.65%, rgb(145 52 210 / 0%) 71.63%, #6D1BFB 100%);
+            opacity: 0.25;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        // the line between the icon and the text takes the space that is left, so the titles of all four cards sit on one line
+        &-in {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            gap: 17px;
+            min-width: 0;
+            padding: 28px;
+
+            @media #{$xl} {
+                padding: 28px 20px;
+            }
+        }
+
+        // the number sits on the icon (16px over it), a glass disc
+        &-icon {
+            position: relative;
+            flex: none;
+            width: 96px;
+            height: 56px;
+        }
+
+        &-num {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: rgb(255 255 255 / 30%);
+            backdrop-filter: blur(20px);
+            transition: var(--ag-cube-1);
+
+            // 1px stroke that runs from coral on the left to purple on the right
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                padding: 1px;
+                border-radius: inherit;
+                background: linear-gradient(90deg, var(--ag-clr-sd-1) 0%, var(--ag-clr-pr-1) 100%);
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                pointer-events: none;
+            }
+
+            .text {
+                font-family: var(--ag-font-2);
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 28px;
+            }
+        }
+
+        &-pic {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--ag-clr-gd-1);
+            font-size: 32px;
+            color: #fff;
+            transition: var(--ag-cube-1);
+
+            i {
+                display: block;
+                line-height: 1;
+            }
+        }
+
+        // the number (still on top of the icon) goes to the right, the icon to the left: 40px is the width of the icon box minus a disc
+        &:hover {
+            .ag-process-1-card-num {
+                transform: translateX(40px);
+            }
+
+            .ag-process-1-card-pic {
+                transform: translateX(-40px);
+            }
+        }
+
+        &-line {
+            flex: 1;
+            width: 1px;
+            min-height: 40px;
+            border-radius: 30px;
+            background-color: var(--ag-clr-h-1);
+            opacity: 0.2;
+
+            @media #{$sm,$xs} {
+                flex: none;
+                height: 56px;
+            }
+        }
+
+        &-content {
+            align-self: stretch;
+            text-align: center;
+        }
+
+        &-title {
+            font-size: 22px;
+            line-height: 28px;
+
+            @media #{$xl} {
+                font-size: 20px;
+            }
+        }
+
+        &-text {
+            margin-top: 12px;
+            line-height: 24px;
+        }
+    }
+}
+/*
+    ag-process-1-end
+*/

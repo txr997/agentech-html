@@ -1,0 +1,203 @@
+
+/*
+************
+*************************
+
+   Template Name: Business Consulting and Services HTML Template
+   Description: A modern, professional HTML template designed specifically for business consulting firms, corporate services, and professional advisory companies. This comprehensive template features multiple homepage variations, extensive service showcases, team member profiles, project portfolios, client testimonials, and interactive elements. Built with Bootstrap, SCSS, and modern JavaScript libraries including GSAP animations, Swiper sliders, and WOW.js effects. Includes responsive design, SEO optimization, contact forms, blog/news sections, pricing tables, FAQ pages, and a complete admin dashboard. Perfect for consulting agencies, business advisors, corporate services, and professional service providers looking to establish a strong online presence with a sophisticated, trustworthy design that builds client confidence and drives business growth.
+   Author: https://themexriver.com/
+   Version: 1.0
+
+-----------------------------------------------------------------------------------
+
+CSS INDEX
+=================== 
+    01. common
+    02. utility
+    03. typography
+    04. mouse-cursor
+    05. button
+    06. offcanvas
+    07. form
+    08. search
+    09. preloader
+    10. animation
+    11. wow-plus
+    12. element
+    13. back-to-top
+    14. typing-text
+    15. header
+    16. hero
+    17. core-features
+    18. about
+    19. projects
+    20. work
+    21. property
+    22. showcase
+    23. award
+    24. brand
+    25. marquee-text
+    26. video
+    27. experience
+    28. choose
+    29. services
+    30. core-services
+    31. testimonial
+    32. contact
+    33. team
+    34. price
+    35. gallery
+    36. counter
+    37. sponsor
+    38. faqs
+    39. blog
+    40. office
+    41. breadcrumb
+    42. service-details
+    43. team-details
+    44. project-details
+    45. career
+    46. career-single
+    47. blog-details
+    48. contact-page
+    49. error-page
+    50. footer
+******************************************************* 
+*************************************************************** */
+
+/*
+    01. common
+*/
+
+@use 'variables' as *;
+
+body {
+    font-family: var(--ag-font-1);
+    font-size: 18px;
+    font-weight: 400;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    line-height: 28px;
+    color: #000;
+    overflow-x: hidden;
+    font-optical-sizing: auto;
+    font-feature-settings: 'liga' off, 'clig' off;
+
+}
+
+
+.img,img {
+    max-width: 100%;
+}
+
+a:focus,
+.button:focus {
+    text-decoration: none;
+    outline: none;
+}
+a , span  {
+    display: inline-block;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
+    text-decoration: none;
+    line-height: inherit;
+    transition: inherit;
+}
+
+
+button {
+    border: none;
+    outline: none;
+}
+
+a:focus,
+a:hover
+{
+    color: inherit;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 55px;
+}
+h2 {
+    font-size: 55px;
+}
+h3 {
+    font-size: 42px;
+}
+h4 {
+    font-size: 27px;
+}
+h5 {
+    font-size: 20px;
+}
+h6 {
+    font-size: 16px;
+}
+
+::-moz-selection {
+    background-color: #3065D0;
+    color: white;
+    text-shadow: none;
+}
+::-moz-selection {
+    background-color: #3065D0;
+    color: white;
+    text-shadow: none;
+}
+::selection {
+    background-color:#3065D0;
+    color: white;
+    text-shadow: none;
+}  
+
+input ,textarea {
+    outline: none;
+    &::placeholder {
+        font-size: inherit;
+        font-weight: inherit;
+        color: inherit;
+        font-family: inherit;
+    }
+
+}
+
+input:focus::placeholder, textarea:focus::placeholder {
+    opacity: 0;
+}
+
+
+
+@media #{$over,$xxxl,$xxl} {
+    ::-webkit-scrollbar {
+        width: 7px;
+        background: #fff;
+        box-shadow: none;
+        border: none;
+    }
+        
+    ::-webkit-scrollbar-track {
+        background: transparent;
+        box-shadow: none;
+        border: none;
+    }
+        
+    ::-webkit-scrollbar-thumb {
+        background: var(--ag-clr-pr-1);
+        border-radius: 6px;
+    }
+
+}
+
+.swiper-notification {
+    display: none;
+}
+
+
+/* 
+    global-css-end
+*/

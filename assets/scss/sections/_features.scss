@@ -1,0 +1,454 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-features-1-start
+*/
+// three columns on the 1920 design: the big picture (32.5%), the head over the dark card (the rest) and the slider that shows the picture of
+// the lit item (23.54%, the top right corner of its first row has the glow and the head of lines). From 1200 up the top row is as tall as
+// the head and the bottom row is 684px tall. 992 - 1199: the big picture is a banner, the card and the slider sit side by side. Below
+// 992 everything is stacked
+.ag-features-1 {
+    &-area {
+        position: relative;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    &-wrap {
+        position: relative;
+        display: grid;
+        grid-template-columns: 32.5% minmax(0, 1fr) 23.54%;
+        grid-template-rows: auto minmax(684px, auto);
+
+        @media #{$xl} {
+            grid-template-columns: 22% minmax(0, 1fr) 25%;
+        }
+
+        @media #{$lg} {
+            grid-template-columns: minmax(0, 1fr) 36%;
+            grid-template-rows: auto auto auto;
+        }
+
+        @media #{$md,$sm,$xs} {
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-rows: auto;
+        }
+    }
+
+    // left: the top left corner is cut, the white stripes sit in the bottom right corner
+    &-left {
+        position: relative;
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        background-color: var(--ag-clr-bg-1);
+
+        @media #{$lg} {
+            grid-column: 1 / -1;
+            grid-row: 1;
+            height: 380px;
+        }
+
+        @media #{$md} {
+            grid-column: 1;
+            grid-row: 1;
+            height: 360px;
+        }
+
+        @media #{$xs} {
+            grid-column: 1;
+            grid-row: 1;
+            height: 240px;
+        }
+
+        @media #{$sm} {
+            height: 300px;
+        }
+    }
+
+    &-big {
+        position: absolute;
+        inset: 0;
+        clip-path: polygon(109px 0, 100% 0, 100% 100%, 0 100%, 0 109px);
+
+        @media #{$lg,$md,$sm,$xs} {
+            clip-path: polygon(72px 0, 100% 0, 100% 100%, 0 100%, 0 72px);
+        }
+    }
+
+    // two white bands (215 x 260) with a slot between them, the picture shows through the slot and the corner; the glow of the card tints them
+    &-stripes {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 215px;
+        height: 260px;
+        background-color: #fff;
+        clip-path: path(evenodd, 'M0 260 L215 260 L215 0 Z M57.24 241.63 L187.29 84.4 A10 10 0 0 1 205 90.78 L205 102.41 A10 10 0 0 1 202.72 108.77 L82.7 254.36 A10 10 0 0 1 74.98 258 L64.95 258 A10 10 0 0 1 57.24 241.63 Z M129 260 L215 260 L215 156 Z');
+
+        @media #{$lg,$md,$sm,$xs} {
+            display: none;
+        }
+    }
+
+    // head
+    &-head {
+        position: relative;
+        z-index: 1;
+        grid-column: 2;
+        grid-row: 1;
+        padding: 132px 48px 37px 72px;
+
+        > .ag-subtitle-1 {
+            display: flex;
+            width: fit-content;
+        }
+
+        @media #{$xxl} {
+            padding: 100px 40px 37px 56px;
+        }
+
+        @media #{$xl} {
+            padding: 100px 32px 32px 48px;
+        }
+
+        @media #{$lg} {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            padding: 72px 40px 40px;
+        }
+
+        @media #{$md} {
+            grid-column: 1;
+            grid-row: 2;
+            padding: 64px 40px 40px;
+        }
+
+        @media #{$xs} {
+            grid-column: 1;
+            grid-row: 2;
+            padding: 48px 24px 32px;
+        }
+
+        @media #{$sm} {
+            padding: 56px 24px 36px;
+        }
+    }
+
+    &-title {
+        max-width: 684px;
+        margin-top: 16px;
+    }
+
+    // deco: the glow sits behind the head of lines (the circle is 324px, blurred 127px), the head (237 x 287) carries its own opacity
+    &-deco {
+        position: relative;
+        grid-column: 3;
+        grid-row: 1;
+        pointer-events: none;
+
+        @media #{$lg,$md,$sm,$xs} {
+            display: none;
+        }
+
+        &-glow {
+            position: absolute;
+            top: 10px;
+            right: 31px;
+            width: 324px;
+            height: 324px;
+            border-radius: 50%;
+            background-color: var(--ag-clr-pr-1);
+            opacity: 0.18;
+            filter: blur(67px);
+        }
+
+        &-head {
+            position: absolute;
+            top: 58px;
+            right: 108px;
+            width: 237px;
+            height: 287px;
+        }
+    }
+
+    // card: --px-l / --px-r are the sides, the bar at the bottom runs out over them
+    &-card {
+        --px-l: 72px;
+        --px-r: 77px;
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        grid-column: 2;
+        grid-row: 2;
+        padding: 60px var(--px-r) 0 var(--px-l);
+        background-color: var(--ag-clr-h-1);
+
+        @media #{$xxl} {
+            --px-l: 56px;
+            --px-r: 48px;
+        }
+
+        @media #{$xl} {
+            --px-l: 48px;
+            --px-r: 40px;
+        }
+
+        @media #{$lg} {
+            --px-l: 40px;
+            --px-r: 40px;
+            grid-column: 1;
+            grid-row: 3;
+            padding-top: 56px;
+        }
+
+        @media #{$md} {
+            --px-l: 40px;
+            --px-r: 40px;
+            grid-column: 1;
+            grid-row: 3;
+            padding-top: 56px;
+        }
+
+        @media #{$xs} {
+            --px-l: 24px;
+            --px-r: 24px;
+            grid-column: 1;
+            grid-row: 3;
+            padding-top: 44px;
+        }
+
+        @media #{$sm} {
+            --px-l: 24px;
+            --px-r: 24px;
+            padding-top: 48px;
+        }
+
+        // the purple glow runs out to the left over the big picture
+        &-glow {
+            position: absolute;
+            top: 204px;
+            left: -115px;
+            width: 394px;
+            height: 393px;
+            border-radius: 50%;
+            background-color: var(--ag-clr-pr-1);
+            opacity: 0.52;
+            filter: blur(157px);
+            pointer-events: none;
+
+            @media #{$lg,$md,$sm,$xs} {
+                top: auto;
+                bottom: -60px;
+                left: -60px;
+            }
+        }
+
+        // only at 1800 and up there is room for it next to the list
+        &-arrow {
+            position: absolute;
+            top: 212px;
+            left: 52px;
+            display: none;
+            width: 227px;
+            height: 227px;
+
+            @media #{$over} {
+                display: block;
+            }
+        }
+
+        &-text {
+            position: relative;
+            max-width: 527px;
+            opacity: 0.8;
+        }
+    }
+
+    // list: the dashed line under every item is 2px (4px dash, 4px gap), the lit item has it in coral
+    &-list {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        width: 100%;
+        max-width: 440px;
+        margin: 71px 0 88px auto;
+
+        @media #{$lg,$md} {
+            margin: 48px 0 56px;
+        }
+
+        @media #{$sm,$xs} {
+            margin: 40px 0 44px;
+        }
+    }
+
+    &-item {
+        position: relative;
+        height: 56px;
+        padding-top: 6px;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+        }
+
+        &::after {
+            background: repeating-linear-gradient(90deg, rgb(255 255 255 / 32%) -2px, rgb(255 255 255 / 32%) 2px, transparent 2px, transparent 6px);
+        }
+
+        &::before {
+            z-index: 1;
+            background: repeating-linear-gradient(90deg, rgb(236 115 108 / 64%) -2px, rgb(236 115 108 / 64%) 2px, transparent 2px, transparent 6px);
+            opacity: 0;
+            transition: var(--ag-cube-1);
+        }
+
+        > a {
+            display: flex;
+            align-items: center;
+            height: 44px;
+            color: #fff;
+        }
+
+        .num {
+            flex: none;
+            width: 49px;
+            font-family: var(--ag-font-2);
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: -0.02em;
+            color: var(--ag-clr-pr-1);
+        }
+
+        .name {
+            flex: 1;
+            font-family: var(--ag-font-2);
+            font-size: 20px;
+            line-height: 24px;
+            letter-spacing: -0.02em;
+            opacity: 0.68;
+            transition: var(--ag-cube-1);
+        }
+
+        .icon {
+            display: flex;
+            flex: none;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 6px;
+            background-color: rgb(255 255 255 / 8%);
+            font-size: 20px;
+            color: var(--ag-clr-sd-1);
+            transition: var(--ag-cube-1);
+
+            i {
+                display: block;
+                line-height: 1;
+            }
+        }
+
+        &:is(.is-active) {
+            &::before {
+                opacity: 1;
+            }
+
+            .name {
+                opacity: 1;
+            }
+
+            .icon {
+                background-color: var(--ag-clr-pr-1);
+                color: #fff;
+            }
+        }
+    }
+
+    // bar: the gradient turns around on hover
+    &-bar {
+        position: relative;
+        z-index: 0;
+        display: flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        height: 64px;
+        margin: auto calc(var(--px-r) * -1) 0 calc(var(--px-l) * -1);
+        background: var(--ag-clr-gd-1);
+        font-family: var(--ag-font-2);
+        font-weight: 500;
+        font-size: 17px;
+        line-height: 24px;
+        letter-spacing: -0.02em;
+        color: #fff;
+        isolation: isolate;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: var(--ag-clr-gd-3);
+            opacity: 0;
+            transition: var(--ag-cube-1);
+        }
+
+        &:hover::before {
+            opacity: 1;
+        }
+    }
+
+    // slider: the top right corner is cut
+    &-slider {
+        grid-column: 3;
+        grid-row: 2;
+        width: 100%;
+        min-width: 0;
+        clip-path: polygon(0 0, calc(100% - 68px) 0, 100% 68px, 100% 100%, 0 100%);
+
+        @media #{$lg} {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        @media #{$md} {
+            grid-column: 1;
+            grid-row: 4;
+            height: 480px;
+        }
+
+        @media #{$xs} {
+            grid-column: 1;
+            grid-row: 4;
+            height: 340px;
+        }
+
+        @media #{$sm} {
+            height: 400px;
+        }
+
+        @media #{$md,$sm,$xs} {
+            clip-path: polygon(0 0, calc(100% - 48px) 0, 100% 48px, 100% 100%, 0 100%);
+        }
+
+        .swiper-slide {
+            height: auto;
+        }
+    }
+
+    &-slide {
+        height: 100%;
+    }
+}
+/*
+    ag-features-1-end
+*/

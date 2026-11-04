@@ -1,0 +1,365 @@
+@use '../abstracts/variables' as *;
+
+/*
+    typography-start
+*/
+
+.ag-p-1 {
+    font-family: var(--ag-font-1);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--ag-clr-p-1);
+    margin-bottom: 0;
+
+    &:is(.has-white) {
+        color: #fff;
+    }
+}
+
+
+// the quote of the testimonials
+.ag-p-2 {
+    font-family: var(--ag-font-1);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--ag-clr-h-1);
+    margin-bottom: 0;
+
+    @media #{$xs} {
+        font-size: 18px;
+        line-height: 28px;
+    }
+}
+
+
+.ag-p-3 {
+    font-family: var(--ag-font-1);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: var(--ag-clr-p-1);
+    margin-bottom: 0;
+
+    &:is(.has-white) {
+        color: #fff;
+    }
+}
+
+
+// base of every Space Grotesk heading, the sizes come from the title classes below or from the section
+.ag-h-1 {
+    font-family: var(--ag-font-2);
+    font-weight: 500;
+    color: var(--ag-clr-h-1);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0;
+
+    &:is(.has-white) {
+        color: #fff;
+    }
+}
+
+
+.ag-subtitle-1 {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border-radius: 3px;
+    background: var(--ag-clr-gd-2);
+
+    &-text {
+        font-family: var(--ag-font-1);
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--ag-clr-pr-1);
+        margin-bottom: 0;
+    }
+}
+
+
+.ag-sec-title-1 {
+    font-family: var(--ag-font-2);
+    font-weight: 500;
+    font-size: 52px;
+    line-height: 56px;
+    letter-spacing: -0.02em;
+    color: var(--ag-clr-h-1);
+    margin-bottom: 0;
+
+    &:is(.has-white) {
+        color: #fff;
+    }
+
+    @media #{$xxl} {
+        font-size: 50px;
+        line-height: 54px;
+    }
+
+    @media #{$xl} {
+        font-size: 46px;
+        line-height: 50px;
+    }
+
+    @media #{$lg} {
+        font-size: 42px;
+        line-height: 46px;
+    }
+
+    @media #{$md} {
+        font-size: 38px;
+        line-height: 42px;
+    }
+
+    @media #{$xs} {
+        font-size: 28px;
+        line-height: 32px;
+    }
+
+    @media #{$sm} {
+        font-size: 32px;
+        line-height: 36px;
+    }
+}
+
+
+// the hero title
+.ag-hero-title-1 {
+    font-family: var(--ag-font-2);
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 68px;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 0;
+
+    @media #{$xxl} {
+        font-size: 60px;
+        line-height: 64px;
+    }
+
+    @media #{$xl} {
+        font-size: 56px;
+        line-height: 60px;
+    }
+
+    @media #{$lg} {
+        font-size: 48px;
+        line-height: 52px;
+    }
+
+    @media #{$md} {
+        font-size: 42px;
+        line-height: 46px;
+    }
+
+    @media #{$xs} {
+        font-size: 32px;
+        line-height: 36px;
+    }
+
+    @media #{$sm} {
+        font-size: 38px;
+        line-height: 42px;
+    }
+}
+
+
+// the cta title, the marquee text
+.ag-title-1 {
+    font-family: var(--ag-font-2);
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 44px;
+    letter-spacing: -0.02em;
+    color: var(--ag-clr-h-1);
+    margin-bottom: 0;
+
+    &:is(.has-white) {
+        color: #fff;
+    }
+
+    @media #{$xl} {
+        font-size: 38px;
+        line-height: 42px;
+    }
+
+    @media #{$lg} {
+        font-size: 34px;
+        line-height: 38px;
+    }
+
+    @media #{$md} {
+        font-size: 32px;
+        line-height: 36px;
+    }
+
+    @media #{$xs} {
+        font-size: 26px;
+        line-height: 30px;
+    }
+
+    @media #{$sm} {
+        font-size: 30px;
+        line-height: 34px;
+    }
+}
+
+
+// the title of the project cards
+.ag-title-2 {
+    font-family: var(--ag-font-2);
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 44px;
+    letter-spacing: -0.02em;
+    color: var(--ag-clr-h-1);
+    margin-bottom: 0;
+
+    &:is(.has-white) {
+        color: #fff;
+    }
+
+    @media #{$xl} {
+        font-size: 34px;
+        line-height: 42px;
+    }
+
+    @media #{$lg} {
+        font-size: 32px;
+        line-height: 38px;
+    }
+
+    @media #{$md} {
+        font-size: 30px;
+        line-height: 36px;
+    }
+
+    @media #{$xs} {
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+    @media #{$sm} {
+        font-size: 28px;
+        line-height: 34px;
+    }
+}
+
+
+// the feature titles of the why choose us section
+.ag-title-3 {
+    font-family: var(--ag-font-2);
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: -0.02em;
+    color: var(--ag-clr-h-1);
+    margin-bottom: 0;
+
+    &:is(.has-white) {
+        color: #fff;
+    }
+
+    @media #{$xs} {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    @media #{$lg,$md,$sm} {
+        font-size: 24px;
+        line-height: 28px;
+    }
+}
+
+
+// the titles of the service and the blog cards
+.ag-title-4 {
+    font-family: var(--ag-font-2);
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 32px;
+    letter-spacing: -0.02em;
+    color: var(--ag-clr-h-1);
+    margin-bottom: 0;
+
+    &:is(.has-white) {
+        color: #fff;
+    }
+
+    @media #{$xs} {
+        font-size: 22px;
+        line-height: 28px;
+    }
+
+    @media #{$lg,$md,$sm} {
+        font-size: 24px;
+        line-height: 30px;
+    }
+}
+
+
+// the names of the testimonials
+.ag-title-5 {
+    font-family: var(--ag-font-2);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 28px;
+    letter-spacing: -0.02em;
+    color: var(--ag-clr-h-1);
+    margin-bottom: 0;
+
+    &:is(.has-white) {
+        color: #fff;
+    }
+
+    @media #{$xs} {
+        font-size: 20px;
+        line-height: 26px;
+    }
+}
+
+
+// the big purple numbers (40%, 98%)
+.ag-num-1 {
+    font-family: var(--ag-font-2);
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: -0.02em;
+    color: var(--ag-clr-pr-1);
+    margin-bottom: 0;
+
+    @media #{$xl} {
+        font-size: 44px;
+        line-height: 52px;
+    }
+
+    @media #{$lg} {
+        font-size: 40px;
+        line-height: 48px;
+    }
+
+    @media #{$md} {
+        font-size: 38px;
+        line-height: 44px;
+    }
+
+    @media #{$xs} {
+        font-size: 32px;
+        line-height: 38px;
+    }
+
+    @media #{$sm} {
+        font-size: 36px;
+        line-height: 42px;
+    }
+}
+/*
+    typography-end
+*/

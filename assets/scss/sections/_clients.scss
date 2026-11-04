@@ -1,0 +1,203 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-clients-1-start
+*/
+// a 174px strip: the title on the left, a light card that runs out to the right edge of the screen with the logos (.wa_marquee) running
+// through it. Below 992 the title sits over the card
+.ag-clients-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        height: 174px;
+        background-color: #e4d7fb;
+
+        @media #{$md,$sm,$xs} {
+            height: auto;
+            padding-top: 44px;
+        }
+    }
+
+    // background: the glow sits in the bottom left corner, the light corner is the end of the section before
+    &-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+
+        &-glow {
+            position: absolute;
+            bottom: -53px;
+            left: -100px;
+            width: 201px;
+            height: 141px;
+            border-radius: 50%;
+            background: var(--ag-clr-gd-1);
+            filter: blur(67px);
+            transform: rotate(31deg);
+        }
+
+        &-cut {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 60px;
+            background-color: #f1f1f1;
+            clip-path: polygon(0 0, 100% 100%, 0 100%);
+        }
+    }
+
+    &-wrap {
+        display: flex;
+        align-items: stretch;
+        height: 174px;
+
+        @media #{$md,$sm,$xs} {
+            flex-direction: column;
+            height: auto;
+        }
+    }
+
+    &-title {
+        flex: none;
+        align-self: center;
+        width: 311px;
+        margin-right: 60px;
+        font-size: 30px;
+        line-height: 34px;
+        letter-spacing: 0;
+
+        @media #{$xl} {
+            width: 280px;
+            margin-right: 48px;
+            font-size: 28px;
+            line-height: 32px;
+        }
+
+        @media #{$lg} {
+            width: 250px;
+            margin-right: 40px;
+            font-size: 26px;
+            line-height: 30px;
+        }
+
+        @media #{$md,$sm,$xs} {
+            align-self: flex-start;
+            width: auto;
+            max-width: 420px;
+            margin: 0 0 28px;
+            font-size: 26px;
+            line-height: 30px;
+        }
+
+        @media #{$xs} {
+            font-size: 22px;
+            line-height: 26px;
+        }
+    }
+
+    // card: the left edge is on the grid, the right margin pulls the card to the right edge of the screen, the bottom left corner is cut
+    &-card {
+        position: relative;
+        flex: 1 1 0;
+        min-width: 0;
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        background-color: #ede7f9;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 60px 100%, 0 calc(100% - 60px));
+
+        @media #{$md,$sm,$xs} {
+            flex: none;
+            height: 174px;
+        }
+
+        &-shape-1 {
+            position: absolute;
+            bottom: 0;
+            left: 32px;
+            width: 1068px;
+            height: 50px;
+        }
+
+        &-shape-2 {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 559px;
+            height: 106px;
+        }
+    }
+
+    // marquee: the logos start 60px in and fade out at the left edge (the plugin floats its copies, so the height is set here)
+    &-marquee {
+        position: relative;
+        height: 40px;
+        margin: 74px 0 0 60px;
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 100%);
+        mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 100%);
+
+        @media #{$xs} {
+            margin-left: 24px;
+        }
+    }
+
+    // the gap between the logos is a margin, so the copy the marquee makes joins on with the same gap
+    &-logos {
+        display: flex;
+        align-items: center;
+        width: max-content;
+    }
+
+    // the logos are flat grey (the pictures are coloured), the one under the pointer shows its colours
+    &-logo {
+        flex: none;
+        height: 40px;
+        margin-right: 120px;
+        opacity: 0.54;
+        filter: brightness(0);
+        transition: var(--ag-cube-1);
+
+        &:hover {
+            opacity: 1;
+            filter: none;
+        }
+
+        @media #{$xs} {
+            margin-right: 80px;
+        }
+
+        &:nth-child(1) {
+            width: 174px;
+        }
+
+        &:nth-child(2) {
+            width: 152px;
+        }
+
+        &:nth-child(3) {
+            width: 132px;
+        }
+
+        &:nth-child(4) {
+            width: 119px;
+        }
+
+        &:nth-child(5) {
+            width: 170px;
+        }
+
+        &:nth-child(6) {
+            width: 127px;
+        }
+
+        &:nth-child(7) {
+            width: 130px;
+        }
+    }
+}
+/*
+    ag-clients-1-end
+*/

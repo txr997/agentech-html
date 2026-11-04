@@ -1,0 +1,85 @@
+/*
+    elements-start
+*/
+
+.wa_clip_animation {
+    width: 100%;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+    position: relative;
+
+    > * {
+        grid-area: 1/1/2/2;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+    }
+
+    .wa_clip_animation_img {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+
+/* the two passes SplitText makes for the line reveal: the mask clips,
+   the inner line is what actually moves */
+.wa-split-mask {
+    display: block;
+    overflow: hidden;
+
+    /* room for descenders, taken straight back out of the layout */
+    padding-bottom: 0.15em;
+    margin-bottom: -0.15em;
+}
+
+.wa-split-line {
+    display: block;
+    will-change: transform;
+}
+
+.ag-bg-light-1 {
+    background-color: var(--ag-clr-bg-1);
+}
+
+.ag-bg-light-2 {
+    background-color: var(--ag-clr-bg-2);
+}
+
+.ag-bg-dark-1 {
+    background-color: var(--ag-clr-h-1);
+}
+
+// the purple > coral gradient on the text itself (active nav link, coloured words)
+.ag-gd-text-1 {
+    background: var(--ag-clr-gd-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+// outline tag of the project cards ("AI Customer", "E-commerce", ...)
+.ag-tag-1 {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 11px;
+    border: 1px solid var(--ag-clr-pr-1);
+    border-radius: 5px;
+    background: #fff;
+    font-family: var(--ag-font-2);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: rgb(109 27 251 / 68%);
+}
+
+
+/*
+    elements-end
+*/

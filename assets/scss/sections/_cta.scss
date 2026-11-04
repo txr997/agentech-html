@@ -1,0 +1,231 @@
+@use '../abstracts/variables' as *;
+
+
+// the outline of the box: the top left and the bottom right corner are cut at 45deg ($c is the length of the cut along an edge, 120 on the full
+// design), the two ends of every cut are soft over the last 8px. The other two corners are the 20px radius of the box
+@mixin ag-cta-1-cut($c) {
+    clip-path: polygon(
+        #{$c}px 0,
+        100% 0,
+        100% calc(100% - #{$c}px),
+        calc(100% - 1px) calc(100% - #{$c - 3}px),
+        calc(100% - 2px) calc(100% - #{$c - 5}px),
+        calc(100% - 4px) calc(100% - #{$c - 8}px),
+        calc(100% - #{$c - 8}px) calc(100% - 4px),
+        calc(100% - #{$c - 5}px) calc(100% - 2px),
+        calc(100% - #{$c - 3}px) calc(100% - 1px),
+        calc(100% - #{$c}px) 100%,
+        0 100%,
+        0 #{$c}px,
+        1px #{$c - 3}px,
+        2px #{$c - 5}px,
+        4px #{$c - 8}px,
+        #{$c - 8}px 4px,
+        #{$c - 5}px 2px,
+        #{$c - 3}px 1px
+    );
+}
+
+
+/*
+    ag-cta-1-start
+*/
+// one box (1560 x 448 on 1920, 24px from the edges of the screen when it is narrower) with the text on the left and the robot on the right. Three
+// pictures sit in it: the dark purple wave over all of the box, the neon lines (948 x 595) that hang from its bottom right corner and rise out of it
+// at the top, and the robot (397 x 492) that is 28px over the top. The box cuts them all. Below 768 the text goes first and the robot stands under it
+.ag-cta-1 {
+    &-area {
+        position: relative;
+        z-index: 2;
+    }
+
+    &-box {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: calc(100% - 48px);
+        max-width: 1560px;
+        min-height: 448px;
+        margin: 0 auto;
+        padding: 40px 0 40px 130px;
+        overflow: hidden;
+        border-radius: 20px;
+        background-color: var(--ag-clr-h-1);
+        @include ag-cta-1-cut(120);
+
+        @media #{$xxl} {
+            min-height: 420px;
+            padding-left: 100px;
+            @include ag-cta-1-cut(110);
+        }
+
+        @media #{$xl} {
+            min-height: 380px;
+            padding-left: 80px;
+            @include ag-cta-1-cut(100);
+        }
+
+        @media #{$lg} {
+            min-height: 340px;
+            padding-left: 56px;
+            @include ag-cta-1-cut(84);
+        }
+
+        @media #{$md} {
+            min-height: 330px;
+            padding-left: 44px;
+            @include ag-cta-1-cut(64);
+        }
+
+        @media #{$xs} {
+            flex-direction: column;
+            align-items: flex-start;
+            width: calc(100% - 24px);
+            min-height: 0;
+            padding: 56px 24px 0;
+            @include ag-cta-1-cut(48);
+        }
+
+        @media #{$sm} {
+            padding: 64px 40px 0;
+        }
+    }
+
+    // the wave
+    &-bg {
+        position: absolute;
+        inset: 0;
+    }
+
+    // the neon lines: they carry their own fade on the left
+    &-lines {
+        position: absolute;
+        right: -2px;
+        bottom: -1px;
+        width: 948px;
+        height: 595px;
+
+        @media #{$xxl} {
+            width: 853px;
+            height: 536px;
+        }
+
+        @media #{$xl} {
+            width: 758px;
+            height: 476px;
+        }
+
+        @media #{$lg} {
+            width: 645px;
+            height: 405px;
+        }
+
+        @media #{$md} {
+            width: 531px;
+            height: 333px;
+        }
+
+        @media #{$xs} {
+            width: 474px;
+            height: 298px;
+        }
+
+        @media #{$sm} {
+            width: 568px;
+            height: 357px;
+        }
+    }
+
+    &-robot {
+        position: absolute;
+        top: -28px;
+        right: 246px;
+        width: 397px;
+        height: 492px;
+
+        @media #{$xxl} {
+            top: -25px;
+            right: 170px;
+            width: 357px;
+            height: 443px;
+        }
+
+        @media #{$xl} {
+            top: -22px;
+            right: 110px;
+            width: 318px;
+            height: 394px;
+        }
+
+        @media #{$lg} {
+            top: -18px;
+            right: 60px;
+            width: 270px;
+            height: 335px;
+        }
+
+        @media #{$md} {
+            top: -10px;
+            right: 36px;
+            width: 222px;
+            height: 275px;
+        }
+
+        @media #{$xs} {
+            position: relative;
+            top: auto;
+            right: auto;
+            align-self: center;
+            order: 2;
+            width: 260px;
+            height: 322px;
+            margin-top: 28px;
+        }
+
+        @media #{$sm} {
+            width: 300px;
+            height: 372px;
+        }
+    }
+
+    // content
+    &-content {
+        position: relative;
+        z-index: 2;
+        width: 613px;
+        max-width: 100%;
+
+        @media #{$xxl} {
+            width: 560px;
+        }
+
+        @media #{$xl} {
+            width: 500px;
+        }
+
+        @media #{$lg} {
+            width: 440px;
+        }
+
+        @media #{$md} {
+            width: 380px;
+        }
+    }
+
+    &-text {
+        margin-top: 20px;
+        opacity: 0.8;
+
+        @media #{$lg,$md} {
+            font-size: 16px;
+            line-height: 26px;
+        }
+    }
+
+    &-btn {
+        margin-top: 32px;
+    }
+}
+/*
+    ag-cta-1-end
+*/

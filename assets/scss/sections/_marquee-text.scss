@@ -1,0 +1,110 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-marquee-text-1-start
+*/
+// two bands of running text that cross each other: the dark one with the picture tilts 2deg down to the right, the purple one 2deg up to the
+// right. Both hang from the middle of the screen (the first starts 1300px to the left of it, the second 1852px) and are wider than any screen,
+// the text (.wa_marquee, main-common.js) runs through them. --h is the height of a band, --fs / --lh the size of the text. The strip is pulled
+// 64px up over the end of the section before
+.ag-marquee-text-1 {
+    &-area {
+        --h: 124px;
+        --fs: 40px;
+        --lh: 28px;
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+        height: calc(var(--h) * 2 + 34px);
+        margin-top: -64px;
+
+        @media #{$xl,$lg} {
+            --h: 110px;
+            --fs: 36px;
+            --lh: 26px;
+        }
+
+        @media #{$lg,$md} {
+            margin-top: -40px;
+        }
+
+        @media #{$md} {
+            --h: 96px;
+            --fs: 30px;
+            --lh: 24px;
+        }
+
+        @media #{$xs} {
+            --h: 76px;
+            --fs: 24px;
+            --lh: 20px;
+            margin-top: -24px;
+        }
+
+        @media #{$sm} {
+            --h: 88px;
+            --fs: 28px;
+            --lh: 22px;
+        }
+    }
+
+    // band: it turns on its top left corner
+    &-band {
+        position: absolute;
+        height: var(--h);
+        transform-origin: 0 0;
+
+        &.is-1 {
+            top: 0;
+            left: calc(50% - 1300px);
+            width: 3230px;
+            background-color: var(--ag-clr-h-1);
+            letter-spacing: -0.01em;
+            transform: rotate(2deg);
+        }
+
+        &.is-2 {
+            top: calc(var(--h) + 34px);
+            left: calc(50% - 1852px);
+            width: 3295px;
+            background: linear-gradient(180deg, #771A99 0%, #89309E 40%, #BD6FFD 100%);
+            transform: rotate(-2deg);
+        }
+
+        &-bg {
+            position: absolute;
+            inset: 0;
+        }
+    }
+
+    // marquee: the band is as high as the text and 48px above and below it (the plugin floats its copies, so the height is set here)
+    &-marquee {
+        position: relative;
+        height: var(--lh);
+        margin: calc((var(--h) - var(--lh)) / 2) 0;
+    }
+
+    // the gap between the items is a margin, so the copy the marquee makes joins on with the same gap
+    &-items {
+        display: flex;
+        align-items: center;
+        width: max-content;
+    }
+
+    &-item,
+    &-sep {
+        flex: none;
+        margin-right: 8px;
+        font-family: var(--ag-font-2);
+        font-weight: 500;
+        font-size: var(--fs);
+        line-height: var(--lh);
+        text-transform: capitalize;
+        white-space: nowrap;
+        color: #fff;
+    }
+}
+/*
+    ag-marquee-text-1-end
+*/

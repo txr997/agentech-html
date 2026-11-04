@@ -1,0 +1,269 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-header-1-start
+*/
+.ag-header-1 {
+    // laid over the hero, the 48px row sits 22px from the top (1920 design)
+    &-area {
+        position: absolute;
+        top: 22px;
+        left: 0;
+        width: 100%;
+        z-index: 3;
+
+        @media #{$md} {
+            top: 16px;
+        }
+
+        @media #{$sm,$xs} {
+            top: 12px;
+        }
+    }
+
+    &-wrap {
+        display: flex;
+        align-items: center;
+        height: 48px;
+    }
+
+    &-logo-box {
+        flex: none;
+    }
+
+    &-logo-elm {
+        display: block;
+    }
+
+    &-logo-img {
+        width: 159px;
+        height: 48px;
+
+        @media #{$xs} {
+            width: 132px;
+            height: 40px;
+        }
+    }
+
+    // 197px from the logo in the design, it gives way as the container gets narrower
+    &-menu {
+        position: relative;
+        margin-left: 197px;
+
+        @media #{$xxl} {
+            margin-left: 100px;
+        }
+
+        @media #{$xl} {
+            margin-left: 48px;
+        }
+
+        // the light tab of the hero behind the links (839 x 60 in the design: 75px before the first link, 107px after the last one),
+        // slanted sides and rounded lower corners
+        &::before {
+            content: "";
+            position: absolute;
+            top: -18px;
+            right: -116px;
+            left: -84px;
+            z-index: -1;
+            height: 60px;
+            background: var(--ag-clr-bg-1);
+            // 9px wider on each side: the two top corners where the panel meets the tab are rounded (20px arc), the first and the last points follow it
+            clip-path: polygon(0.4px 0, calc(100% - 0.4px) 0, calc(100% - 5.2px) 0.6px, calc(100% - 9.8px) 2.3px, calc(100% - 13.2px) 4.7px, calc(100% - 14.9px) 6.3px, calc(100% - 60px) 54.2px, calc(100% - 66.1px) 58.55px, calc(100% - 73.5px) 60px, 73.5px 60px, 66.1px 58.55px, 60px 54.2px, 14.9px 6.3px, 13.2px 4.7px, 9.8px 2.3px, 5.2px 0.6px);
+
+            @media #{$xl} {
+                right: -79px;
+                left: -49px;
+            }
+        }
+    }
+
+    &-action-link {
+        display: flex;
+        align-items: center;
+        gap: 29px;
+        margin-left: auto;
+
+        @media #{$lg,$md,$sm,$xs} {
+            gap: 20px;
+        }
+
+        @media #{$xs} {
+            gap: 16px;
+        }
+
+        // icon only on the narrow screens
+        .ag-search-btn-1 .text {
+            @media #{$xs} {
+                display: none;
+            }
+        }
+
+        .ag-header-1-button {
+            @media (max-width: 575px) {
+                display: none;
+            }
+        }
+
+        .ag-offcanvas-btn-1 {
+            @media #{$over,$xxxl,$xxl,$xl} {
+                display: none;
+            }
+        }
+    }
+}
+
+.ag-main-navigation {
+    .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 52px;
+
+        @media #{$xxl} {
+            gap: 36px;
+        }
+
+        @media #{$xl} {
+            gap: 28px;
+        }
+
+        > li {
+            position: relative;
+
+            // the links sit 4px above the middle of the row, centred in the notch of the hero
+            > a {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                padding-bottom: 8px;
+                font-family: var(--ag-font-1);
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 26px;
+                color: var(--ag-clr-h-1);
+                transition: var(--ag-cube-1);
+            }
+
+            // hover + current page, the purple > coral runs through the text and the arrow
+            &:hover > a .text,
+            &.active > a .text {
+                background: var(--ag-clr-gd-1);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            &:hover > a .menu-arrow,
+            &.active > a .menu-arrow {
+                background: var(--ag-clr-gd-1);
+            }
+
+            &:hover > .dropdown-menu,
+            &:focus-within > .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        // the small triangle after Home, Pages and Blog
+        .menu-arrow {
+            width: 8px;
+            height: 4px;
+            background: currentColor;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 14px);
+            left: 50%;
+            z-index: 100;
+            display: block;
+            min-width: 220px;
+            margin: 0;
+            padding: 12px;
+            list-style: none;
+            border: 1px solid var(--ag-clr-bd-1);
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 20px 40px rgb(7 0 14 / 12%);
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, 12px);
+            transition: var(--ag-cube-1);
+
+            // keeps the hover alive over the gap between the link and the card
+            &::before {
+                content: "";
+                position: absolute;
+                top: -15px;
+                right: 0;
+                left: 0;
+                height: 15px;
+            }
+
+            li a {
+                display: block;
+                padding: 9px 14px;
+                border-radius: 10px;
+                font-family: var(--ag-font-1);
+                font-size: 16px;
+                line-height: 24px;
+                white-space: nowrap;
+                color: var(--ag-clr-h-1);
+                transition: var(--ag-cube-1);
+
+                &:hover {
+                    background: var(--ag-clr-bg-1);
+                    color: var(--ag-clr-pr-1);
+                }
+            }
+        }
+    }
+}
+/*
+    ag-header-1-end
+*/
+
+/*
+    sticky-header-css-start
+*/
+
+
+.wa_sticky_header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    transition: 400ms ease-in-out;
+    z-index: 8;
+
+
+    &:is(.wa_sticky) {
+        transform: translateY(-190%);
+
+        &:is(.wa_sticky_show) {
+            transform: translateY(0%);
+        }
+    }
+
+    &:is(.ag-header-1-area) {
+        top: 12px;
+
+        &:is(.wa_sticky_show) {
+            animation: none;
+        }
+    }
+
+
+}
+
+
+/*
+    sticky-header-css-end
+*/

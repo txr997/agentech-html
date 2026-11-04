@@ -1,0 +1,255 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-team-1-start
+*/
+// four cards drawn on a 332 x 462 stage (the photo has a notch for the name at the bottom left and a corner cut for the social links at the
+// right), --s scales the stage and the box it takes. The lit card (.is-active, set in main.js) turns grey and shows its social links
+.ag-team-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: 132px 0;
+
+        @media #{$xl} {
+            padding: 110px 0;
+        }
+
+        @media #{$lg} {
+            padding: 100px 0;
+        }
+
+        @media #{$md} {
+            padding: 90px 0;
+        }
+
+        @media #{$xs} {
+            padding: 64px 0;
+        }
+
+        @media #{$sm} {
+            padding: 80px 0;
+        }
+
+        // pinned while the cards slide in (agTeam1Scroll in main.js): the section fills the screen, the content stays in the middle
+        &:is(.has-pin) {
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+
+            > .container {
+                width: 100%;
+            }
+        }
+    }
+
+    // background: the picture carries its own opacity
+    &-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    // top
+    &-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px 40px;
+
+        @media #{$md,$sm,$xs} {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    &-sec-title {
+        max-width: 809px;
+
+        > .ag-subtitle-1 {
+            display: flex;
+            width: fit-content;
+        }
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    // the box of the cards: it cuts them off, so they come in from its right edge (the width of the container)
+    &-overflow {
+        margin-top: 48px;
+        overflow: hidden;
+    }
+
+    // cards: four across from 1200, two across to 768, one below
+    &-cards {
+        --s: 1;
+        display: grid;
+        grid-template-columns: repeat(4, calc(332px * var(--s)));
+        justify-content: space-between;
+        gap: 24px;
+
+        @media #{$xxl} {
+            --s: 0.92;
+        }
+
+        @media #{$xl} {
+            --s: 0.8;
+        }
+
+        @media #{$lg,$md} {
+            grid-template-columns: repeat(2, calc(332px * var(--s)));
+            justify-content: center;
+            gap: 32px 24px;
+        }
+
+        @media #{$lg} {
+            --s: 1.2;
+        }
+
+        @media #{$md} {
+            --s: 1;
+        }
+
+        @media #{$sm,$xs} {
+            grid-template-columns: calc(332px * var(--s));
+            justify-content: center;
+            gap: 32px;
+        }
+
+        @media #{$xs} {
+            --s: 0.88;
+        }
+
+        @media #{$sm} {
+            --s: 1;
+        }
+    }
+
+    &-card {
+        position: relative;
+        width: calc(332px * var(--s));
+        height: calc(462px * var(--s));
+
+        &-in {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 332px;
+            height: 462px;
+            transform: scale(var(--s));
+            transform-origin: 0 0;
+        }
+
+        // the photo: 10px corners, the bottom left corner is carved out for the name
+        &-img {
+            position: absolute;
+            inset: 0;
+            clip-path: path('M10 0 L322 0 A10 10 0 0 1 332 10 L332 452 A10 10 0 0 1 322 462 L226.82 462 A10 10 0 0 1 219 458.23 L174 401.77 A10 10 0 0 0 166.18 398 L10 398 A10 10 0 0 1 0 388 L0 10 A10 10 0 0 1 10 0 Z');
+            transition: var(--ag-cube-1);
+        }
+
+        // the social links sit in a panel in the colour of the section that cuts into the right edge of the photo
+        &-social {
+            position: absolute;
+            top: 12px;
+            right: -1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 297px;
+            background-color: var(--ag-clr-bg-1);
+            clip-path: path('M0 49.1451C0 39.0653 5.062 29.6592 13.4747 24.1068L50 0V296.5L13.6504 272.873C5.13657 267.339 0 257.874 0 247.72V49.1451Z');
+            opacity: 0;
+            transform: translateX(16px);
+            transition: var(--ag-cube-1);
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .line {
+                width: 1px;
+                height: 16px;
+                background-color: rgb(1 23 79 / 16%);
+            }
+
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 25px;
+                height: 21px;
+                font-size: 18px;
+                line-height: 1;
+                color: #011850;
+                transition: var(--ag-cube-1);
+
+                &:hover {
+                    color: var(--ag-clr-pr-1);
+                }
+            }
+
+            li:nth-child(4) a {
+                color: #135cfd;
+
+                &:hover {
+                    color: var(--ag-clr-pr-1);
+                }
+            }
+        }
+
+        &-content {
+            position: absolute;
+            top: 406px;
+            left: 0;
+            width: 190px;
+        }
+
+        &-name {
+            font-size: 22px;
+            line-height: 28px;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+
+            a {
+                color: inherit;
+                transition: var(--ag-cube-1);
+
+                &:hover {
+                    color: var(--ag-clr-pr-1);
+                }
+            }
+        }
+
+        &-role {
+            font-size: 16px;
+            font-weight: 300;
+            color: var(--ag-clr-h-1);
+            white-space: nowrap;
+            opacity: 0.68;
+        }
+
+        &:is(.is-active) {
+            .ag-team-1-card-img {
+                filter: grayscale(1);
+            }
+
+            .ag-team-1-card-social {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    }
+}
+/*
+    ag-team-1-end
+*/

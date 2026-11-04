@@ -1,0 +1,901 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-hero-1-start
+*/
+// the 1920 design is one stage: a dark panel with the bottom corners carved out. From 1400 up it is laid out as drawn (everything
+// sits on the section, anchored to the left / the middle / the right), below 1400 the panel is a plain box and the cards flow under it
+.ag-hero-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        height: 1004px;
+        background-color: var(--ag-clr-bg-1);
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            height: auto;
+            padding: 12px;
+        }
+    }
+
+    // panel: 12px in from every side of the section, 20px corners
+    &-panel {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+        z-index: 1;
+        border-radius: 20px;
+        background-color: var(--ag-clr-h-1);
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            inset: auto;
+            height: 800px;
+        }
+
+        @media #{$lg} {
+            height: 760px;
+        }
+
+        @media #{$md} {
+            height: 720px;
+        }
+
+        @media #{$xs} {
+            height: 800px;
+        }
+
+        @media #{$sm} {
+            height: 780px;
+        }
+    }
+
+    // the three layers of the slider: the pictures (back, z 1), the ghost title (z 2) and the robot with the text (front, z 3)
+    &-slider {
+        position: absolute;
+        inset: 0;
+
+        &-back,
+        &-front {
+            position: absolute;
+            inset: 0;
+        }
+
+        &-back {
+            z-index: 1;
+        }
+
+        &-front {
+            z-index: 3;
+        }
+
+        // the picture of the slide that is on is shown by main.js (is-current), the one that goes out stays under it (is-leaving) until the
+        // iris of the new one has covered it; swiper's own fade is not used here (the new picture is opened by a circle, not faded in)
+        &-back .swiper-slide {
+            z-index: 0;
+            visibility: hidden;
+            opacity: 1 !important;
+
+            &.is-current {
+                z-index: 2;
+                visibility: visible;
+            }
+
+            &.is-leaving {
+                z-index: 1;
+                visibility: visible;
+            }
+        }
+    }
+
+    // the thin ring that runs on the edge of the iris while a new picture opens (its size and place are set by main.js: 58% from the top is the
+    // centre of the circle), between the ghost title and the robot
+    &-rim {
+        position: absolute;
+        top: 58%;
+        left: 50%;
+        z-index: 2;
+        width: 0;
+        height: 0;
+        border: 1px solid rgb(255 255 255 / 40%);
+        border-radius: 50%;
+        box-shadow: 0 0 60px rgb(109 27 251 / 60%), inset 0 0 60px rgb(109 27 251 / 40%);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+
+    // 2186 x 1286 in the design, centred, 18px above the top of the panel
+    &-bg {
+        position: absolute;
+        top: -18px;
+        left: 50%;
+        width: 2186px;
+        height: 1286px;
+        transform: translateX(-50%);
+    }
+
+    // dark at the top, gone by 557px
+    &-shade {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 557px;
+        background: linear-gradient(180deg, var(--ag-clr-h-1) 0%, rgb(58 0 116 / 0%) 100%);
+        opacity: .64;
+    }
+
+    // the big ghost title behind the robot, the cards and the cut-outs hide its lower part. The outline of the letters is 1631 x 212 (exported
+    // from the design, it is in the svg at the top of the section): a frosted glass cut to it (the 12px background blur of the design is
+    // blur(6px) in css, + white 11%) and, on top of it, a 3px purple edge on the right of every stroke. --s scales the whole thing
+    &-watermark {
+        --s: 1;
+        position: absolute;
+        top: 657px;
+        z-index: 2;
+        left: 50%;
+        width: 1631px;
+        height: 212px;
+        transform: translateX(-50%) scale(var(--s));
+        transform-origin: 50% 0;
+
+        .glass {
+            position: absolute;
+            inset: 0;
+            background: rgb(255 255 255 / 11%);
+            backdrop-filter: blur(6px);
+            clip-path: url(#ag-watermark-clip);
+        }
+
+        .edge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            overflow: visible;
+        }
+
+        @media #{$xxxl} {
+            --s: 0.9;
+        }
+
+        @media #{$xxl} {
+            --s: 0.76;
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            --s: 0.59;
+            top: auto;
+            bottom: 40px;
+            transform-origin: 50% 100%;
+        }
+
+        @media #{$lg} {
+            --s: 0.48;
+        }
+
+        @media #{$md} {
+            --s: 0.38;
+        }
+
+        @media #{$xs} {
+            --s: 0.28;
+        }
+    }
+
+    // the robot, --s scales the natural size of each of the three pictures
+    &-main {
+        --w: 842px;
+        --r: 0.867;
+        --s: 1;
+        position: absolute;
+        bottom: 179px;
+        left: 50%;
+        width: calc(var(--w) * var(--s));
+        height: calc(var(--w) * var(--s) * var(--r));
+        transform: translateX(-50%);
+
+        &.is-2 {
+            --w: 701px;
+            --r: 0.9686;
+        }
+
+        &.is-3 {
+            --w: 757px;
+            --r: 0.9564;
+        }
+
+        @media #{$xxxl} {
+            --s: 0.9;
+        }
+
+        @media #{$xxl} {
+            --s: 0.8;
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            --s: 0.76;
+            bottom: 0;
+        }
+
+        @media #{$lg} {
+            --s: 0.64;
+        }
+
+        @media #{$md} {
+            --s: 0.55;
+            left: auto;
+            right: 0;
+            transform: none;
+        }
+
+        @media #{$xs} {
+            --s: 0.44;
+        }
+
+        @media #{$sm} {
+            --s: 0.5;
+        }
+    }
+
+    // cut-outs: light shapes over the panel, 600 x 180 each, the slanted end starts 190px before the edge.
+    // The 20px rounding of the panel is drawn in: the corner of the panel above the cut (::before) and the corner where the top edge
+    // meets the slant (the first points of the polygon follow the 20px arc)
+    &-cut {
+        position: absolute;
+        bottom: 12px;
+        z-index: 2;
+        width: 600px;
+        height: 180px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--ag-clr-bg-1);
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            width: 20px;
+            height: 20px;
+        }
+
+        &.is-left {
+            left: 12px;
+
+            &::after {
+                clip-path: polygon(0 0, 402px 0, 406.9px 0.6px, 411.4px 2.3px, 414.9px 4.7px, 415.8px 5.5px, 100% 100%, 0 100%);
+            }
+
+            &::before {
+                left: 0;
+                background: radial-gradient(circle 20px at 100% 0, transparent 19.5px, var(--ag-clr-bg-1) 20px);
+            }
+        }
+
+        &.is-right {
+            right: 12px;
+
+            &::after {
+                clip-path: polygon(100% 0, 198px 0, 193.1px 0.6px, 188.6px 2.3px, 185.1px 4.7px, 184.2px 5.5px, 0 100%, 100% 100%);
+            }
+
+            &::before {
+                right: 0;
+                background: radial-gradient(circle 20px at 0 0, transparent 19.5px, var(--ag-clr-bg-1) 20px);
+            }
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            display: none;
+        }
+    }
+
+    // content of a slide: the left edge is the container, 222px from the top of the section (the panel starts 12px down)
+    &-wrap {
+        position: absolute;
+        top: 210px;
+        right: 0;
+        left: 0;
+        z-index: 4;
+
+        @media #{$xl} {
+            top: 138px;
+        }
+
+        @media #{$lg} {
+            top: 118px;
+        }
+
+        @media #{$md} {
+            top: 108px;
+        }
+
+        @media #{$sm,$xs} {
+            top: 98px;
+        }
+    }
+
+    // the title, the text and the button of the active slide are brought in by main.js (agHero1Slider)
+    &-content {
+        max-width: 480px;
+    }
+
+    // 459px wide in the design = 7.17 of its own size, so the three lines break the same at every size
+    &-title {
+        margin-bottom: 16px;
+    }
+
+    // the words of the title (made by main.js): every word rises out of its own mask, the lower part of the letters has some room so it is not cut
+    &-word-mask {
+        display: inline-block;
+        padding-bottom: .12em;
+        margin-bottom: -.12em;
+        overflow: hidden;
+        vertical-align: top;
+    }
+
+    &-word {
+        display: inline-block;
+    }
+
+    &-text {
+        max-width: 459px;
+        margin-bottom: 32px;
+        font-size: 19px;
+        color: rgb(255 255 255 / 80%);
+
+        @media #{$xs} {
+            font-size: 17px;
+            line-height: 26px;
+        }
+    }
+
+    // social: a thin line, the icons and a thin line, 80px from the left
+    &-social {
+        position: absolute;
+        top: 236px;
+        left: 80px;
+        z-index: 4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 16px;
+
+        @media #{$xxxl} {
+            left: 40px;
+        }
+
+        @media #{$xxl} {
+            left: 24px;
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            display: none;
+        }
+
+        .line {
+            width: 1px;
+            height: 76px;
+            background: rgb(255 255 255 / 32%);
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 21px;
+                font-size: 18px;
+                line-height: 21px;
+                color: rgb(255 255 255 / 80%);
+                transition: var(--ag-cube-1);
+
+                &:hover,
+                &.is-active {
+                    color: #EC04FB;
+                }
+
+                &:nth-child(3) {
+                    height: 14px;
+                    font-size: 14px;
+                    line-height: 14px;
+                }
+            }
+        }
+    }
+
+    // the two cards: the review (dark, two corners cut) and the projects (a dome with the photo in its lower half)
+    &-card-wrap {
+        position: absolute;
+        top: 212px;
+        right: 194px;
+        z-index: 4;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 308px;
+
+        @media #{$xxxl} {
+            right: 60px;
+        }
+
+        @media #{$xxl} {
+            right: 40px;
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            top: auto;
+            right: auto;
+            margin: 12px auto 0;
+        }
+    }
+
+    &-review {
+        position: relative;
+        height: 132px;
+        border-radius: 8px;
+        // the purple lights behind the avatar and in the bottom right corner
+        background:
+            radial-gradient(circle 90px at 56px 62px, rgb(109 27 251 / 100%) 0%, rgb(109 27 251 / 0%) 100%),
+            radial-gradient(circle 90px at 301px 121px, rgb(109 27 251 / 70%) 0%, rgb(109 27 251 / 0%) 100%),
+            var(--ag-clr-h-1);
+        clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 40px 100%, 0 calc(100% - 40px));
+
+        &-avatar {
+            position: absolute;
+            top: 36px;
+            left: 32px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+
+        &-body {
+            position: absolute;
+            top: 33px;
+            left: 112px;
+            width: 156px;
+        }
+
+        &-stars {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 9px;
+
+            svg {
+                display: block;
+                flex: none;
+            }
+        }
+
+        &-text {
+            line-height: 21px;
+        }
+    }
+
+    &-project {
+        position: relative;
+        height: 339px;
+        overflow: hidden;
+        border-radius: 11px 11px 154px 154px;
+        background: linear-gradient(0deg, #CF74E1 32%, #0E0910 100%);
+
+        &-content {
+            position: absolute;
+            top: 24px;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            text-align: center;
+        }
+
+        &-count {
+            margin-bottom: 9px;
+            font-family: var(--ag-font-2);
+            font-size: 60px;
+            font-weight: 500;
+            line-height: 60px;
+            letter-spacing: -0.02em;
+            color: #fff;
+
+            .plus {
+                color: var(--ag-clr-sd-1);
+            }
+        }
+
+        &-text {
+            margin-bottom: 0;
+            font-family: var(--ag-font-1);
+            font-size: 18px;
+            line-height: 23px;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+            color: rgb(255 255 255 / 72%);
+        }
+
+        // the top edge of the photo sags 44px in the middle, the two corners where it meets the sides are rounded (16px)
+        &-img {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 308px;
+            height: 205px;
+            clip-path: path('M0 36.5 Q0 9 23.9 21.6 Q154 84.4 284.1 21.6 Q308 9 308 36.5 V205 H0 Z');
+        }
+    }
+
+    // bottom: the client card on the left, the testimonial in the middle, the counter and the thumbnails on the right
+    &-bottom {
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+    }
+
+    &-client {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        z-index: 3;
+        width: 566px;
+        height: 170px;
+
+        .shape {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        &-content {
+            position: absolute;
+            top: 20px;
+            left: 32px;
+            width: 417px;
+        }
+
+        &-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 17px;
+        }
+
+        &-avatars {
+            display: flex;
+            align-items: center;
+
+            .item {
+                flex: none;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+            }
+
+            .item + .item,
+            .plus {
+                margin-left: -20px;
+            }
+
+            .plus {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex: none;
+                width: 56px;
+                height: 56px;
+                border: 2px solid var(--ag-clr-bg-2);
+                border-radius: 50%;
+                background: #fff;
+                color: var(--ag-clr-h-1);
+            }
+        }
+
+        &-count {
+            margin-bottom: 0;
+            font-family: var(--ag-font-2);
+            font-size: 48px;
+            font-weight: 500;
+            line-height: 52px;
+            letter-spacing: -0.02em;
+            color: var(--ag-clr-h-1);
+
+            .unit {
+                color: rgb(7 0 14 / 35%);
+            }
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            bottom: auto;
+            left: auto;
+            width: 100%;
+            max-width: 566px;
+            height: auto;
+            padding: 20px 32px 24px;
+            border: 1px solid rgb(7 0 14 / 8%);
+            border-radius: 12px;
+            background: var(--ag-clr-bg-1);
+
+            .shape {
+                display: none;
+            }
+
+            &-content {
+                position: static;
+                width: auto;
+            }
+        }
+    }
+
+    // the card is as wide as what is left between the two cut-outs, 1039px at most
+    &-testimonial {
+        position: absolute;
+        bottom: 24px;
+        left: 50%;
+        z-index: 3;
+        width: calc(100% - 881px);
+        max-width: 1039px;
+        height: 168px;
+        transform: translateX(-50%);
+
+        .shape {
+            position: absolute;
+            inset: 0;
+            background: var(--ag-clr-bg-1);
+            clip-path: polygon(0 0, 100% 0, calc(100% - 83.2px) 76.9px, calc(100% - 177px) 100%, 177px 100%, 83.2px 76.9px);
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            bottom: auto;
+            left: auto;
+            width: 100%;
+            max-width: 566px;
+            height: auto;
+            padding: 24px 32px;
+            border-radius: 12px;
+            background: var(--ag-clr-bg-1);
+            transform: none;
+
+            .shape {
+                display: none;
+            }
+        }
+    }
+
+    // purple frame, the picture sits 2px in so only the top and the slanted left edge show it
+    &-video {
+        position: absolute;
+        top: 10px;
+        left: 27px;
+        width: 387px;
+        height: 148px;
+        background: var(--ag-clr-pr-1);
+        clip-path: polygon(0 0, 231px 0, 100% 100%, 156px 100%);
+
+        &-img {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 387px;
+            height: 148px;
+            clip-path: polygon(0 0, 231px 0, 100% 100%, 156px 100%);
+        }
+
+        @media #{$xxxl,$xxl,$xl,$lg,$md,$sm,$xs} {
+            display: none;
+        }
+    }
+
+    &-play {
+        position: absolute;
+        top: 48px;
+        left: 309px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 72px;
+        height: 72px;
+        padding: 0;
+        border: 4px solid var(--ag-clr-bg-1);
+        border-radius: 50%;
+        background: #E1E5EA;
+        box-shadow: 0 0 0 4px var(--ag-clr-bg-1);
+        color: var(--ag-clr-pr-1);
+        transition: var(--ag-cube-1);
+
+        &:hover {
+            background: var(--ag-clr-pr-1);
+            color: #fff;
+        }
+
+        @media #{$xxxl,$xxl,$xl,$lg,$md,$sm,$xs} {
+            display: none;
+        }
+    }
+
+    // the pale quote marks sit behind the text, upper right
+    &-quote-icon {
+        position: absolute;
+        top: 15px;
+        left: calc(100% - 413px);
+        display: flex;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            display: none;
+        }
+    }
+
+    &-quote {
+        position: absolute;
+        top: 42px;
+        right: 143px;
+        left: 424px;
+        margin-bottom: 0;
+        font-family: var(--ag-font-1);
+        font-size: 19px;
+        line-height: 28px;
+        color: var(--ag-clr-h-1);
+
+        .q {
+            color: var(--ag-clr-pr-1);
+        }
+
+        // the video and the play button are gone, the text takes their place
+        @media #{$xxxl} {
+            left: 110px;
+        }
+
+        @media #{$xxl} {
+            top: 30px;
+            right: 120px;
+            left: 96px;
+            font-size: 16px;
+            line-height: 22px;
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: static;
+            font-size: 17px;
+            line-height: 26px;
+        }
+    }
+
+    &-pagination {
+        position: absolute;
+        right: 16px;
+        bottom: 40px;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        gap: 26px;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            right: auto;
+            bottom: auto;
+            gap: 20px;
+        }
+
+        @media #{$xs} {
+            flex-wrap: wrap;
+        }
+    }
+
+    // 01 is 80px light, /3 is 24px
+    &-count {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        width: 106px;
+        margin-bottom: 0;
+        font-family: var(--ag-font-2);
+        color: var(--ag-clr-h-1);
+
+        .current {
+            font-size: 80px;
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        .total {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1;
+            color: var(--ag-clr-p-1);
+        }
+    }
+
+    &-thumbs {
+        display: flex;
+        align-items: center;
+    }
+
+    // 101 x 124, the top left and the bottom right corner are cut, the 3px frame is drawn 3px outside (white, the active one is purple > coral)
+    &-thumb {
+        position: relative;
+        flex: none;
+        width: 101px;
+        height: 124px;
+        cursor: pointer;
+
+        & + & {
+            margin-left: -20px;
+        }
+
+        .ring {
+            position: absolute;
+            inset: -3px;
+            background: #fff;
+            clip-path: polygon(32.1px 0, 100% 0, 100% 98.1px, 75.1px 100%, 0 100%, 0 32.1px);
+            transition: var(--ag-cube-1);
+        }
+
+        .pic {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            filter: grayscale(1);
+            clip-path: polygon(30.3px 0, 100% 0, 100% 93.84px, 70.7px 100%, 0 100%, 0 30.16px);
+            transition: var(--ag-cube-1);
+        }
+
+        .bg {
+            position: absolute;
+            top: -5px;
+            left: -67px;
+            width: 244px;
+            height: 144px;
+        }
+
+        .main {
+            position: absolute;
+            bottom: 0;
+            left: -7px;
+            width: 117px;
+            height: 104px;
+
+            &.is-2 {
+                height: 113px;
+            }
+
+            &.is-3 {
+                height: 112px;
+            }
+        }
+
+        &.is-active {
+            .ring {
+                background: var(--ag-clr-gd-1);
+            }
+
+            .pic {
+                filter: none;
+            }
+        }
+    }
+}
+/*
+    ag-hero-1-end
+*/

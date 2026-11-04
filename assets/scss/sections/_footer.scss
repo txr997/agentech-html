@@ -1,0 +1,583 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-footer-1-start
+*/
+// the footer hangs 220px under the box of the cta (the cta is over it, so the area is pulled up and gets that space as padding, plus 121px under the box).
+// A picture is the background (1920 x 960, the purple glow is in it). The content is a grid of two columns, 560 and 840 on 1400: on the left the page
+// links and under them the text, on the right the robot with the five social boxes on the top and the contact card under them. The robot stands on the
+// card and the social boxes go like stairs (two rows, every second box is up). All the lines are 1px white at 12%, the fills white at 6%. Below 992 the
+// columns go one under the other: links, text, robot with the social boxes, contact card. The bar with the copyright is on the bottom, from edge to edge
+.ag-footer-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        margin-top: -220px;
+        padding-top: 341px;
+        overflow: hidden;
+        background-color: #0B0015;
+
+        @media #{$xxl} {
+            margin-top: -205px;
+            padding-top: 326px;
+        }
+
+        @media #{$xl} {
+            margin-top: -185px;
+            padding-top: 306px;
+        }
+
+        @media #{$lg} {
+            margin-top: -165px;
+            padding-top: 286px;
+        }
+
+        @media #{$md} {
+            margin-top: -160px;
+            padding-top: 281px;
+        }
+
+        @media #{$xs} {
+            margin-top: -150px;
+            padding-top: 230px;
+        }
+    }
+
+    &-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        pointer-events: none;
+    }
+
+    // grid
+    &-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 560fr) minmax(0, 840fr);
+
+        @media #{$md,$xs} {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
+    // the page links: the rows are 64px and share their lines (the next row goes 1px over the one before)
+    &-links {
+        li + li {
+            margin-top: -1px;
+        }
+    }
+
+    &-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+        padding: 0 32px;
+        border: 1px solid rgb(255 255 255 / 12%);
+        background-color: rgb(255 255 255 / 6%);
+        font-family: var(--ag-font-2);
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 26px;
+        letter-spacing: -0.01em;
+        color: #fff;
+        transition: var(--ag-cube-1);
+
+        i {
+            font-size: 20px;
+            line-height: 1;
+            opacity: 0.6;
+            transition: var(--ag-cube-1);
+        }
+
+        &:hover {
+            background-color: rgb(255 255 255 / 12%);
+            color: #fff;
+
+            i {
+                opacity: 1;
+                transform: translateX(4px);
+            }
+        }
+
+        @media #{$xxl} {
+            padding: 0 28px;
+        }
+
+        @media #{$xl} {
+            height: 60px;
+            padding: 0 24px;
+        }
+
+        @media #{$lg} {
+            height: 56px;
+            padding: 0 20px;
+            font-size: 20px;
+            line-height: 24px;
+        }
+
+        @media #{$md} {
+            height: 60px;
+            padding: 0 24px;
+        }
+
+        @media #{$xs} {
+            height: 56px;
+            padding: 0 20px;
+            font-size: 20px;
+            line-height: 24px;
+        }
+    }
+
+    // text under the links
+    &-text {
+        max-width: 438px;
+        margin-top: 67px;
+
+        @media #{$md,$xs} {
+            order: 2;
+            max-width: 520px;
+            margin-top: 28px;
+        }
+    }
+
+    // top of the right column: the robot (281 x 278) stands on the card, the social boxes (5 x 100) are on the right
+    &-top {
+        position: relative;
+
+        @media #{$md,$xs} {
+            order: 3;
+        }
+
+        @media #{$md} {
+            height: 220px;
+            margin-top: 36px;
+        }
+
+        @media #{$sm} {
+            height: 190px;
+        }
+
+        @media #{$xs} {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 28px;
+        }
+
+        @media #{$sm} {
+            display: block;
+        }
+    }
+
+    &-robot {
+        position: absolute;
+        bottom: 0;
+        left: 1px;
+        width: 281px;
+        height: 278px;
+
+        @media #{$xxl} {
+            width: 256px;
+            height: 253px;
+        }
+
+        @media #{$xl} {
+            width: 230px;
+            height: 228px;
+        }
+
+        @media #{$lg} {
+            width: 190px;
+            height: 188px;
+        }
+
+        @media #{$md} {
+            left: 0;
+            width: 200px;
+            height: 198px;
+        }
+
+        @media #{$xs} {
+            position: relative;
+            left: auto;
+            width: 160px;
+            height: 158px;
+        }
+
+        @media #{$sm} {
+            position: absolute;
+            left: 0;
+            width: 170px;
+            height: 168px;
+        }
+    }
+
+    // the social boxes: two rows, the first, the third and the fifth are in the lower row
+    &-social {
+        --cell: 100px;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: repeat(5, var(--cell));
+        grid-template-rows: repeat(2, var(--cell));
+
+        @media #{$xxl} {
+            --cell: 90px;
+        }
+
+        @media #{$xl} {
+            --cell: 76px;
+        }
+
+        @media #{$lg,$md} {
+            --cell: 64px;
+        }
+
+        @media #{$xs} {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            margin-top: 8px;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            grid-template-rows: repeat(2, auto);
+        }
+
+        @media #{$sm} {
+            --cell: 56px;
+            position: absolute;
+            width: auto;
+            max-width: none;
+            margin-top: 0;
+            grid-template-columns: repeat(5, var(--cell));
+            grid-template-rows: repeat(2, var(--cell));
+        }
+
+        &-item {
+            position: relative;
+            border: 1px solid rgb(255 255 255 / 12%);
+            grid-row: 2;
+
+            &:nth-child(even) {
+                grid-row: 1;
+            }
+
+            @for $i from 1 through 5 {
+                &:nth-child(#{$i}) {
+                    grid-column: $i;
+                }
+            }
+
+            @media #{$xs} {
+                aspect-ratio: 1;
+            }
+
+            // the stroke goes from purple on the left to coral on the right
+            &::before {
+                content: "";
+                position: absolute;
+                inset: -1px;
+                padding: 1px;
+                background: var(--ag-clr-gd-1);
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                opacity: 0;
+                transition: var(--ag-cube-1);
+                pointer-events: none;
+            }
+
+            &:is(.is-active, :hover) {
+                &::before {
+                    opacity: 1;
+                }
+
+                .icon {
+                    background-color: var(--ag-clr-pr-1);
+                }
+            }
+        }
+
+        // the link covers the box with its line, so the dark square is 68px (68% of 100)
+        &-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: calc(100% + 2px);
+            height: calc(100% + 2px);
+            margin: -1px;
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 68%;
+            height: 68%;
+            background-color: #23182F;
+            font-size: 28px;
+            line-height: 1;
+            color: #fff;
+            transition: var(--ag-cube-1);
+
+            @media #{$xxl} {
+                font-size: 26px;
+            }
+
+            @media #{$xl} {
+                font-size: 22px;
+            }
+
+            @media #{$lg,$md,$sm,$xs} {
+                font-size: 20px;
+            }
+        }
+    }
+
+    // contact card: two rows (the first is cut in two by a line) and the name of the company under them
+    &-contact {
+        border: 1px solid rgb(255 255 255 / 12%);
+        background-color: rgb(255 255 255 / 6%);
+
+        @media #{$md,$xs} {
+            order: 4;
+        }
+    }
+
+    &-row {
+        display: flex;
+        border-bottom: 1px solid rgb(255 255 255 / 12%);
+
+        @media #{$xs} {
+            flex-direction: column;
+        }
+
+        @media #{$sm} {
+            flex-direction: row;
+        }
+    }
+
+    &-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        height: 47px;
+        padding: 0 32px;
+        font-family: var(--ag-font-1);
+        font-size: 16px;
+        line-height: 20px;
+        color: rgb(255 255 255 / 80%);
+        transition: var(--ag-cube-1);
+
+        // the email takes the half of the row, the line is on its right
+        .ag-footer-1-row > &:first-child:not(:last-child) {
+            flex: 0 0 52.4%;
+            border-right: 1px solid rgb(255 255 255 / 12%);
+        }
+
+        i {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        &:hover {
+            color: #fff;
+        }
+
+        @media #{$xxl} {
+            padding: 0 28px;
+        }
+
+        @media #{$xl} {
+            padding: 0 24px;
+            font-size: 15px;
+        }
+
+        @media #{$lg} {
+            height: 43px;
+            padding: 0 20px;
+            font-size: 14px;
+        }
+
+        @media #{$md} {
+            padding: 0 24px;
+            font-size: 15px;
+        }
+
+        @media #{$xs} {
+            height: 43px;
+            padding: 0 20px;
+            font-size: 14px;
+
+            .ag-footer-1-row > &:first-child:not(:last-child) {
+                flex: none;
+                border-right: 0;
+                border-bottom: 1px solid rgb(255 255 255 / 12%);
+            }
+        }
+
+        @media #{$sm} {
+            .ag-footer-1-row > &:first-child:not(:last-child) {
+                flex: 0 0 52.4%;
+                border-right: 1px solid rgb(255 255 255 / 12%);
+                border-bottom: 0;
+            }
+        }
+    }
+
+    // the name of the company: the box is as high as the capitals (136px x 0.7 = 95px), the text goes from white on the top to nothing on the bottom
+    &-brand {
+        padding: 29px 24px 25px;
+
+        @media #{$xxl,$xl,$lg,$md,$xs} {
+            padding: 24px 24px 20px;
+        }
+
+        @media #{$sm,$xs} {
+            padding: 20px 16px 16px;
+        }
+
+        &-text {
+            display: block;
+            margin: 0;
+            height: 0.7em;
+            font-family: var(--ag-font-2);
+            font-weight: 700;
+            font-size: 136px;
+            line-height: 0.7em;
+            letter-spacing: -0.022em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            background: linear-gradient(180deg, #fff 0%, rgb(255 255 255 / 0%) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            user-select: none;
+
+            @media #{$xxl} {
+                font-size: 124px;
+            }
+
+            @media #{$xl} {
+                font-size: 104px;
+            }
+
+            @media #{$lg} {
+                font-size: 86px;
+            }
+
+            @media #{$md} {
+                font-size: 110px;
+            }
+
+            @media #{$xs} {
+                font-size: calc((100vw - 56px) / 5.9);
+            }
+
+            @media #{$sm} {
+                font-size: 80px;
+            }
+        }
+    }
+
+    // bar: it runs from edge to edge, the text is 30px high between the lines
+    &-bar {
+        margin-top: -1px;
+        border: 1px solid rgb(255 255 255 / 12%);
+        background-color: rgb(255 255 255 / 6%);
+
+        @media #{$md,$xs} {
+            margin-top: 36px;
+        }
+
+        &-in {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4px 30px;
+            padding: 12px 0 13px;
+
+            @media #{$xs} {
+                flex-direction: column;
+                padding: 16px 0;
+                text-align: center;
+            }
+
+            @media #{$sm} {
+                flex-direction: row;
+                padding: 12px 0 13px;
+                text-align: left;
+            }
+        }
+    }
+
+    &-copy {
+        margin: 0;
+        font-family: var(--ag-font-1);
+        font-size: 16px;
+        line-height: 30px;
+        color: rgb(255 255 255 / 72%);
+
+        span {
+            color: #fff;
+        }
+
+        @media #{$xs} {
+            font-size: 15px;
+            line-height: 24px;
+        }
+    }
+
+    &-legal {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0 60px;
+
+        a {
+            font-family: var(--ag-font-1);
+            font-size: 16px;
+            line-height: 30px;
+            color: rgb(255 255 255 / 72%);
+            transition: var(--ag-cube-1);
+
+            &:hover {
+                color: #fff;
+            }
+        }
+
+        @media #{$lg} {
+            gap: 0 36px;
+        }
+
+        @media #{$md} {
+            gap: 0 40px;
+        }
+
+        @media #{$xs} {
+            justify-content: center;
+            gap: 0 24px;
+
+            a {
+                font-size: 15px;
+                line-height: 24px;
+            }
+        }
+
+        @media #{$sm} {
+            justify-content: flex-start;
+        }
+    }
+}
+/*
+    ag-footer-1-end
+*/

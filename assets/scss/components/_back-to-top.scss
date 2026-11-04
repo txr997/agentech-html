@@ -1,0 +1,59 @@
+@use '../abstracts/variables' as *;
+
+/* 
+    start-back-to-top
+*/
+
+.wa-back-to-top {
+    position: fixed;
+    right: 1.5%;
+    bottom: -12.5%;
+    z-index: 4;
+    width: 35px;
+    height: 40px;
+    background-color: var(--ag-clr-pr-1);
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    cursor: pointer;
+
+    @media #{$xs} {
+        right: 3%;
+    }
+
+
+
+
+    svg {
+        transition: 0.3s;
+
+        * {
+            fill: #fff;
+            transition: 0.3s;
+        }
+    }
+
+    &:hover {
+        height: 35px;
+        svg {
+            transform: translateY(-20px);
+            mix-blend-mode: difference;
+            * {
+                fill: var(--ag-clr-pr-1);
+            }
+        }
+    }
+      
+    &:is(.active) {
+        bottom: 2.5%;
+    }
+
+
+}
+
+
+/* 
+    start-back-to-end
+*/

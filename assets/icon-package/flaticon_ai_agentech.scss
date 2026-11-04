@@ -1,0 +1,265 @@
+$flaticon_ai_agentech-font: "flaticon_ai_agentech";
+
+@font-face {
+    font-family: $flaticon_ai_agentech-font;
+    src: url("./flaticon_ai_agentech.woff2?4a1b3737cfe0090dd497a919e2b827a7") format("woff2"),
+url("./flaticon_ai_agentech.woff?4a1b3737cfe0090dd497a919e2b827a7") format("woff"),
+url("./flaticon_ai_agentech.eot?4a1b3737cfe0090dd497a919e2b827a7#iefix") format("embedded-opentype"),
+url("./flaticon_ai_agentech.ttf?4a1b3737cfe0090dd497a919e2b827a7") format("truetype"),
+url("./flaticon_ai_agentech.svg?4a1b3737cfe0090dd497a919e2b827a7#flaticon_ai_agentech") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon_ai_agentech !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$flaticon_ai_agentech-map: (
+    "ai": "\f101",
+    "ai-technology": "\f102",
+    "play-button": "\f103",
+    "play": "\f104",
+    "star": "\f105",
+    "left": "\f106",
+    "bank": "\f107",
+    "bank-1": "\f108",
+    "factory": "\f109",
+    "heart": "\f10a",
+    "shopping-bag": "\f10b",
+    "magistrate": "\f10c",
+    "briefcase": "\f10d",
+    "technology": "\f10e",
+    "user-groups": "\f10f",
+    "idea": "\f110",
+    "artificial-intelligence": "\f111",
+    "idea-1": "\f112",
+    "layer": "\f113",
+    "development": "\f114",
+    "rocket": "\f115",
+    "arrow-right": "\f116",
+    "arrow-left": "\f117",
+    "close": "\f118",
+    "right-arrow": "\f119",
+    "facebook": "\f11a",
+    "instagram": "\f11b",
+    "linkedin": "\f11c",
+    "twitter": "\f11d",
+    "youtube": "\f11e",
+    "email": "\f11f",
+    "calling": "\f120",
+    "location": "\f121",
+    "shape": "\f122",
+    "ai-innovation": "\f123",
+    "sparkle": "\f124",
+    "automation": "\f125",
+    "process": "\f126",
+    "ai-1": "\f127",
+    "ai-technology-1": "\f128",
+    "braid": "\f129",
+    "online-consulting": "\f12a",
+    "up-right-arrow": "\f12b",
+    "sparkle-1": "\f12c",
+    "check": "\f12d",
+    "plus-sign": "\f12e",
+    "star-1": "\f12f",
+    "star-2": "\f130",
+    "solution": "\f131",
+    "group": "\f132",
+    "digital-transformation": "\f133",
+    "customer-support": "\f134",
+    "security": "\f135",
+    "customer-service": "\f136",
+    "relationships": "\f137",
+    "verified": "\f138",
+    "brifcase": "\f139",
+    "up-right-arrow-1": "\f13a",
+    "abstract-shape": "\f13b",
+    "double-arrows": "\f13c",
+);
+
+.flaticon-ai:before {
+    content: map-get($flaticon_ai_agentech-map, "ai");
+}
+.flaticon-ai-technology:before {
+    content: map-get($flaticon_ai_agentech-map, "ai-technology");
+}
+.flaticon-play-button:before {
+    content: map-get($flaticon_ai_agentech-map, "play-button");
+}
+.flaticon-play:before {
+    content: map-get($flaticon_ai_agentech-map, "play");
+}
+.flaticon-star:before {
+    content: map-get($flaticon_ai_agentech-map, "star");
+}
+.flaticon-left:before {
+    content: map-get($flaticon_ai_agentech-map, "left");
+}
+.flaticon-bank:before {
+    content: map-get($flaticon_ai_agentech-map, "bank");
+}
+.flaticon-bank-1:before {
+    content: map-get($flaticon_ai_agentech-map, "bank-1");
+}
+.flaticon-factory:before {
+    content: map-get($flaticon_ai_agentech-map, "factory");
+}
+.flaticon-heart:before {
+    content: map-get($flaticon_ai_agentech-map, "heart");
+}
+.flaticon-shopping-bag:before {
+    content: map-get($flaticon_ai_agentech-map, "shopping-bag");
+}
+.flaticon-magistrate:before {
+    content: map-get($flaticon_ai_agentech-map, "magistrate");
+}
+.flaticon-briefcase:before {
+    content: map-get($flaticon_ai_agentech-map, "briefcase");
+}
+.flaticon-technology:before {
+    content: map-get($flaticon_ai_agentech-map, "technology");
+}
+.flaticon-user-groups:before {
+    content: map-get($flaticon_ai_agentech-map, "user-groups");
+}
+.flaticon-idea:before {
+    content: map-get($flaticon_ai_agentech-map, "idea");
+}
+.flaticon-artificial-intelligence:before {
+    content: map-get($flaticon_ai_agentech-map, "artificial-intelligence");
+}
+.flaticon-idea-1:before {
+    content: map-get($flaticon_ai_agentech-map, "idea-1");
+}
+.flaticon-layer:before {
+    content: map-get($flaticon_ai_agentech-map, "layer");
+}
+.flaticon-development:before {
+    content: map-get($flaticon_ai_agentech-map, "development");
+}
+.flaticon-rocket:before {
+    content: map-get($flaticon_ai_agentech-map, "rocket");
+}
+.flaticon-arrow-right:before {
+    content: map-get($flaticon_ai_agentech-map, "arrow-right");
+}
+.flaticon-arrow-left:before {
+    content: map-get($flaticon_ai_agentech-map, "arrow-left");
+}
+.flaticon-close:before {
+    content: map-get($flaticon_ai_agentech-map, "close");
+}
+.flaticon-right-arrow:before {
+    content: map-get($flaticon_ai_agentech-map, "right-arrow");
+}
+.flaticon-facebook:before {
+    content: map-get($flaticon_ai_agentech-map, "facebook");
+}
+.flaticon-instagram:before {
+    content: map-get($flaticon_ai_agentech-map, "instagram");
+}
+.flaticon-linkedin:before {
+    content: map-get($flaticon_ai_agentech-map, "linkedin");
+}
+.flaticon-twitter:before {
+    content: map-get($flaticon_ai_agentech-map, "twitter");
+}
+.flaticon-youtube:before {
+    content: map-get($flaticon_ai_agentech-map, "youtube");
+}
+.flaticon-email:before {
+    content: map-get($flaticon_ai_agentech-map, "email");
+}
+.flaticon-calling:before {
+    content: map-get($flaticon_ai_agentech-map, "calling");
+}
+.flaticon-location:before {
+    content: map-get($flaticon_ai_agentech-map, "location");
+}
+.flaticon-shape:before {
+    content: map-get($flaticon_ai_agentech-map, "shape");
+}
+.flaticon-ai-innovation:before {
+    content: map-get($flaticon_ai_agentech-map, "ai-innovation");
+}
+.flaticon-sparkle:before {
+    content: map-get($flaticon_ai_agentech-map, "sparkle");
+}
+.flaticon-automation:before {
+    content: map-get($flaticon_ai_agentech-map, "automation");
+}
+.flaticon-process:before {
+    content: map-get($flaticon_ai_agentech-map, "process");
+}
+.flaticon-ai-1:before {
+    content: map-get($flaticon_ai_agentech-map, "ai-1");
+}
+.flaticon-ai-technology-1:before {
+    content: map-get($flaticon_ai_agentech-map, "ai-technology-1");
+}
+.flaticon-braid:before {
+    content: map-get($flaticon_ai_agentech-map, "braid");
+}
+.flaticon-online-consulting:before {
+    content: map-get($flaticon_ai_agentech-map, "online-consulting");
+}
+.flaticon-up-right-arrow:before {
+    content: map-get($flaticon_ai_agentech-map, "up-right-arrow");
+}
+.flaticon-sparkle-1:before {
+    content: map-get($flaticon_ai_agentech-map, "sparkle-1");
+}
+.flaticon-check:before {
+    content: map-get($flaticon_ai_agentech-map, "check");
+}
+.flaticon-plus-sign:before {
+    content: map-get($flaticon_ai_agentech-map, "plus-sign");
+}
+.flaticon-star-1:before {
+    content: map-get($flaticon_ai_agentech-map, "star-1");
+}
+.flaticon-star-2:before {
+    content: map-get($flaticon_ai_agentech-map, "star-2");
+}
+.flaticon-solution:before {
+    content: map-get($flaticon_ai_agentech-map, "solution");
+}
+.flaticon-group:before {
+    content: map-get($flaticon_ai_agentech-map, "group");
+}
+.flaticon-digital-transformation:before {
+    content: map-get($flaticon_ai_agentech-map, "digital-transformation");
+}
+.flaticon-customer-support:before {
+    content: map-get($flaticon_ai_agentech-map, "customer-support");
+}
+.flaticon-security:before {
+    content: map-get($flaticon_ai_agentech-map, "security");
+}
+.flaticon-customer-service:before {
+    content: map-get($flaticon_ai_agentech-map, "customer-service");
+}
+.flaticon-relationships:before {
+    content: map-get($flaticon_ai_agentech-map, "relationships");
+}
+.flaticon-verified:before {
+    content: map-get($flaticon_ai_agentech-map, "verified");
+}
+.flaticon-brifcase:before {
+    content: map-get($flaticon_ai_agentech-map, "brifcase");
+}
+.flaticon-up-right-arrow-1:before {
+    content: map-get($flaticon_ai_agentech-map, "up-right-arrow-1");
+}
+.flaticon-abstract-shape:before {
+    content: map-get($flaticon_ai_agentech-map, "abstract-shape");
+}
+.flaticon-double-arrows:before {
+    content: map-get($flaticon_ai_agentech-map, "double-arrows");
+}
