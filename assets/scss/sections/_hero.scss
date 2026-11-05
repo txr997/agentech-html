@@ -53,7 +53,7 @@
         }
     }
 
-    // the three layers of the slider: the pictures (back, z 1), the ghost title (z 2) and the robot with the text (front, z 3)
+    // the two layers of the slider: the pictures (back, z 1) and the front one (z 3) with the ghost title behind the robot and the text
     &-slider {
         position: absolute;
         inset: 0;
@@ -92,7 +92,7 @@
     }
 
     // the thin ring that runs on the edge of the iris while a new picture opens (its size and place are set by main.js: 58% from the top is the
-    // centre of the circle), between the ghost title and the robot
+    // centre of the circle), between the pictures and the front slider
     &-rim {
         position: absolute;
         top: 58%;
@@ -128,14 +128,15 @@
         opacity: .64;
     }
 
-    // the big ghost title behind the robot, the cards and the cut-outs hide its lower part. The outline of the letters is 1631 x 212 (exported
-    // from the design, it is in the svg at the top of the section): a frosted glass cut to it (the 12px background blur of the design is
-    // blur(6px) in css, + white 11%) and, on top of it, a 3px purple edge on the right of every stroke. --s scales the whole thing
+    // the big ghost title behind the robot (it sits in the front slider, before the slides), the cards and the cut-outs hide its lower part.
+    // The outline of the letters is 1631 x 212 (exported from the design, it is in the svg at the top of the section): a frosted glass cut to
+    // it (the 12px background blur of the design is blur(6px) in css, + white 11%) and, on top of it, a 3px purple edge on the right of every
+    // stroke. --s scales the whole thing. main.js animates .glass and .edge on every slide change, never the box itself (its transform
+    // centres it, and an opacity on it would take the blur away from the glass)
     &-watermark {
         --s: 1;
         position: absolute;
         top: 657px;
-        z-index: 2;
         left: 50%;
         width: 1631px;
         height: 212px;
@@ -607,6 +608,8 @@
                 border-radius: 50%;
                 background: #fff;
                 color: var(--ag-clr-h-1);
+                position: relative;
+                z-index: 2;
             }
         }
 

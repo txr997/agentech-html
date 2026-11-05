@@ -157,7 +157,7 @@
                 </svg>
 
                 <!-- panel: the dark rounded stage. The slider is three layers: the pictures behind (a swiper that only follows the front one),
-                     the ghost title in between (one for all the slides) and the robot with the text in front (the swiper that is driven) -->
+                     and the robot with the text in front (the swiper that is driven) with the ghost title (one for all the slides) behind them -->
                 <div class="ag-hero-1-panel wa-fix">
                     <div class="ag-hero-1-slider">
 
@@ -189,14 +189,15 @@
                             </div>
                         </div>
 
-                        <!-- watermark -->
-                        <div class="ag-hero-1-watermark" aria-hidden="true">
-                                    <div class="glass"></div>
-                                    <svg class="edge" width="1634" height="212" viewBox="0 0 1634 212"><use href="#ag-watermark-edge"></use></svg>
-                                </div>
-
                         <!-- front -->
                         <div class="ag-hero-1-slider-front swiper">
+
+                            <!-- watermark: one for all the slides, brought in again by main.js on every slide change -->
+                            <div class="ag-hero-1-watermark" aria-hidden="true">
+                                <div class="glass"></div>
+                                <svg class="edge" width="1634" height="212" viewBox="0 0 1634 212"><use href="#ag-watermark-edge"></use></svg>
+                            </div>
+
                             <div class="swiper-wrapper">
 
                                 <div class="swiper-slide ag-hero-1-slide">
@@ -279,7 +280,7 @@
                 <div class="ag-hero-1-card-wrap">
 
                     <!-- review -->
-                    <div class="ag-hero-1-review">
+                    <div class="ag-hero-1-review wow fadeInUp2" data-wow-delay="1.5s">
                         <div class="ag-hero-1-review-avatar wa-img-cover wa-fix">
                             <img src="assets/img/hero/h1-author-img.jpg" alt="">
                         </div>
@@ -296,7 +297,7 @@
                     </div>
 
                     <!-- projects -->
-                    <div class="ag-hero-1-project">
+                    <div class="ag-hero-1-project wow fadeInUp2" data-wow-delay="1.8s">
                         <div class="ag-hero-1-project-content">
                             <h3 class="ag-hero-1-project-count">120<span class="plus">+</span></h3>
                             <p class="ag-hero-1-project-text">Projects Successfully <br>Delivered</p>
@@ -323,9 +324,9 @@
                         <div class="ag-hero-1-client-content">
                             <div class="ag-hero-1-client-top">
                                 <div class="ag-hero-1-client-avatars">
-                                    <div class="item wa-img-cover wa-fix"><img src="assets/img/hero/h1-avatar-1.png" alt=""></div>
-                                    <div class="item wa-img-cover wa-fix"><img src="assets/img/hero/h1-avatar-2.png" alt=""></div>
-                                    <div class="item wa-img-cover wa-fix"><img src="assets/img/hero/h1-avatar-3.png" alt=""></div>
+                                    <div class="item wa-img-cover wa-fix wow slideInLeft2 " data-wow-delay=".3s"><img src="assets/img/hero/h1-avatar-1.png" alt=""></div>
+                                    <div class="item wa-img-cover wa-fix wow slideInLeft2 " data-wow-delay=".2s"><img src="assets/img/hero/h1-avatar-2.png" alt=""></div>
+                                    <div class="item wa-img-cover wa-fix wow slideInLeft2 " data-wow-delay=".1s"><img src="assets/img/hero/h1-avatar-3.png" alt=""></div>
                                     <span class="plus"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M18.9999 9H11.0001V0.9999C11.0001 0.4481 10.552 0 9.9999 0C9.4481 0 9 0.4481 9 0.9999V9H0.9999C0.4481 9 0 9.4481 0 9.9999C0 10.552 0.4481 11.0001 0.9999 11.0001H9V18.9999C9 19.552 9.4481 20.0001 9.9999 20.0001C10.552 20.0001 11.0001 19.552 11.0001 18.9999V11.0001H18.9999C19.552 11.0001 20.0001 10.552 20.0001 9.9999C20.0001 9.4481 19.552 9 18.9999 9Z" fill="currentColor"/></svg></span>
                                 </div>
                                 <h3 class="ag-hero-1-client-count">98<span class="unit">%</span></h3>
@@ -339,12 +340,12 @@
                         <div class="shape"></div>
                         <div class="ag-hero-1-video">
                             <div class="ag-hero-1-video-img wa-img-cover wa-fix">
-                                <img src="assets/img/hero/h1-video-img.jpg" alt="">
+                                <img class="wa_parallax_img" src="assets/img/hero/h1-video-img.jpg" alt="">
                             </div>
                         </div>
-                        <button type="button" class="ag-hero-1-play" aria-label="Play video">
+                        <a href="https://www.youtube.com/watch?v=jX4dLxiso6A" class="ag-hero-1-play popup_video"  aria-label="Play video">
                             <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M30.728 5.27203C27.3282 1.87237 22.808 0 18 0C13.192 0 8.67184 1.87237 5.27203 5.27203C1.87237 8.67184 0 13.192 0 18C0 22.808 1.87237 27.3282 5.27203 30.728C8.67184 34.1276 13.192 36 18 36C22.808 36 27.3282 34.1276 30.728 30.728C34.1276 27.3282 36 22.808 36 18C36 13.192 34.1276 8.67184 30.728 5.27203ZM18 33.7732C9.30262 33.7732 2.2268 26.6974 2.2268 18C2.2268 9.30262 9.30262 2.2268 18 2.2268C26.6974 2.2268 33.7732 9.30262 33.7732 18C33.7732 26.6974 26.6974 33.7732 18 33.7732Z" fill="currentColor"/><path d="M13.4396 24.9829L25.5294 18L13.4396 11.0171V24.9829Z" fill="currentColor"/></svg>
-                        </button>
+                        </a>
                         <div class="ag-hero-1-quote-icon" aria-hidden="true">
                             <svg width="68" height="68" viewBox="0 0 68 68" fill="none"><path d="M18.4162 8.5C27.4665 8.5 33.9995 15.9716 33.9993 27.0346C33.9413 43.1085 21.8578 54.4732 4.42551 56.6557C2.80822 56.8582 2.18461 54.6178 3.67393 53.9555C10.3628 50.9813 13.7411 47.2071 14.1774 43.4714C14.5034 40.6804 12.9862 38.2355 11.0811 37.7777C6.14204 36.5909 2.83286 30.4402 2.83286 24.0833C2.83286 15.4769 9.80975 8.5 18.4162 8.5Z" fill="#6D1BFB" fill-opacity="0.08"/><path d="M52.4162 8.5C61.4665 8.5 67.9995 15.9716 67.9993 27.0346C67.9414 43.1085 55.8578 54.4732 38.4255 56.6557C36.8082 56.8582 36.1846 54.6178 37.6739 53.9555C44.3628 50.9813 47.7411 47.2071 48.1774 43.4714C48.5034 40.6804 46.9862 38.2355 45.0811 37.7777C40.142 36.5909 36.8329 30.4402 36.8329 24.0833C36.8329 15.4769 43.8098 8.5 52.4162 8.5Z" fill="#6D1BFB" fill-opacity="0.08"/></svg>
                         </div>
@@ -417,8 +418,8 @@
                                 <p class="ag-subtitle-1-text">About Our Company</p>
                             </div>
                             <h2 class="ag-sec-title-1 ag-about-1-title wa_text_effect">We Turn AI Innovation Into Business Growth.</h2>
-                            <p class="ag-p-1 ag-about-1-text">We combine artificial intelligence, automation, and strategic expertise to help businesses solve complex challenges, improve efficiency, and unlock new opportunities for sustainable growth.</p>
-                            <div class="ag-about-1-btn">
+                            <p class="ag-p-1 ag-about-1-text wow fadeInUp2">We combine artificial intelligence, automation, and strategic expertise to help businesses solve complex challenges, improve efficiency, and unlock new opportunities for sustainable growth.</p>
+                            <div class="ag-about-1-btn wow fadeInUp2">
                                 <a href="about-us.html" class="ag-pr-btn-1">
                                     <span class="icon"><i class="flaticon-ai flaticon"></i></span>
                                     <span class="text">More About Us</span>
@@ -431,6 +432,7 @@
                             <div class="ag-about-1-images-in">
                                 <div class="ag-about-1-img wa-img-cover wa-fix">
                                     <img src="assets/img/about/a1-img.jpg" alt="AI powered robot woman">
+                                    <div class="ag-about-1-img-scan" aria-hidden="true"></div>
                                 </div>
                                 <div class="ag-about-1-card wa-fix">
                                     <div class="ag-about-1-card-wave wa-img-contain"><img src="assets/img/about/a1-p-wave.svg" alt=""></div>
@@ -472,11 +474,15 @@
                 <div class="ag-services-1-bg" aria-hidden="true">
                     <div class="ag-services-1-bg-main wa-img-cover wa-fix"><img src="assets/img/services/s1-bg-main-img.png" alt=""></div>
                     <div class="ag-services-1-bg-girl">
-                        <div class="pic wa-img-cover wa-fix"><img src="assets/img/services/s1-bg-img-1.jpg" alt=""></div>
+                        <div class="pic wa-img-cover wa-fix">
+                            <img data-wow-offset="300" class="wow slideInLeft2" src="assets/img/services/s1-bg-img-1.jpg" alt="">
+                        </div>
                     </div>
                     <div class="ag-services-1-bg-glow is-1"></div>
                     <div class="ag-services-1-bg-glow is-2"></div>
-                    <div class="ag-services-1-bg-glass wa-img-contain"><img src="assets/img/services/s1-bg-img-2.png" alt=""></div>
+                    <div class="ag-services-1-bg-glass wa-img-contain">
+                        <img class="wow slideInRight2" data-wow-offset="300" src="assets/img/services/s1-bg-img-2.png" alt="">
+                    </div>
                     <div class="ag-services-1-bg-cut is-1"></div>
                     <div class="ag-services-1-bg-cut is-2"></div>
                 </div>
@@ -580,11 +586,13 @@
 
                     <!-- bottom -->
                     <div class="ag-services-1-bottom">
-                        <p class="ag-p-1 has-white ag-services-1-text">We combine artificial intelligence, automation, and strategic expertise to help businesses solve complex challenges, improve efficiency, and unlock new opportunities for sustainable growth.</p>
-                        <a href="services.html" class="ag-pr-btn-1">
-                            <span class="icon"><i class="flaticon-ai flaticon"></i></span>
-                            <span class="text">View All Services</span>
-                        </a>
+                        <p class="ag-p-1 has-white ag-services-1-text wow fadeInUp2">We combine artificial intelligence, automation, and strategic expertise to help businesses solve complex challenges, improve efficiency, and unlock new opportunities for sustainable growth.</p>
+                        <div class="btn-elm wow fadeInUp2">
+                            <a href="services.html" class="ag-pr-btn-1">
+                                <span class="icon"><i class="flaticon-ai flaticon"></i></span>
+                                <span class="text">View All Services</span>
+                            </a>
+                        </div>
                     </div>
 
                 </div>
@@ -645,10 +653,12 @@
                             </div>
                             <h2 class="ag-sec-title-1 ag-team-1-title wa_text_effect">Meet The Experts Powering Our Intelligent AI Innovation.</h2>
                         </div>
-                        <a href="team.html" class="ag-pr-btn-1">
-                            <span class="icon"><i class="flaticon-ai flaticon"></i></span>
-                            <span class="text">View All Team</span>
-                        </a>
+                        <div class="btn-elm wow fadeInRight2">
+                            <a href="team.html" class="ag-pr-btn-1">
+                                <span class="icon"><i class="flaticon-ai flaticon"></i></span>
+                                <span class="text">View All Team</span>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="ag-team-1-overflow">
@@ -775,7 +785,9 @@
                     <!-- deco: the glow and the head made of lines in the top right corner -->
                     <div class="ag-features-1-deco" aria-hidden="true">
                         <div class="ag-features-1-deco-glow"></div>
-                        <div class="ag-features-1-deco-head wa-img-contain"><img src="assets/img/features/f1-bg-shape.png" alt=""></div>
+                        <div class="ag-features-1-deco-head wa-img-contain">
+                            <img class="wow slideInUp2" data-wow-offset="400" src="assets/img/features/f1-bg-shape.png" alt="">
+                        </div>
                     </div>
 
                     <!-- card: the text, the list and the bar, the glow of the card runs out over the big picture -->
@@ -786,35 +798,35 @@
 
                         <!-- list: the item under the pointer is the lit one and brings its picture to the slider -->
                         <ul class="ag-features-1-list wa-ul">
-                            <li class="ag-features-1-item is-active">
+                            <li class="ag-features-1-item is-active wow fadeInUp2">
                                 <a href="industries-details.html">
                                     <span class="num">01.</span>
                                     <span class="name">Finance &amp; Banking</span>
                                     <span class="icon"><i class="flaticon-bank flaticon"></i></span>
                                 </a>
                             </li>
-                            <li class="ag-features-1-item">
+                            <li class="ag-features-1-item wow fadeInUp2">
                                 <a href="industries-details.html">
                                     <span class="num">02.</span>
                                     <span class="name">Manufacturing</span>
                                     <span class="icon"><i class="flaticon-factory flaticon"></i></span>
                                 </a>
                             </li>
-                            <li class="ag-features-1-item">
+                            <li class="ag-features-1-item wow fadeInUp2">
                                 <a href="industries-details.html">
                                     <span class="num">03.</span>
                                     <span class="name">Healthcare</span>
                                     <span class="icon"><i class="flaticon-heart flaticon"></i></span>
                                 </a>
                             </li>
-                            <li class="ag-features-1-item">
+                            <li class="ag-features-1-item wow fadeInUp2">
                                 <a href="industries-details.html">
                                     <span class="num">04.</span>
                                     <span class="name">E-commerce</span>
                                     <span class="icon"><i class="flaticon-shopping-bag flaticon"></i></span>
                                 </a>
                             </li>
-                            <li class="ag-features-1-item">
+                            <li class="ag-features-1-item wow fadeInUp2">
                                 <a href="industries-details.html">
                                     <span class="num">05.</span>
                                     <span class="name">Education</span>
@@ -823,7 +835,9 @@
                             </li>
                         </ul>
 
-                        <a href="industries.html" class="ag-features-1-bar">Explore All Industries</a>
+                        <div class="btn-elm wow fadeInUp2">
+                            <a href="industries.html" class="ag-features-1-bar">Explore All Industries</a>
+                        </div>
                     </div>
 
                     <!-- slider: one picture for every item of the list -->
@@ -1064,7 +1078,7 @@
                         <!-- features -->
                         <div class="ag-choose-1-features">
 
-                            <div class="ag-choose-1-item">
+                            <div class="ag-choose-1-item wow fadeInUp2">
                                 <div class="ag-choose-1-item-icon"><i class="flaticon-briefcase flaticon"></i></div>
                                 <div class="ag-choose-1-item-content">
                                     <h3 class="ag-title-3 has-white ag-choose-1-item-title">Business-First<br>Approach</h3>
@@ -1072,7 +1086,7 @@
                                 </div>
                             </div>
 
-                            <div class="ag-choose-1-item">
+                            <div class="ag-choose-1-item wow fadeInUp2">
                                 <div class="ag-choose-1-item-icon"><i class="flaticon-technology flaticon"></i></div>
                                 <div class="ag-choose-1-item-content">
                                     <h3 class="ag-title-3 has-white ag-choose-1-item-title">Custom AI<br>Solutions</h3>
@@ -1080,7 +1094,7 @@
                                 </div>
                             </div>
 
-                            <div class="ag-choose-1-item">
+                            <div class="ag-choose-1-item wow fadeInUp2">
                                 <div class="ag-choose-1-item-icon"><i class="flaticon-user-groups flaticon"></i></div>
                                 <div class="ag-choose-1-item-content">
                                     <h3 class="ag-title-3 has-white ag-choose-1-item-title">Expert AI Team<br>Members</h3>
@@ -1088,7 +1102,7 @@
                                 </div>
                             </div>
 
-                            <div class="ag-choose-1-item">
+                            <div class="ag-choose-1-item wow fadeInUp2">
                                 <div class="ag-choose-1-item-icon"><i class="flaticon-artificial-intelligence flaticon"></i></div>
                                 <div class="ag-choose-1-item-content">
                                     <h3 class="ag-title-3 has-white ag-choose-1-item-title">Secure<br>Technology</h3>
@@ -1101,7 +1115,7 @@
                         <!-- media: the photo runs out to the right edge of the screen, the glass card sits in its bottom right corner -->
                         <div class="ag-choose-1-media">
                             <div class="ag-choose-1-img wa-img-cover wa-fix"><img src="assets/img/choose/c1-img-1.jpg" alt="Business man and AI robot working together"></div>
-                            <div class="ag-choose-1-box">
+                            <div class="ag-choose-1-box wow fadeInUp2">
                                 <p class="ag-p-1 has-white ag-choose-1-box-text">We combine advanced AI technology, strategic thinking, and practical business expertise to create intelligent solutions that deliver measurable results and long-term value.</p>
                                 <a href="about-us.html" class="ag-pr-btn-1">
                                     <span class="icon"><i class="flaticon-ai flaticon"></i></span>
@@ -1120,10 +1134,14 @@
             <section class="ag-process-1-area">
 
                 <!-- background: the photo, the panel with the steps hangs over its bottom edge -->
-                <div class="ag-process-1-bg wa-img-cover wa-fix" aria-hidden="true"><img src="assets/img/process/p1-bg-img.jpg" alt=""></div>
+                <div class="ag-process-1-bg wa-img-cover wa-fix" aria-hidden="true">
+                    <img class="wa_parallax_img" src="assets/img/process/p1-bg-img.jpg" alt="">
+                </div>
 
                 <!-- the big title: only its top is on show, the panel covers the rest -->
-                <h2 class="ag-process-1-title">Work Process</h2>
+                <h2 class="ag-process-1-title " >
+                    <span >Work Process</span>
+                </h2>
 
                 <div class="container ag-container-1">
                     <div class="ag-process-1-panel" data-background="assets/img/process/p1-bg-shape.jpg">
@@ -1217,8 +1235,8 @@
                             <p class="ag-subtitle-1-text">Client Testimonials</p>
                         </div>
                         <h2 class="ag-sec-title-1 ag-testimonial-1-title wa_text_effect">What Our Clients Say About Our AI Expertise</h2>
-                        <p class="ag-p-1 ag-testimonial-1-text">Our clients share how our AI expertise, innovative solutions, and strategic approach helped transform operations, accelerate growth, and achieve measurable results.</p>
-                        <div class="ag-testimonial-1-btn">
+                        <p class="ag-p-1 ag-testimonial-1-text wow fadeInUp2">Our clients share how our AI expertise, innovative solutions, and strategic approach helped transform operations, accelerate growth, and achieve measurable results.</p>
+                        <div class="ag-testimonial-1-btn wow fadeInUp2">
                             <a href="testimonial.html" class="ag-pr-btn-1">
                                 <span class="icon"><i class="flaticon-ai flaticon"></i></span>
                                 <span class="text">View All More</span>
@@ -1376,7 +1394,7 @@
                     <!-- list -->
                     <div class="ag-blog-1-list">
 
-                        <article class="ag-blog-1-card">
+                        <article class="ag-blog-1-card wow fadeInUp2" data-wow-delay=".2s">
                             <div class="ag-blog-1-card-img wa-img-cover wa-fix"><img src="assets/img/blog/b1-img-1.jpg" alt="AI Automation Trends Every Business Should Know."></div>
                             <div class="ag-blog-1-card-body">
                                 <div class="ag-blog-1-card-date">
@@ -1394,7 +1412,7 @@
                             </div>
                         </article>
 
-                        <article class="ag-blog-1-card">
+                        <article class="ag-blog-1-card wow fadeInUp2" data-wow-delay=".1s">
                             <div class="ag-blog-1-card-img wa-img-cover wa-fix"><img src="assets/img/blog/b1-img-2.jpg" alt="The Future Of AI-Powered Business Automation."></div>
                             <div class="ag-blog-1-card-body">
                                 <div class="ag-blog-1-card-date">
@@ -1412,7 +1430,7 @@
                             </div>
                         </article>
 
-                        <article class="ag-blog-1-card">
+                        <article class="ag-blog-1-card wow fadeInUp2" data-wow-delay=".2s">
                             <div class="ag-blog-1-card-img wa-img-cover wa-fix"><img src="assets/img/blog/b1-img-3.jpg" alt="Turning Business Data Into Intelligent Decisions."></div>
                             <div class="ag-blog-1-card-body">
                                 <div class="ag-blog-1-card-date">

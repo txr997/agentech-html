@@ -3360,6 +3360,26 @@ input:focus::placeholder, textarea:focus::placeholder {
     transform: translateY(0);
   }
 }
+@keyframes slideInLeft2 {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideInRight2 {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 @keyframes slideInUp3 {
   0% {
     visibility: visible;
@@ -3374,7 +3394,7 @@ input:focus::placeholder, textarea:focus::placeholder {
 .fadeInLeft2,
 .fadeInRight2 {
   animation-duration: 700ms;
-  animation-timing-function: var(--kf-cube-1);
+  animation-timing-function: var(--ag-cube-1);
   animation-fill-mode: both;
 }
 
@@ -3382,7 +3402,14 @@ input:focus::placeholder, textarea:focus::placeholder {
 .slideInDown2,
 .animate__slideInUp3 {
   animation-duration: 1000ms;
-  animation-timing-function: var(--kf-cube-1);
+  animation-timing-function: var(--ag-cube-1);
+  animation-fill-mode: both;
+}
+
+.slideInLeft2,
+.slideInRight2 {
+  animation-duration: 1000ms;
+  animation-timing-function: cubic-bezier(0.45, 0.05, 0.25, 1);
   animation-fill-mode: both;
 }
 
@@ -3408,6 +3435,14 @@ input:focus::placeholder, textarea:focus::placeholder {
 
 .slideInDown2 {
   animation-name: slideInDown2;
+}
+
+.slideInLeft2 {
+  animation-name: slideInLeft2;
+}
+
+.slideInRight2 {
+  animation-name: slideInRight2;
 }
 
 .animate__slideInUp3 {
@@ -3885,7 +3920,6 @@ input:focus::placeholder, textarea:focus::placeholder {
   --s: 1;
   position: absolute;
   top: 657px;
-  z-index: 2;
   left: 50%;
   width: 1631px;
   height: 212px;
@@ -4319,6 +4353,8 @@ input:focus::placeholder, textarea:focus::placeholder {
   border-radius: 50%;
   background: #fff;
   color: var(--ag-clr-h-1);
+  position: relative;
+  z-index: 2;
 }
 .ag-hero-1-client-count {
   margin-bottom: 0;
@@ -4785,6 +4821,18 @@ input:focus::placeholder, textarea:focus::placeholder {
   position: absolute;
   inset: 0;
   clip-path: url(#ag-about-img-clip);
+}
+.ag-about-1-img-scan {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff 50%, rgba(255, 255, 255, 0));
+  box-shadow: 0 0 24px 6px rgba(109, 27, 251, 0.7), 0 0 80px 18px rgba(109, 27, 251, 0.35);
+  opacity: 0;
+  pointer-events: none;
 }
 .ag-about-1-card {
   position: absolute;

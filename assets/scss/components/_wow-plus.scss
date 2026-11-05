@@ -107,6 +107,30 @@
     }
 }
 
+@keyframes slideInLeft2 {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight2 {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 @keyframes slideInUp3 {
     0% {
         visibility: visible;
@@ -123,7 +147,7 @@
 .fadeInLeft2,
 .fadeInRight2 {
     animation-duration: 700ms;
-    animation-timing-function: var(--kf-cube-1);
+    animation-timing-function: var(--ag-cube-1);
     animation-fill-mode: both;
 }
 
@@ -131,7 +155,15 @@
 .slideInDown2,
 .animate__slideInUp3 {
     animation-duration: 1000ms;
-    animation-timing-function: var(--kf-cube-1);
+    animation-timing-function: var(--ag-cube-1);
+    animation-fill-mode: both;
+}
+
+// sideways slides are short (the width of the item), so they get a soft start and a long settle instead of jumping in
+.slideInLeft2,
+.slideInRight2 {
+    animation-duration: 1000ms;
+    animation-timing-function: cubic-bezier(.45, .05, .25, 1);
     animation-fill-mode: both;
 }
 
@@ -157,6 +189,14 @@
 
 .slideInDown2 {
     animation-name: slideInDown2;
+}
+
+.slideInLeft2 {
+    animation-name: slideInLeft2;
+}
+
+.slideInRight2 {
+    animation-name: slideInRight2;
 }
 
 .animate__slideInUp3 {

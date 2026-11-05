@@ -1,5 +1,5 @@
 /*
-	Template Name: KingFeast - Restaurant HTML Template
+	Template Name: AI Agentech - AI Agency & Technology HTML Template
 	Author: https://themexriver.com/
 	Version: 1.0
 */
@@ -70,16 +70,8 @@ function agPreloaderInit() {
 var agPreloader = agPreloaderInit();
 
 
-/*
-	hero-1 intro — parked before the preloader lifts, played right after: the two red lights swell in, then the
-	letters of the big title come up from behind the bottom edge one after another, clearing from a blur
-*/
-var kfHero1 = null;
-var kfHero1First = null;
-var kfHero1Swiper = null;
-
-// the plain words of a title become masked words, anything else inside it stays as it is
-function kfHeroWords(title, maskClass, wordClass) {
+// the plain words of a title become masked words (the mask cuts them off at their line), anything else inside it stays as it is
+function agHeroWords(title, maskClass, wordClass) {
 	var words = [];
 
 	Array.prototype.slice.call(title.childNodes).forEach(function (node) {
@@ -95,8 +87,8 @@ function kfHeroWords(title, maskClass, wordClass) {
 
 			var mask = document.createElement("span");
 			var word = document.createElement("span");
-			mask.className = maskClass || "sb-split-mask";
-			word.className = wordClass || "sb-split-word";
+			mask.className = maskClass;
+			word.className = wordClass;
 			word.textContent = part;
 			mask.appendChild(word);
 			frag.appendChild(mask);
@@ -108,1148 +100,9 @@ function kfHeroWords(title, maskClass, wordClass) {
 	return words;
 }
 
-function kfHero1Park() {
-	if (prefersReducedMotion()) return;
-
-	if (kfHero1First) kfHero1First.park();
-
-	var letters = document.querySelectorAll(".kf-hero-1-big-title span");
-	var glows = document.querySelectorAll(".kf-hero-1-glow");
-	if (!letters.length && !glows.length) return;
-
-	gsap.set(glows, { opacity: 0, scale: .3 });
-	gsap.set(letters, { yPercent: 120, opacity: 0, filter: "blur(12px)" });
-
-	kfHero1 = { letters: letters, glows: glows };
-}
-
-function kfHero1Play() {
-	if (kfHero1First) kfHero1First.play();
-	if (!kfHero1) return;
-	var hero = kfHero1;
-
-	gsap.timeline({
-		defaults: { ease: "power3.out" },
-		onComplete: function () {
-			gsap.set(Array.prototype.slice.call(hero.glows).concat(Array.prototype.slice.call(hero.letters)), { clearProps: "opacity,filter,transform" });
-		}
-	})
-		.to(hero.glows, { opacity: 1, scale: 1, duration: 2.2, ease: "power2.out", stagger: .25 }, 0)
-		.to(hero.letters, { yPercent: 0, opacity: 1, filter: "blur(0px)", duration: 1.3, stagger: .08 }, .3);
-}
-
 
 /*
-	hero-1 sliders — the big slider opens each slide like an iris (plate reveal) and serves its text after it; the
-	card slider turns its cards like a drum
-*/
-function kfHero1Slider() {
-	if (!$(".kf-hero-1-slider").length) return;
-
-	var slider = document.querySelector(".kf-hero-1-slider");
-	var scenes = [];
-	var rim = null;
-
-	if (!prefersReducedMotion()) {
-		$(".kf-hero-1-slider .swiper-slide").each(function () {
-			var title = this.querySelector(".kf-hero-1-title");
-
-			scenes.push({
-				item: this.querySelector(".kf-hero-1-item"),
-				img: this.querySelector(".kf-hero-1-img"),
-				words: title ? kfHeroWords(title) : [],
-				rest: Array.prototype.slice.call(this.querySelectorAll(".kf-hero-1-disc, .kf-pr-btn-1"))
-			});
-		});
-
-		rim = document.createElement("div");
-		rim.className = "kf-hero-1-rim";
-		slider.appendChild(rim);
-		gsap.set(rim, { autoAlpha: 0 });
-	}
-
-	// parked: the slide is closed (a circle of nothing) and its text is waiting below its line
-	function park(scene) {
-		gsap.killTweensOf([scene.item, scene.img].concat(scene.words, scene.rest));
-		gsap.killTweensOf(rim);
-		// the button has a css transition for its hover, it would lag behind gsap
-		gsap.set(scene.rest, { transition: "none", y: 28, opacity: 0, filter: "blur(6px)" });
-		gsap.set(scene.words, { yPercent: 115, rotate: 5, opacity: 0, filter: "blur(10px)", transformOrigin: "0% 100%" });
-		scene.item.style.clipPath = "circle(0px at 50% 58%)";
-	}
-
-	function serve(scene) {
-		var targets = [scene.item, scene.img].concat(scene.words, scene.rest);
-		var iris = { r: 0 };
-		// the circle opens at 50% 58% and has to reach the farthest corner
-		var reach = Math.hypot(slider.clientWidth / 2, slider.clientHeight * .58) + 10;
-
-		gsap.timeline({
-			defaults: { ease: "power3.out" },
-			onComplete: function () {
-				scene.item.style.clipPath = "";
-				gsap.set(targets, { clearProps: "transform,opacity,filter,transition" });
-			}
-		})
-			.to(iris, {
-				r: reach,
-				duration: 1.5,
-				ease: "power3.inOut",
-				onUpdate: function () {
-					scene.item.style.clipPath = "circle(" + iris.r + "px at 50% 58%)";
-					rim.style.width = rim.style.height = iris.r * 2 + "px";
-				}
-			}, 0)
-			.fromTo(rim, { autoAlpha: 0 }, { autoAlpha: 1, duration: .2 }, 0)
-			.to(rim, { autoAlpha: 0, duration: .3 }, 1.2)
-			.fromTo(scene.img, { scale: 1.2 }, { scale: 1, duration: 2, ease: "power2.out" }, 0)
-			// the words wait until the circle has reached the text
-			.to(scene.words, { yPercent: 0, rotate: 0, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "power4.out", stagger: .08 }, .9)
-			.to(scene.rest, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: .15 }, 1.25);
-	}
-
-	kfHero1Swiper = new Swiper(".kf-hero-1-slider", {
-		effect: "fade",
-		fadeEffect: { crossFade: true },
-		speed: 1500,
-		rewind: true,
-		on: {
-			slideChange: function (swiper) {
-				var scene = scenes[swiper.activeIndex];
-				var leaving = swiper.slides[swiper.previousIndex];
-
-				// the slide that goes out stays on screen until the circle has covered it
-				Array.prototype.forEach.call(swiper.slides, function (slide) {
-					slide.classList.remove("is-leaving");
-				});
-				if (leaving) leaving.classList.add("is-leaving");
-
-				if (!scene) return;
-
-				park(scene);
-				serve(scene);
-			},
-			slideChangeTransitionEnd: function (swiper) {
-				Array.prototype.forEach.call(swiper.slides, function (slide) {
-					slide.classList.remove("is-leaving");
-				});
-			}
-		},
-		autoplay: {
-			delay: 5000,
-			disableOnInteraction: false,
-		},
-	});
-
-	// the slider waits behind the preloader, afterPreloader starts it; the first slide opens right then too,
-	// parked before the preloader lifts like the rest of the hero
-	kfHero1Swiper.autoplay.stop();
-
-	if (scenes.length) {
-		kfHero1First = {
-			park: function () {
-				park(scenes[0]);
-			},
-			play: function () {
-				serve(scenes[0]);
-			}
-		};
-	}
-
-	// a looping vertical slider needs more slides than the cards it shows, with only two it jumps instead of sliding
-	var $cards = $(".kf-hero-1-card-slider .swiper-wrapper");
-	if ($cards.children().length < 4) {
-		$cards.append($cards.children().clone().attr("aria-hidden", "true"));
-	}
-
-	// the card leaves upwards tipping back into the screen, the next one rises tipped the other way, like cards on a drum
-	new Swiper(".kf-hero-1-card-slider", {
-		direction: "vertical",
-		effect: "creative",
-		creativeEffect: {
-			perspective: true,
-			limitProgress: 1,
-			// negative opacity = the card is invisible for the first part of the way: the one leaving is gone just before half way
-			// and the one arriving shows up just after it, so the two never overlap as ghosts
-			prev: {
-				translate: [0, "-40%", -300],
-				rotate: [90, 0, 0],
-				opacity: -1.2,
-			},
-			next: {
-				translate: [0, "40%", -300],
-				rotate: [-90, 0, 0],
-				opacity: -0.8,
-			},
-		},
-		speed: 900,
-		loop: true,
-		autoplay: {
-			delay: 3500,
-			disableOnInteraction: false,
-		},
-	});
-}
-
-
-/*
-	hero-2 sliders — the thumbs on the right lead: they go round on their own, the one in the middle is the plate on show.
-	Each plate slide builds itself when it comes: the shape behind turns in, then the plate turns in, then the words
-	"Special Platter" come up (the order of the plates is the order of the thumbs)
-*/
-var kfHero2First = null;
-var kfHero2Swiper = null;
-
-function kfHero2Slider() {
-	if (!$(".kf-hero-2-preview-slider").length) return;
-
-	// a looping slider needs more slides than the three it shows, with only three it jumps instead of sliding
-	var $thumbs = $(".kf-hero-2-preview-slider .swiper-wrapper");
-	$thumbs.append($thumbs.children().clone().attr("aria-hidden", "true"));
-
-	var plates = $(".kf-hero-2-slider-img .swiper-slide").length;
-	var scenes = [];
-	var ready = false;
-	var first = 1;
-
-	if (!prefersReducedMotion()) {
-		$(".kf-hero-2-slider-img .swiper-slide").each(function () {
-			scenes.push({
-				shape: this.querySelector(".kf-hero-2-slider-img-shape"),
-				plate: this.querySelector(".kf-hero-2-slider-img-plate"),
-				special: this.querySelector(".kf-hero-2-slider-img-special .text"),
-				platter: this.querySelector(".kf-hero-2-slider-img-platter .text")
-			});
-		});
-	}
-
-	function parts(scene) {
-		return [scene.shape, scene.plate, scene.special, scene.platter];
-	}
-
-	// parked: nothing of the slide is on show yet
-	function park(scene) {
-		gsap.killTweensOf(parts(scene));
-		gsap.set(scene.shape, { opacity: 0, rotate: 120, scale: .7, transformOrigin: "48% 42%" });
-		gsap.set(scene.plate, { opacity: 0, rotate: 90, scale: .5 });
-		gsap.set([scene.special, scene.platter], { opacity: 0, y: 36, filter: "blur(8px)" });
-	}
-
-	function serve(scene) {
-		gsap.timeline({
-			defaults: { ease: "power3.out" },
-			onComplete: function () {
-				gsap.set(parts(scene), { clearProps: "transform,opacity,filter,transformOrigin" });
-			}
-		})
-			.to(scene.shape, { opacity: 1, rotate: 0, scale: 1, duration: 1.4 }, 0)
-			.to(scene.plate, { opacity: 1, rotate: 0, scale: 1, duration: 1.2 }, .5)
-			.to(scene.special, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, ease: "power4.out" }, 1.15)
-			.to(scene.platter, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, ease: "power4.out" }, 1.3);
-	}
-
-	var plateSlider = new Swiper(".kf-hero-2-slider-img", {
-		effect: "fade",
-		fadeEffect: { crossFade: true },
-		speed: 700,
-		initialSlide: first,
-		allowTouchMove: false,
-		on: {
-			slideChange: function (swiper) {
-				var scene = scenes[swiper.activeIndex];
-
-				if (!ready || !scene) return;
-
-				park(scene);
-				serve(scene);
-			}
-		}
-	});
-
-	kfHero2Swiper = new Swiper(".kf-hero-2-preview-slider", {
-		direction: "vertical",
-		slidesPerView: 3,
-		spaceBetween: 71.5,
-		centeredSlides: true,
-		initialSlide: first,
-		loop: true,
-		speed: 900,
-		grabCursor: true,
-		slideToClickedSlide: true,
-		// a plate needs about 2.5s to build up, the rest of the 5s it is on show whole
-		autoplay: {
-			delay: 5000,
-			disableOnInteraction: false,
-		},
-		on: {
-			slideChange: function (swiper) {
-				plateSlider.slideTo(swiper.realIndex % plates);
-			},
-		},
-	});
-
-	// waits behind the preloader like the hero-1 slider: the first slide is parked now, afterPreloader plays it and starts the thumbs
-	kfHero2Swiper.autoplay.stop();
-
-	if (scenes.length) {
-		park(scenes[first]);
-
-		kfHero2First = {
-			play: function () {
-				ready = true;
-				serve(scenes[first]);
-			}
-		};
-	}
-}
-
-
-/*
-	hero-3 slider — the three round photos under the plate lead: a click on one shows its plate, the one that is up (the red arch) is the
-	plate on show. Each slide builds itself when it comes: the plate turns in, the line with its four cards fades in behind it, the
-	slice and the peppers show once the plate has settled (kfHero3Drift then moves them with the cursor), then the words come up
-	one after another
-*/
-var kfHero3First = null;
-var kfHero3Swiper = null;
-
-function kfHero3Slider() {
-	if (!$(".kf-hero-3-slider").length) return;
-
-	var $thumbs = $(".kf-hero-3-thumb");
-	var scenes = [];
-	var ready = false;
-	// the middle plate is up when the page opens, like the design
-	var first = 1;
-
-	if (!prefersReducedMotion()) {
-		$(".kf-hero-3-slider .swiper-slide").each(function () {
-			var pepper = this.querySelector(".kf-hero-3-pepper");
-
-			scenes.push({
-				plate: this.querySelector(".kf-hero-3-plate"),
-				ring: this.querySelector(".kf-hero-3-ring"),
-				slice: this.querySelector(".kf-hero-3-slice"),
-				pepper: pepper,
-				// the peppers are 53% in the css, they come in to that and not to 1
-				pepperTo: pepper ? parseFloat(getComputedStyle(pepper).opacity) : 1,
-				cards: this.querySelectorAll(".kf-hero-3-card"),
-				words: this.querySelectorAll(".kf-hero-3-title-sub, .kf-hero-3-title-name, .kf-hero-3-title-script, .kf-hero-3-btns")
-			});
-		});
-	}
-
-	// the slice and the peppers drift with the cursor (kfHero3Drift), so gsap keeps their transform (it holds the css rotation too)
-	function drifters(scene) {
-		return [scene.slice, scene.pepper];
-	}
-
-	function still(scene) {
-		return [scene.plate, scene.ring].concat(
-			Array.prototype.slice.call(scene.cards),
-			Array.prototype.slice.call(scene.words)
-		);
-	}
-
-	// parked: nothing of the slide is on show yet
-	function park(scene) {
-		gsap.killTweensOf(still(scene).concat(drifters(scene)));
-		gsap.set(scene.plate, { opacity: 0, rotate: 90, scale: .5 });
-		gsap.set(scene.ring, { opacity: 0 });
-		gsap.set(scene.slice, { opacity: 0, scale: .8 });
-		gsap.set(scene.pepper, { opacity: 0, scale: .6 });
-		gsap.set(scene.cards, { opacity: 0, scale: .6, y: 20 });
-		gsap.set(scene.words, { opacity: 0, y: 36, filter: "blur(8px)" });
-	}
-
-	function serve(scene) {
-		gsap.timeline({
-			defaults: { ease: "power3.out" },
-			onComplete: function () {
-				gsap.set(still(scene), { clearProps: "transform,opacity,filter,transformOrigin" });
-				gsap.set(drifters(scene), { clearProps: "opacity" });
-			}
-		})
-			.to(scene.plate, { opacity: 1, rotate: 0, scale: 1, duration: 1.3 }, 0)
-			.to(scene.ring, { opacity: 1, duration: 1.2 }, .4)
-			.to(scene.cards, { opacity: 1, scale: 1, y: 0, duration: .9, stagger: .15 }, .9)
-			.to(scene.words, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, ease: "power4.out", stagger: .15 }, 1)
-			// the plate has settled by now: the slice shows first, the peppers a moment after it
-			.to(scene.slice, { opacity: 1, scale: 1, duration: 1.2 }, 1.2)
-			.to(scene.pepper, { opacity: scene.pepperTo, scale: 1, duration: 1.2 }, 1.4);
-	}
-
-	kfHero3Swiper = new Swiper(".kf-hero-3-slider", {
-		effect: "fade",
-		fadeEffect: { crossFade: true },
-		speed: 800,
-		initialSlide: first,
-		allowTouchMove: false,
-		rewind: true,
-		// a slide needs about 2.5s to build up, the rest of the 6s it is on show whole
-		// autoplay: {
-		// 	delay: 6000,
-		// 	disableOnInteraction: false,
-		// },
-		on: {
-			slideChange: function (swiper) {
-				var scene = scenes[swiper.activeIndex];
-
-				$thumbs.removeClass("is-active").eq(swiper.activeIndex).addClass("is-active");
-
-				if (!ready || !scene) return;
-
-				park(scene);
-				serve(scene);
-			},
-		},
-	});
-
-	$thumbs.on("click", function () {
-		kfHero3Swiper.slideTo($thumbs.index(this));
-	});
-
-	$thumbs.on("keydown", function (e) {
-		if (e.key !== "Enter" && e.key !== " ") return;
-
-		e.preventDefault();
-		kfHero3Swiper.slideTo($thumbs.index(this));
-	});
-
-	// no autoplay, the slide changes with the thumbs only; the first slide is parked now behind the preloader, afterPreloader plays it
-	if (scenes.length) {
-		park(scenes[first]);
-
-		kfHero3First = {
-			play: function () {
-				ready = true;
-				serve(scenes[first]);
-			}
-		};
-	}
-}
-
-
-/*
-	hero-3 drift — the slice and the peppers follow the cursor over the hero, the peppers further and the other way round, and go back
-	when the cursor leaves. A proxy is tweened and the pictures are set from it, so a slide that is parked meanwhile (that kills the
-	tweens of its own parts) does not stop the drift
-*/
-function kfHero3Drift() {
-	var area = document.querySelector(".kf-hero-3-area");
-	var slices = gsap.utils.toArray(".kf-hero-3-slice");
-	var peppers = gsap.utils.toArray(".kf-hero-3-pepper");
-	if (!area || prefersReducedMotion() || (!slices.length && !peppers.length)) return;
-
-	var pos = { x: 0, y: 0 };
-
-	function apply() {
-		gsap.set(slices, { x: pos.x * 24, y: pos.y * 24 });
-		gsap.set(peppers, { x: pos.x * -44, y: pos.y * -44 });
-	}
-
-	function follow(x, y) {
-		gsap.to(pos, { x: x, y: y, duration: 1.2, ease: "power3.out", overwrite: true, onUpdate: apply });
-	}
-
-	area.addEventListener("mousemove", function (e) {
-		var box = area.getBoundingClientRect();
-
-		follow(((e.clientX - box.left) / box.width - .5) * 2, ((e.clientY - box.top) / box.height - .5) * 2);
-	});
-
-	area.addEventListener("mouseleave", function () {
-		follow(0, 0);
-	});
-}
-
-
-/*
-	hero-3 decor — parked behind the preloader like the slider, played right after: the cream shape slides in from the right edge,
-	the mint leaves unroll from the lower left corner, the tomato drops in from the top left and the tomatoes in the lower right
-	corner rise last. They are plain pictures in the css (no transform of their own), so gsap hands them back clean
-*/
-var kfHero3Deco = null;
-
-function kfHero3DecoInit() {
-	if (prefersReducedMotion()) return;
-
-	var shape = document.querySelector(".kf-hero-3-shape");
-	var leaf = document.querySelector(".kf-hero-3-leaf");
-	var tomato = document.querySelector(".kf-hero-3-tomato");
-	var corner = document.querySelector(".kf-hero-3-corner");
-	var all = [shape, leaf, tomato, corner].filter(Boolean);
-	if (!all.length) return;
-
-	gsap.set(shape, { xPercent: 30, opacity: 0 });
-	gsap.set(leaf, { xPercent: -40, yPercent: 40, rotate: -30, scale: .6, opacity: 0, transformOrigin: "0% 100%" });
-	gsap.set(tomato, { y: -70, rotate: -40, scale: .4, opacity: 0 });
-	gsap.set(corner, { xPercent: 25, yPercent: 40, rotate: 25, scale: .6, opacity: 0, transformOrigin: "100% 100%" });
-
-	kfHero3Deco = {
-		play: function () {
-			gsap.timeline({
-				defaults: { ease: "power3.out" },
-				onComplete: function () {
-					gsap.set(all, { clearProps: "transform,opacity,transformOrigin" });
-				}
-			})
-				.to(shape, { xPercent: 0, opacity: 1, duration: 1.6 }, 0)
-				.to(leaf, { xPercent: 0, yPercent: 0, rotate: 0, scale: 1, opacity: 1, duration: 1.4 }, .3)
-				.to(tomato, { y: 0, rotate: 0, scale: 1, opacity: 1, duration: 1.5, ease: "back.out(1.4)" }, .5)
-				.to(corner, { xPercent: 0, yPercent: 0, rotate: 0, scale: 1, opacity: 1, duration: 1.4 }, .9);
-		}
-	};
-}
-
-
-/*
-	products-1 slider — cards of a fixed width run past the edges, the line under them shows how far the slider has gone
-*/
-function kfProducts1Slider() {
-	if (!$(".kf-products-1-slider").length) return;
-
-	new Swiper(".kf-products-1-slider", {
-		loop: true,
-		slidesPerView: "auto",
-		spaceBetween: 20,
-		slidesOffsetBefore: 20,
-		slidesOffsetAfter: 20,
-		speed: 700,
-		grabCursor: true,
-		navigation: {
-			prevEl: ".kf-products-1-btn.prev",
-			nextEl: ".kf-products-1-btn.next",
-		},
-		pagination: {
-			el: ".kf-products-1-pagination",
-			type: "progressbar",
-		},
-	});
-}
-
-
-/*
-	about-1 slider — two pictures that are always both on show, the one on top and the one under it swap places
-	(the movement and the layer change are in the css, this only flips which one is in front)
-*/
-function kfAbout1Slider() {
-	var $slides = $(".kf-about-1-slide");
-	if ($slides.length < 2) return;
-
-	setInterval(function () {
-		$slides.toggleClass("is-front");
-	}, 4000);
-}
-
-
-/*
-	about-1 scroll motion — while the section passes, the pizza comes down from above and the round dish makes one full turn
-*/
-function kfAbout1Parallax() {
-	var pizza = document.querySelector(".kf-about-1-parallax-img");
-	var dish = document.querySelector(".kf-about-1-sm-img");
-	if ((!pizza && !dish) || prefersReducedMotion()) return;
-
-	var scrollTrigger = {
-		trigger: ".kf-about-1-area",
-		start: "top bottom",
-		end: "bottom top",
-		scrub: true
-	};
-
-	if (pizza) {
-		gsap.fromTo(pizza, { y: -200 }, { y: 150, ease: "none", scrollTrigger: scrollTrigger });
-	}
-
-	if (dish) {
-		gsap.fromTo(dish, { rotation: 0 }, { rotation: 360, ease: "none", scrollTrigger: scrollTrigger });
-	}
-}
-
-
-/*
-	menu-1 scroll motion — the big round dish turns with the scroll, one full turn while the section passes
-*/
-function kfMenu1Rotate() {
-	var dish = document.querySelector(".kf-menu-1-big-img");
-	if (!dish || prefersReducedMotion()) return;
-
-	gsap.fromTo(dish, { rotation: 0 }, {
-		rotation: 360,
-		ease: "none",
-		scrollTrigger: {
-			trigger: ".kf-menu-1-area",
-			start: "top bottom",
-			end: "bottom top",
-			scrub: true
-		}
-	});
-}
-
-
-/*
-	menu-1 background pieces — the red strip at the bottom and the pizza slide up into place when they scroll into view;
-	parked with a class, played by a second class (css, see _menu.scss)
-*/
-function kfMenu1BgIn() {
-	if (prefersReducedMotion()) return;
-
-	document.querySelectorAll(".kf-menu-1-bg-shape, .kf-menu-1-bg-img").forEach(function (el) {
-		el.classList.add("is-ani");
-
-		ScrollTrigger.create({
-			trigger: el,
-			start: "top 100%",
-			once: true,
-			onEnter: function () {
-				el.classList.add("is-in");
-			}
-		});
-	});
-}
-
-
-/*
-	menu-1 card dishes — every round dish in the cards turns 45deg into place while it fades in, once its card scrolls
-	into view; parked with a class, played by a second class (css, see _menu.scss)
-*/
-function kfMenu1CardImgIn() {
-	if (prefersReducedMotion()) return;
-
-	document.querySelectorAll(".kf-menu-1-card-img").forEach(function (el) {
-		el.classList.add("is-ani");
-
-		ScrollTrigger.create({
-			trigger: el,
-			start: "top 90%",
-			once: true,
-			onEnter: function () {
-				el.classList.add("is-in");
-			}
-		});
-	});
-}
-
-
-/*
-	menu-2 tabs — every group shows the picture of the dish picked in its list; the pointer on a dish, a tap
-	or the keyboard picks it
-*/
-function kfMenu2Tabs() {
-	$(".kf-menu-2-tabs").each(function () {
-		var $tabs = $(this).find(".kf-menu-2-tab");
-		var $imgs = $(this).find(".kf-menu-2-tabs-img");
-
-		$tabs.on("click mouseenter focus", function () {
-			if ($(this).hasClass("is-active")) return;
-
-			$tabs.removeClass("is-active").attr("aria-selected", "false");
-			$(this).addClass("is-active").attr("aria-selected", "true");
-			$imgs.removeClass("is-active").eq($tabs.index(this)).addClass("is-active");
-		});
-	});
-}
-
-
-/*
-	menu-2 title lines — each line is drawn when it comes into view: the left flower is drawn in outline and then filled,
-	the dashed line grows out of it and the right flower is drawn at its end. The flowers are <use> of one symbol in the
-	hidden svg (kf-menu-2-defs) whose paths have pathLength="1", so a dash of 1 is a whole outline; stroke and dash
-	properties are inherited from the svg of each flower into the symbol
-*/
-function kfMenu2Orn() {
-	if (!$(".kf-menu-2-tabs-orn").length || prefersReducedMotion()) return;
-
-	document.querySelectorAll(".kf-menu-2-tabs-orn").forEach(function (orn) {
-		var flowers = orn.querySelectorAll(".flower");
-		var line = orn.querySelector(".line");
-
-		// parked: nothing of the flowers is there until the outline is drawn (the gap is longer than the line, no dot at the ends)
-		gsap.set(flowers, { stroke: "currentColor", strokeWidth: 1, strokeDasharray: "1 2", strokeDashoffset: 1, strokeOpacity: 1, fillOpacity: 0 });
-		gsap.set(line, { scaleX: 0, transformOrigin: "left center" });
-
-		var tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: orn,
-				start: "top 88%",
-				once: true
-			},
-			onComplete: function () {
-				gsap.set(flowers, { clearProps: "stroke,strokeWidth,strokeDasharray,strokeDashoffset,strokeOpacity,fillOpacity" });
-				gsap.set(line, { clearProps: "transform" });
-			}
-		});
-
-		flowers.forEach(function (flower, i) {
-			var at = i * 1.5;
-			tl.to(flower, { strokeDashoffset: 0, duration: 1.1, ease: "power2.inOut" }, at)
-				.to(flower, { fillOpacity: 1, strokeOpacity: 0, duration: .6, ease: "power1.out" }, at + .8);
-		});
-
-		tl.to(line, { scaleX: 1, duration: 1.2, ease: "power2.inOut" }, .5);
-	});
-}
-
-
-/*
-	opening-1 parallax — the photo is taller than its frame and runs against the scroll: while the frame passes
-	through the screen it slides down inside it, so the picture seems to sit deeper than the page
-*/
-function kfOpening1Parallax() {
-	var photo = document.querySelector(".kf-opening-1-photo");
-	if (!photo || prefersReducedMotion()) return;
-
-	gsap.fromTo(photo, { yPercent: -12 }, {
-		yPercent: 12,
-		ease: "none",
-		scrollTrigger: {
-			trigger: ".kf-opening-1-img",
-			start: "top bottom",
-			end: "bottom top",
-			scrub: true
-		}
-	});
-}
-
-
-/*
-	offers-2 parallax — the dish picture is taller than its frame and runs against the scroll: while the section passes
-	through the screen it slides down inside the frame, so it seems to lie deeper than the content
-*/
-function kfOffers2Parallax() {
-	var dish = document.querySelector(".kf-offers-2-img-in");
-	if (!dish || prefersReducedMotion()) return;
-
-	// 11% of the 130% tall picture is 14.3% of its frame, just under the 15% it hangs over each edge
-	gsap.fromTo(dish, { yPercent: -11 }, {
-		yPercent: 11,
-		ease: "none",
-		scrollTrigger: {
-			trigger: ".kf-offers-2-area",
-			start: "top bottom",
-			end: "bottom top",
-			scrub: true
-		}
-	});
-}
-
-
-/*
-	products-2 line drawing — the chef is drawn like with a pen when it comes into view: its strokes (one path each, inline
-	in the html) are drawn one after another, each for as long as it is, so the pen has the same speed everywhere
-*/
-function kfProducts2VectorDraw() {
-	var box = document.querySelector(".kf-products-2-bg-vector");
-	if (!box || prefersReducedMotion()) return;
-
-	var paths = box.querySelectorAll("path");
-	// it is hidden on small screens (display: none) and a hidden path cannot be measured, so it just stays whole there
-	if (!paths.length || !box.getClientRects().length) return;
-
-	var lengths = [];
-	var total = 0;
-	paths.forEach(function (path) {
-		var length = path.getTotalLength();
-		lengths.push(length);
-		total += length;
-	});
-
-	var duration = 4;
-	var at = 0;
-	var tl = gsap.timeline({
-		scrollTrigger: {
-			trigger: box,
-			start: "top 85%",
-			once: true
-		},
-		onComplete: function () {
-			gsap.set(paths, { clearProps: "strokeDasharray,strokeDashoffset" });
-		}
-	});
-
-	paths.forEach(function (path, i) {
-		var length = lengths[i];
-
-		// the gap is a little longer than the line, so a round cap does not leave a dot at the end before the line comes
-		gsap.set(path, { strokeDasharray: length + " " + (length + 4), strokeDashoffset: length + 2 });
-
-		var time = duration * length / total;
-		tl.to(path, { strokeDashoffset: 0, duration: time, ease: "none" }, at);
-		at += time;
-	});
-}
-
-
-/*
-	background drift (home-2) — the decorative pictures marked data-kf-drift="40" run against the scroll: while their
-	section passes through the screen they slide from -40px to +40px (the number is the distance), so they lie a little
-	deeper than the content. Only for pictures that have no transform of their own in the css
-*/
-function kfBgDrift() {
-	if (prefersReducedMotion()) return;
-
-	gsap.utils.toArray("[data-kf-drift]").forEach(function (el) {
-		var distance = parseFloat(el.getAttribute("data-kf-drift")) || 40;
-
-		gsap.fromTo(el, { y: -distance }, {
-			y: distance,
-			ease: "none",
-			scrollTrigger: {
-				trigger: el.closest("section") || el,
-				start: "top bottom",
-				end: "bottom top",
-				scrub: true
-			}
-		});
-	});
-}
-
-
-/*
-	choose-1 sliders — the picture slider leads: its arrows also move the text slider and the number
-*/
-function kfChoose1Slider() {
-	if (!$(".kf-choose-1-img-slider").length) return;
-
-	var $current = $(".kf-choose-1-control .current");
-
-	var text = new Swiper(".kf-choose-1-content-slider", {
-		effect: "fade",
-		fadeEffect: { crossFade: true },
-		speed: 700,
-		allowTouchMove: false,
-	});
-
-	new Swiper(".kf-choose-1-img-slider", {
-		grabCursor: true,
-		effect: "creative",
-		creativeEffect: {
-			prev: {
-				shadow: true,
-				origin: "left center",
-				translate: ["-5%", 0, -200],
-				rotate: [0, 100, 0],
-			},
-			next: {
-				origin: "right center",
-				translate: ["5%", 0, -200],
-				rotate: [0, -100, 0],
-			},
-		},
-		speed: 900,
-		autoplay: {
-			delay: 4000,
-			disableOnInteraction: false,
-		},
-		navigation: {
-			prevEl: ".kf-choose-1-btn.prev",
-			nextEl: ".kf-choose-1-btn.next"
-		},
-		on: {
-			slideChange: function (swiper) {
-				text.slideTo(swiper.activeIndex);
-				$current.text(("0" + (swiper.activeIndex + 1)).slice(-2));
-			}
-		}
-	});
-}
-
-
-/*
-	choose-2 — when it scrolls into view the two brush halves of the plate slide out of the middle line, then the dish
-	comes up between them; the circle draws itself from the top down and each reason pops up when the line reaches its
-	dot (parked with a class, played by a second class — css, see _choose.scss). Below 1200px there is no circle, so the
-	reasons come one after another as they scroll into view
-*/
-function kfChoose2In() {
-	var area = document.querySelector(".kf-choose-2-area");
-	if (!area || prefersReducedMotion()) return;
-
-	var plate = area.querySelector(".kf-choose-2-plate");
-	var plateParts = plate.querySelectorAll(".kf-choose-2-plate-bg-1, .kf-choose-2-plate-bg-2, .kf-choose-2-plate-img");
-	var rings = area.querySelector(".kf-choose-2-rings");
-	var items = area.querySelectorAll(".kf-choose-2-item");
-	var wide = window.matchMedia("(min-width: 1200px)");
-	var shown = false;
-
-	function park(el) {
-		el.classList.add("is-ani");
-	}
-
-	function play(el) {
-		el.classList.add("is-in");
-	}
-
-	plateParts.forEach(park);
-	park(rings);
-	items.forEach(park);
-
-	ScrollTrigger.create({
-		trigger: plate,
-		start: "top 95%",
-		once: true,
-		onEnter: function () {
-			shown = true;
-			plateParts.forEach(play);
-			play(rings);
-
-			// with the circle the reasons follow the line, their delays are in the css
-			if (wide.matches) items.forEach(play);
-		}
-	});
-
-	items.forEach(function (item) {
-		ScrollTrigger.create({
-			trigger: item,
-			start: "top 90%",
-			once: true,
-			onEnter: function () {
-				if (!wide.matches || shown) play(item);
-			}
-		});
-	});
-}
-
-
-/*
-	faqs-2 pizza — when it scrolls into view the picture grows from nothing on its lower right corner while it slides up
-	(parked with a class, played by a second class — css, see _faqs.scss). The frame is the trigger, it never moves
-*/
-function kfFaqs2ImgIn() {
-	var frame = document.querySelector(".kf-faqs-2-img");
-	var img = document.querySelector(".kf-faqs-2-img-in");
-	if (!frame || !img || prefersReducedMotion()) return;
-
-	img.classList.add("is-ani");
-
-	ScrollTrigger.create({
-		trigger: frame,
-		start: "top 65%",
-		once: true,
-		onEnter: function () {
-			img.classList.add("is-in");
-		}
-	});
-}
-
-
-/*
-	offers-2 counter — the numbers run down to the date in data-countdown (the ones in the html show until the script starts)
-*/
-function kfOffers2Countdown() {
-	var box = document.querySelector(".kf-offers-2-counter-box");
-	if (!box) return;
-
-	var end = new Date(box.getAttribute("data-countdown")).getTime();
-	if (isNaN(end)) return;
-
-	var days = box.querySelector('[data-unit="days"]');
-	var hours = box.querySelector('[data-unit="hours"]');
-	var mins = box.querySelector('[data-unit="mins"]');
-	var secs = box.querySelector('[data-unit="secs"]');
-
-	function pad(n) {
-		return ("0" + n).slice(-2);
-	}
-
-	function tick() {
-		var left = Math.max(0, end - Date.now());
-
-		days.textContent = Math.floor(left / 864e5);
-		hours.textContent = pad(Math.floor(left % 864e5 / 36e5));
-		mins.textContent = pad(Math.floor(left % 36e5 / 6e4));
-		secs.textContent = pad(Math.floor(left % 6e4 / 1e3));
-	}
-
-	tick();
-	setInterval(tick, 1000);
-}
-
-
-/*
-	testimonial-1 slider — the portrait and the words fade into the next ones, the dots show which one is on
-*/
-function kfTestimonial1Slider() {
-	if (!$(".kf-testimonial-1-slider").length) return;
-
-	new Swiper(".kf-testimonial-1-slider", {
-		effect: "fade",
-		fadeEffect: { crossFade: true },
-		speed: 800,
-		// without a loop the autoplay would stop on the last slide, rewind sends it back to the first
-		rewind: true,
-		autoplay: {
-			delay: 5000,
-			disableOnInteraction: false
-		},
-		pagination: {
-			el: ".kf-testimonial-1-pagination",
-			clickable: true
-		}
-	});
-}
-
-
-/*
-	testimonial-2 slider — pictures and cards are slides of different widths, so it shows as many as fit and the next one
-	is cut by the edge of the page; it loops and plays by itself (stops while the pointer is on it), the dots show where it
-	is and can be clicked
-*/
-function kfTestimonial2Slider() {
-	if (!$(".kf-testimonial-2-slider").length) return;
-
-	new Swiper(".kf-testimonial-2-slider", {
-		slidesPerView: "auto",
-		spaceBetween: 12,
-		grabCursor: true,
-		speed: 700,
-		loop: true,
-		// the last slide at the right edge is cut, two more copies keep the row full there
-		loopAdditionalSlides: 2,
-		autoplay: {
-			delay: 4000,
-			disableOnInteraction: false,
-			pauseOnMouseEnter: true
-		},
-		pagination: {
-			el: ".kf-testimonial-2-pagination",
-			clickable: true
-		}
-	});
-}
-
-
-/*
-	order-2 meal tabs — Starter / Lunch / Dinner: the one picked turns dark and its name goes to the hidden field of the form
-*/
-function kfOrder2Tabs() {
-	$(".kf-order-2-tabs").each(function () {
-		var $tabs = $(this).find(".kf-order-2-tab");
-		var $meal = $(this).closest(".kf-order-2-form").find("input[name='meal']");
-
-		$tabs.on("click", function () {
-			$tabs.removeClass("is-active").attr("aria-pressed", "false");
-			$(this).addClass("is-active").attr("aria-pressed", "true");
-			$meal.val($(this).data("meal"));
-		});
-	});
-}
-
-
-/*
-	testimonial-1 big word — like the big title of outgrid (service-v1-title): while the page scrolls the letters rise from
-	below one after the other (0.4s each, 0.2s apart, power2.out, scrubbed 1.5), fading in on the way so nothing is cut off
-	by a hard edge, and the whole word slides in from the right (40% -> 0). The filled word and the outline word move
-	together; from 992px up only
-*/
-function kfTestimonial1BgText() {
-	var texts = document.querySelectorAll(".kf-testimonial-1-bg-text");
-	if (!texts.length || prefersReducedMotion()) return;
-
-	gsap.matchMedia().add("(min-width: 992px)", function () {
-		var splits = [];
-		var tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: texts[0],
-				start: "top bottom",
-				end: "bottom 50%",
-				scrub: 1.5
-			}
-		});
-
-		tl.fromTo(texts, { xPercent: 40 }, { xPercent: 0, duration: 1.6, ease: "none" }, 0);
-
-		texts.forEach(function (text) {
-			var split = new SplitText(text, { type: "chars" });
-			splits.push(split);
-			tl.fromTo(split.chars, { yPercent: 200, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.4, ease: "power2.out", stagger: 0.2 }, 0);
-		});
-
-		return function () {
-			splits.forEach(function (split) {
-				split.revert();
-			});
-		};
-	});
-}
-
-
-/*
-	footer-1 / footer-2 big title — the word is served: the letters come up from behind the line one after another like
-	dishes from the pass, each one clearing from a blur (steam) as it lands. They go from the first letter to the last,
-	or (from: "center") start with the middle one and go out to both sides
-*/
-function kfFooterBigTitle(titleSelector, triggerSelector, from) {
-	var title = document.querySelector(titleSelector);
-	if (!title || prefersReducedMotion()) return;
-
-	var letters = title.querySelectorAll("span");
-
-	gsap.fromTo(letters, {
-		yPercent: 120,
-		opacity: 0,
-		filter: "blur(12px)"
-	}, {
-		yPercent: 0,
-		opacity: 1,
-		filter: "blur(0px)",
-		duration: 1.3,
-		ease: "power3.out",
-		stagger: { each: .1, from: from || "start" },
-		scrollTrigger: {
-			trigger: triggerSelector,
-			start: "top 92%",
-			once: true
-		},
-		onComplete: function () {
-			gsap.set(letters, { clearProps: "opacity,filter,transform" });
-		}
-	});
-}
-
-
-/*
-	footer-1 photos — every tile is a covered dish: a lid with a gold rim and a knob lifts off it, tile after tile, while
-	the photo settles from a closer view; the lids are made here, so without the script (or with reduced motion) the
-	photos are simply there. The photos have a css transition for the hover, which is switched off while gsap moves them
-*/
-function kfFooter1Images() {
-	var box = document.querySelector(".kf-footer-1-img-box");
-	if (!box || prefersReducedMotion()) return;
-
-	var photos = box.querySelectorAll(".kf-footer-1-img-photo");
-	var lids = [];
-
-	box.querySelectorAll(".kf-footer-1-img-item").forEach(function (tile) {
-		var lid = document.createElement("div");
-		lid.className = "kf-footer-1-img-lid";
-		tile.appendChild(lid);
-		lids.push(lid);
-	});
-
-	gsap.set(photos, { transition: "none", scale: 1.25 });
-
-	gsap.timeline({
-		scrollTrigger: {
-			trigger: box,
-			start: "top 85%",
-			once: true
-		},
-		onComplete: function () {
-			gsap.set(photos, { clearProps: "transition,transform" });
-			lids.forEach(function (lid) {
-				lid.remove();
-			});
-		}
-	})
-		.to(lids, { yPercent: -101, duration: 1.1, ease: "power3.inOut", stagger: .14 }, 0)
-		.to(photos, { scale: 1, duration: 1.6, ease: "power2.out", stagger: .14 }, 0);
-}
-
-
-/*
-	hero-1 (AI Agentech) — like the slider of the KingFeast hero: the picture of the new slide opens like an iris (a circle that grows from
+	hero-1 (AI Agentech) — the picture of the new slide opens like an iris (a circle that grows from
 	the middle of the stage, a thin ring runs on its edge) and settles from a zoom, the robot comes in out of a blur, then the words of the
 	title come up from behind their line one after another and the text and the button follow. The counter and the thumbnails follow the
 	active slide, a click on a thumbnail jumps to its slide. The first slide opens right after the preloader and the slides go on by themselves
@@ -1267,6 +120,11 @@ function agHero1Slider() {
 	var $current = $(".ag-hero-1-count .current");
 	var scenes = [];
 	var rim = null;
+	// the ghost title sits in the front slider and does not fade with the slides, so it is brought in by hand on every slide
+	var mark = prefersReducedMotion() ? null : slider.querySelector(".ag-hero-1-watermark");
+	var markGlass = mark ? mark.querySelector(".glass") : null;
+	var markEdge = mark ? mark.querySelector(".edge") : null;
+	var markTl = null;
 
 	if (!prefersReducedMotion()) {
 		$(".ag-hero-1-slider-front .swiper-slide").each(function (i) {
@@ -1276,7 +134,7 @@ function agHero1Slider() {
 				back: backSlides[i],
 				bg: backSlides[i].querySelector(".ag-hero-1-bg img"),
 				robot: this.querySelector(".ag-hero-1-main img"),
-				words: title ? kfHeroWords(title, "ag-hero-1-word-mask", "ag-hero-1-word") : [],
+				words: title ? agHeroWords(title, "ag-hero-1-word-mask", "ag-hero-1-word") : [],
 				rest: Array.prototype.slice.call(this.querySelectorAll(".ag-hero-1-text, .ag-pr-btn-1")),
 				tl: null
 			});
@@ -1300,7 +158,20 @@ function agHero1Slider() {
 		scene.back.style.clipPath = "circle(0px at 50% 58%)";
 	}
 
-	function serve(scene) {
+	// the picture that goes out is cut away where the circle of the new one is (a hole that grows with it, 2px under the circle so no seam
+	// shows), so the new picture always sits on the dark panel alone: the first and the third are 60% see-through and would otherwise show
+	// the old one through them until it is taken away at the end, and jump darker then
+	function maskLeaving(slide, r) {
+		var hole = Math.max(0, r - 2);
+
+		slide.style.maskImage = slide.style.webkitMaskImage = "radial-gradient(circle at 50% 58%, transparent " + hole + "px, #000 " + (hole + 1) + "px)";
+	}
+
+	function unmask(slide) {
+		slide.style.maskImage = slide.style.webkitMaskImage = "";
+	}
+
+	function serve(scene, leaving) {
 		var targets = [scene.bg, scene.robot].concat(scene.words, scene.rest);
 		var iris = { r: 0 };
 		// the circle opens at 50% 58% and has to reach the farthest corner
@@ -1312,6 +183,7 @@ function agHero1Slider() {
 				scene.back.style.clipPath = "";
 				Array.prototype.forEach.call(backSlides, function (slide) {
 					slide.classList.remove("is-leaving");
+					unmask(slide);
 				});
 				gsap.set(targets, { clearProps: "transform,opacity,filter,transition" });
 			}
@@ -1322,6 +194,7 @@ function agHero1Slider() {
 				ease: "power3.inOut",
 				onUpdate: function () {
 					scene.back.style.clipPath = "circle(" + iris.r + "px at 50% 58%)";
+					if (leaving) maskLeaving(leaving, iris.r);
 					rim.style.width = rim.style.height = iris.r * 2 + "px";
 				}
 			}, 0)
@@ -1334,7 +207,41 @@ function agHero1Slider() {
 			.to(scene.rest, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: .15 }, 1.25);
 	}
 
-	// the pictures behind only follow the front one (the ghost title sits between the two); which of them shows is set below (is-current)
+	// the glass and its edge wait below their place; only these two are animated, the box itself is centred by a transform
+	function markPark() {
+		if (!mark) return;
+		if (markTl) markTl.kill();
+
+		gsap.set(markGlass, { y: 70, opacity: 0 });
+		gsap.set(markEdge, { y: 70, opacity: 0, filter: "blur(12px)" });
+	}
+
+	// what is shown goes up and out (not on the first slide), then the glass rises into its place and the edge follows out of a blur,
+	// timed to meet the circle of the new picture
+	function markServe(out) {
+		if (!mark) return;
+		if (markTl) markTl.kill();
+
+		markTl = gsap.timeline({
+			defaults: { ease: "power3.out" },
+			onComplete: function () {
+				gsap.set([markGlass, markEdge], { clearProps: "transform,opacity,filter" });
+			}
+		});
+
+		if (out) {
+			markTl
+				.to([markGlass, markEdge], { y: -30, opacity: 0, duration: .4, ease: "power2.in" })
+				.set(markGlass, { y: 70 })
+				.set(markEdge, { y: 70, filter: "blur(12px)" });
+		}
+
+		markTl
+			.to(markGlass, { y: 0, opacity: 1, duration: 1.4 }, .7)
+			.to(markEdge, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.4 }, .85);
+	}
+
+	// the pictures behind only follow the front one; which of them shows is set below (is-current)
 	var back = new Swiper(".ag-hero-1-slider-back", {
 		slidesPerView: 1,
 		speed: 1000,
@@ -1359,10 +266,11 @@ function agHero1Slider() {
 				$thumbs.removeClass("is-active").eq(now).addClass("is-active");
 				$current.text("0" + (now + 1));
 
-				// the picture that goes out stays under the new one until the circle has covered it
+				// the picture that goes out stays under the new one until the circle has covered it (without the animation it just goes)
 				Array.prototype.forEach.call(backSlides, function (slide, n) {
 					slide.classList.toggle("is-current", n === now);
-					slide.classList.toggle("is-leaving", n === before);
+					slide.classList.toggle("is-leaving", n === before && scenes.length > 0);
+					unmask(slide);
 				});
 
 				if (!scenes.length) return;
@@ -1374,7 +282,8 @@ function agHero1Slider() {
 				}
 
 				park(scenes[now]);
-				serve(scenes[now]);
+				serve(scenes[now], backSlides[before]);
+				markServe(true);
 			}
 		}
 	});
@@ -1394,19 +303,246 @@ function agHero1Slider() {
 	if (scenes.length) {
 		swiper.autoplay.stop();
 		park(scenes[0]);
+		markPark();
 
 		agHero1First = {
 			play: function () {
 				serve(scenes[0]);
+				markServe(false);
 			}
 		};
 	}
 }
 
 
+
 /*
-	services-1 (AI Agentech) — the cards drag along the slider, the card under the pointer (or the focus) is the lit one,
-	the second card starts lit as drawn in the design
+	about-1 (AI Agentech) — when the parts scroll into view they come up like an AI system starting: the photo is drawn by a scan line
+	that runs down it (out of a blur, a little zoomed), the small card rises and its number counts up, the key features card boots
+	(the face comes out of a blur, the hand reaches in, the sparkles spin in one after another with their lines, the chip pops last).
+	The tag and the 3d shapes of the background follow, the shapes also drift against the scroll. The title, the text and the button
+	have their own effects (wa_text_effect, wow)
+*/
+function agAbout1In() {
+
+	var area = document.querySelector(".ag-about-1-area");
+	if (!area || prefersReducedMotion()) return;
+
+	var tag = area.querySelector(".ag-about-1-sec-title > .ag-subtitle-1");
+	var shapes = gsap.utils.toArray(".ag-about-1-bg-shape-1, .ag-about-1-bg-shape-2", area);
+
+	gsap.from(tag, {
+		x: -30,
+		opacity: 0,
+		filter: "blur(8px)",
+		duration: 1,
+		ease: "power3.out",
+		clearProps: "transform,opacity,filter",
+		scrollTrigger: { trigger: tag, start: "top 85%", once: true }
+	});
+
+	// the shapes keep their transform (the drift below uses it), only the blur and the fade are cleared
+	gsap.from(shapes, {
+		scale: .7,
+		opacity: 0,
+		filter: "blur(16px)",
+		duration: 1.8,
+		ease: "power3.out",
+		stagger: .25,
+		clearProps: "opacity,filter",
+		scrollTrigger: { trigger: area, start: "top 75%", once: true }
+	});
+
+	shapes.forEach(function (shape, i) {
+		gsap.fromTo(shape, { yPercent: i ? 8 : -8 }, {
+			yPercent: i ? -8 : 8,
+			ease: "none",
+			scrollTrigger: { trigger: area, start: "top bottom", end: "bottom top", scrub: true }
+		});
+	});
+
+	// photo + small card: the line and the photo run down together (same time, same ease), so the line is always at the edge of what is drawn
+	var images = area.querySelector(".ag-about-1-images");
+	var photo = area.querySelector(".ag-about-1-img img");
+	var scan = area.querySelector(".ag-about-1-img-scan");
+	var card = area.querySelector(".ag-about-1-card");
+	var num = area.querySelector(".ag-about-1-card-num");
+
+	if (images && photo && scan && card && num) {
+		var goal = parseInt(num.textContent, 10);
+		var unit = num.textContent.replace(/[\d\s]/g, "");
+		var count = { v: 0 };
+
+		num.textContent = "0" + unit;
+
+		gsap.timeline({
+			defaults: { ease: "power3.out" },
+			scrollTrigger: { trigger: images, start: "top 78%", once: true },
+			onComplete: function () {
+				gsap.set([photo, card], { clearProps: "transform,opacity,filter,clipPath" });
+			}
+		})
+			.fromTo(scan, { top: "0%" }, { top: "100%", duration: 1.6, ease: "power2.inOut" }, 0)
+			.fromTo(scan, { opacity: 0 }, { opacity: 1, duration: .2, ease: "none" }, 0)
+			.to(scan, { opacity: 0, duration: .3, ease: "none" }, 1.3)
+			.fromTo(photo, { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.6, ease: "power2.inOut" }, 0)
+			.fromTo(photo, { scale: 1.15, filter: "blur(14px) saturate(1.8)" }, { scale: 1, filter: "blur(0px) saturate(1)", duration: 2, ease: "power2.out" }, 0)
+			.from(card, { y: 70, scale: .88, opacity: 0, transformOrigin: "0% 100%", duration: 1.2 }, .9)
+			.to(count, {
+				v: goal,
+				duration: 1.6,
+				ease: "power1.out",
+				onUpdate: function () {
+					num.textContent = Math.round(count.v) + unit;
+				}
+			}, 1.1);
+	}
+
+	// key features card
+	var key = area.querySelector(".ag-about-1-key");
+
+	if (key) {
+		var face = key.querySelector(".ag-about-1-key-face");
+		var hand = key.querySelector(".ag-about-1-key-hand");
+		var chip = key.querySelector(".ag-about-1-key-ai");
+		var icons = gsap.utils.toArray(".ag-about-1-key-list .icon", key);
+		var lines = gsap.utils.toArray(".ag-about-1-key-list .text", key);
+
+		gsap.timeline({
+			defaults: { ease: "power3.out" },
+			scrollTrigger: { trigger: key, start: "top 85%", once: true },
+			onComplete: function () {
+				gsap.set(key, { clearProps: "opacity" });
+				gsap.set([face, hand, chip].concat(icons, lines), { clearProps: "transform,opacity,filter" });
+			}
+		})
+			.from(key, { opacity: 0, duration: .8 }, 0)
+			.from(face, { x: -60, opacity: 0, filter: "blur(12px)", duration: 1.2 }, .1)
+			.from(hand, { x: 90, rotate: 8, opacity: 0, transformOrigin: "100% 50%", duration: 1.2 }, .3)
+			.from(icons, { scale: 0, rotate: -180, duration: .7, ease: "back.out(2)", stagger: .12 }, .5)
+			.from(lines, { x: -28, opacity: 0, filter: "blur(6px)", duration: .8, stagger: .12 }, .5)
+			.from(chip, { scale: .4, rotate: -25, opacity: 0, duration: .9, ease: "back.out(2.4)" }, 1.1);
+	}
+}
+
+
+/*
+	process-1 title — the big title sits behind the panel and rises out of it with the scroll: it is all hidden when the panel comes
+	into the screen and is where the design has it when the panel is just over the middle (and goes back down when scrolled back).
+	Only its margin-top moves (the title is centred by its transform, so a gsap y would fight it)
+*/
+function agProcess1Title() {
+	var title = document.querySelector(".ag-process-1-title");
+	var panel = document.querySelector(".ag-process-1-panel");
+	if (!title || !panel || prefersReducedMotion()) return;
+
+	// 55% of the title's own height is more than the 0.45em that shows above the panel, so all of it is behind the panel at the start
+	gsap.fromTo(title, {
+		marginTop: function () {
+			return title.offsetHeight * .55;
+		}
+	}, {
+		marginTop: 0,
+		ease: "none",
+		scrollTrigger: { trigger: panel, start: "top bottom", end: "top 55%", scrub: true, invalidateOnRefresh: true }
+	});
+}
+
+
+/*
+	cta-1 (AI Agentech) — when the box scrolls into view the robot comes up first (from below, out of a blur), and only when it is there
+	the neon lines fade in behind it. The title, the text and the button come up one after another beside it
+*/
+function agCta1In() {
+
+	var box = document.querySelector(".ag-cta-1-box");
+	if (!box || prefersReducedMotion()) return;
+
+	var robot = box.querySelector(".ag-cta-1-robot");
+	var lines = box.querySelector(".ag-cta-1-lines");
+	var rest = gsap.utils.toArray(".ag-cta-1-title, .ag-cta-1-text, .ag-cta-1-btn", box);
+
+	if (!robot || !lines) return;
+
+	gsap.timeline({
+		defaults: { ease: "power3.out" },
+		scrollTrigger: { trigger: box, start: "top 80%", once: true },
+		onComplete: function () {
+			gsap.set([robot, lines].concat(rest), { clearProps: "transform,opacity,filter" });
+		}
+	})
+		.from(robot, { y: 90, scale: .85, opacity: 0, filter: "blur(14px)", transformOrigin: "50% 100%", duration: 1.2 }, 0)
+		.from(rest, { y: 30, opacity: 0, filter: "blur(6px)", duration: .9, stagger: .15 }, .2)
+		// the lines wait for the robot (it takes 1.2s)
+		.from(lines, { opacity: 0, duration: 1.4, ease: "power2.out" }, 1.2);
+}
+
+
+/*
+	footer-1 (AI Agentech) — the robot powers on when its row scrolls into view: it comes up out of a blur and its light flickers
+	like a hologram before it holds. The big brand text (its own trigger) rises out of a blur and its letters close in from a wide
+	spacing, like a line being set
+*/
+function agFooter1In() {
+
+	if (prefersReducedMotion()) return;
+
+	var top = document.querySelector(".ag-footer-1-top");
+	var robot = document.querySelector(".ag-footer-1-robot");
+
+	if (top && robot) {
+		gsap.set(robot, { opacity: 0 });
+
+		gsap.timeline({
+			defaults: { ease: "power3.out" },
+			scrollTrigger: { trigger: top, start: "top 90%", once: true },
+			onComplete: function () {
+				gsap.set(robot, { clearProps: "transform,opacity,filter" });
+			}
+		})
+			.from(robot, { y: 70, scale: .9, filter: "blur(10px)", transformOrigin: "50% 100%", duration: 1.2 }, 0)
+			.to(robot, { opacity: .9, duration: .12, ease: "none" }, 0)
+			.to(robot, { opacity: .15, duration: .1, ease: "none" })
+			.to(robot, { opacity: 1, duration: .12, ease: "none" })
+			.to(robot, { opacity: .4, duration: .1, ease: "none" })
+			.to(robot, { opacity: 1, duration: .3, ease: "none" });
+	}
+
+	var brand = document.querySelector(".ag-footer-1-brand");
+	var text = document.querySelector(".ag-footer-1-brand-text");
+
+	if (brand && text) {
+		// the em values are the same on both sides (-0.022em is the letter spacing of the design), so gsap has nothing to convert
+		gsap.fromTo(text, {
+			yPercent: 45,
+			opacity: 0,
+			filter: "blur(12px)",
+			letterSpacing: "0.06em"
+		}, {
+			yPercent: 0,
+			opacity: 1,
+			filter: "blur(0px)",
+			letterSpacing: "-0.022em",
+			duration: 1.6,
+			ease: "power3.out",
+			clearProps: "transform,opacity,filter,letterSpacing",
+			scrollTrigger: { trigger: brand, start: "top 90%", once: true }
+		});
+	}
+}
+
+
+// the card under the pointer (or the focus) is the lit one (the one that starts lit, as drawn in the design, has is-active in the html)
+function agLitOnHover($cards) {
+	$cards.on("mouseenter focusin", function () {
+		$cards.removeClass("is-active");
+		$(this).addClass("is-active");
+	});
+}
+
+
+/*
+	services-1 (AI Agentech) — the cards drag along the slider, the card under the pointer (or the focus) is the lit one
 */
 function agServices1Slider() {
 
@@ -1419,28 +555,15 @@ function agServices1Slider() {
 		grabCursor: true
 	});
 
-	var $cards = $(".ag-services-1-card");
-
-	$cards.on("mouseenter focusin", function () {
-		$cards.removeClass("is-active");
-		$(this).addClass("is-active");
-	});
+	agLitOnHover($(".ag-services-1-card"));
 }
 
 
 /*
-	team-1 (AI Agentech) — the card under the pointer (or the focus) is the lit one, the second card starts lit as drawn in the design
+	team-1 (AI Agentech) — the card under the pointer (or the focus) is the lit one
 */
 function agTeam1Cards() {
-
-	var $cards = $(".ag-team-1-card");
-
-	if (!$cards.length) return;
-
-	$cards.on("mouseenter focusin", function () {
-		$cards.removeClass("is-active");
-		$(this).addClass("is-active");
-	});
+	agLitOnHover($(".ag-team-1-card"));
 }
 
 
@@ -1530,7 +653,7 @@ function agTestimonial1Slider() {
 
 
 /*
-	team-1 scroll — like the team of kaelorian: from 1200px up the section is pinned and the cards slide in from the right edge of their
+	team-1 scroll — from 1200px up the section is pinned and the cards slide in from the right edge of their
 	box (.ag-team-1-overflow, it cuts them off) while the page scrolls (the row as a block, every card a little behind the one before it,
 	scrubbed 0.6), then they rest for a moment and the page goes on. The top of the section comes up once when it arrives.
 	Below 1200 there is no animation at all
@@ -1612,15 +735,6 @@ function agTeam1Scroll() {
 	page lifecycle
 */
 function afterPreloader() {
-	// hero-1 card stack — the two cards under the top one fade down into place (css, see _hero.scss)
-	$(".kf-hero-1-area").addClass("is-ready");
-
-	kfHero1Play();
-	if (kfHero1Swiper) kfHero1Swiper.autoplay.start();
-	if (kfHero2First) kfHero2First.play();
-	if (kfHero2Swiper) kfHero2Swiper.autoplay.start();
-	if (kfHero3First) kfHero3First.play();
-	if (kfHero3Deco) kfHero3Deco.play();
 	if (agHero1First) agHero1First.play();
 	if (agHero1Swiper && !prefersReducedMotion()) agHero1Swiper.autoplay.start();
 
@@ -1646,9 +760,6 @@ window.addEventListener("load", function () {
 
 	ScrollTrigger.refresh();
 
-	// park the hero while the curtain is still up
-	kfHero1Park();
-
 	if (agPreloader) {
 		agPreloader.done();
 	} else {
@@ -1658,46 +769,22 @@ window.addEventListener("load", function () {
 	afterPageLoad();
 });
 
-// a trigger on a timeline (wa_text_effect in main-common.js, menu-2 orn) is measured a moment after it is made; when the page is
+// a trigger on a timeline (wa_text_effect in main-common.js) is measured a moment after it is made; when the page is
 // reloaded halfway down, the next trigger that is made would measure and kill the passed ones all at once and ScrollTrigger
 // loses count (reading 'pin' of undefined), so they are measured first
 ScrollTrigger.refresh();
 
-kfHero1Slider();
-kfHero2Slider();
-kfHero3Slider();
-kfHero3DecoInit();
-kfHero3Drift();
-kfProducts1Slider();
-kfAbout1Slider();
-kfAbout1Parallax();
-kfMenu1Rotate();
-kfMenu1BgIn();
-kfMenu1CardImgIn();
-kfMenu2Tabs();
-kfMenu2Orn();
-ScrollTrigger.refresh();
-kfOpening1Parallax();
-kfChoose1Slider();
-kfChoose2In();
-kfFaqs2ImgIn();
-kfOffers2Countdown();
-kfOffers2Parallax();
-kfBgDrift();
-kfProducts2VectorDraw();
-kfTestimonial1Slider();
-kfTestimonial2Slider();
-kfOrder2Tabs();
-kfTestimonial1BgText();
-kfFooterBigTitle(".kf-footer-1-name-text", ".kf-footer-1-big-title");
-kfFooterBigTitle(".kf-footer-2-name-text", ".kf-footer-2-big-title", "center");
-kfFooter1Images();
 agHero1Slider();
+agAbout1In();
 agServices1Slider();
 agTeam1Cards();
 agTeam1Scroll();
 agFeatures1Slider();
 agProjects1Slider();
 agTestimonial1Slider();
+agProcess1Title();
+agCta1In();
+agFooter1In();
 
 })(jQuery);
+
