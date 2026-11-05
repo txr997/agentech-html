@@ -431,8 +431,9 @@
                         <div class="ag-about-1-images">
                             <div class="ag-about-1-images-in">
                                 <div class="ag-about-1-img wa-img-cover wa-fix">
-                                    <img src="assets/img/about/a1-img.jpg" alt="AI powered robot woman">
-                                    <div class="ag-about-1-img-scan" aria-hidden="true"></div>
+                                    <div id="wa_liquid_img2" class="w-100 h-100 wa-fix" data-displacement="assets/img/common/liquid-displacement.png">
+                                        <img src="assets/img/about/a1-img.jpg" alt="AI powered robot woman">
+                                    </div>
                                 </div>
                                 <div class="ag-about-1-card wa-fix">
                                     <div class="ag-about-1-card-wave wa-img-contain"><img src="assets/img/about/a1-p-wave.svg" alt=""></div>
@@ -688,7 +689,7 @@
                                 </div>
                             </div>
 
-                            <div class="ag-team-1-card is-active">
+                            <div class="ag-team-1-card">
                                 <div class="ag-team-1-card-in">
                                     <div class="ag-team-1-card-img wa-img-cover wa-fix"><img src="assets/img/team/t1-img-2.jpg" alt="Wade Warren"></div>
                                     <div class="ag-team-1-card-social">
@@ -770,7 +771,11 @@
 
                     <!-- left: the big picture, the white stripes in its bottom right corner sit on top of it -->
                     <div class="ag-features-1-left">
-                        <div class="ag-features-1-big wa-img-cover wa-fix"><img src="assets/img/features/f1-big-img.jpg" alt="AI robot"></div>
+                        <div class="ag-features-1-big wa-img-cover wa-fix">
+                            <div class="wa_liquid_img2 w-100 h-100 wa-fix" data-displacement="assets/img/common/liquid-displacement.png">
+                                <img src="assets/img/features/f1-big-img.jpg" alt="AI robot">
+                            </div>
+                        </div>
                         <div class="ag-features-1-stripes"></div>
                     </div>
 
@@ -1114,7 +1119,11 @@
 
                         <!-- media: the photo runs out to the right edge of the screen, the glass card sits in its bottom right corner -->
                         <div class="ag-choose-1-media">
-                            <div class="ag-choose-1-img wa-img-cover wa-fix"><img src="assets/img/choose/c1-img-1.jpg" alt="Business man and AI robot working together"></div>
+                            <div class="ag-choose-1-img wa-img-cover wa-fix">
+                                <div class="wa_liquid_img2 w-100 h-100 wa-fix" data-displacement="assets/img/common/liquid-displacement.png">
+                                    <img src="assets/img/choose/c1-img-1.jpg" alt="Business man and AI robot working together">
+                                </div>
+                            </div>
                             <div class="ag-choose-1-box wow fadeInUp2">
                                 <p class="ag-p-1 has-white ag-choose-1-box-text">We combine advanced AI technology, strategic thinking, and practical business expertise to create intelligent solutions that deliver measurable results and long-term value.</p>
                                 <a href="about-us.html" class="ag-pr-btn-1">
@@ -1246,88 +1255,75 @@
 
                 </div>
 
-                <!-- slider: the cards run out to both edges of the screen, they drag and play by themselves -->
-                <div class="ag-testimonial-1-slider swiper">
-                    <div class="swiper-wrapper">
+                <!-- marquee: the cards run out to both edges of the screen and run by themselves (they stop while the pointer is on them) -->
+                <div class="ag-testimonial-1-marquee wa_marquee" data-speed="60" data-pause="true">
+                    <div class="ag-testimonial-1-cards">
 
-                        <div class="swiper-slide">
-                            <div class="ag-testimonial-1-card">
-                                <div class="ag-testimonial-1-card-bg"></div>
-                                <div class="ag-testimonial-1-card-quote"></div>
-                                <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-1.jpg" alt="Sarah Mitchell"></div>
-                                <div class="ag-testimonial-1-card-info">
-                                    <h3 class="ag-h-1 ag-testimonial-1-card-name">Sarah Mitchell</h3>
-                                    <p class="ag-p-1 ag-testimonial-1-card-role">Chief Executive Officer, NovaTech</p>
-                                </div>
-                                <p class="ag-p-2 ag-testimonial-1-card-text">“From strategy to implementation, the team made AI feel practical and achievable. Their solution significantly improved our workflow and helped our team operate more efficiently.”</p>
+                        <div class="ag-testimonial-1-card">
+                            <div class="ag-testimonial-1-card-bg"></div>
+                            <div class="ag-testimonial-1-card-quote"></div>
+                            <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-1.jpg" alt="Sarah Mitchell"></div>
+                            <div class="ag-testimonial-1-card-info">
+                                <h3 class="ag-h-1 ag-testimonial-1-card-name">Sarah Mitchell</h3>
+                                <p class="ag-p-1 ag-testimonial-1-card-role">Chief Executive Officer, NovaTech</p>
                             </div>
+                            <p class="ag-p-2 ag-testimonial-1-card-text">“From strategy to implementation, the team made AI feel practical and achievable. Their solution significantly improved our workflow and helped our team operate more efficiently.”</p>
                         </div>
 
-                        <div class="swiper-slide">
-                            <div class="ag-testimonial-1-card">
-                                <div class="ag-testimonial-1-card-bg"></div>
-                                <div class="ag-testimonial-1-card-quote"></div>
-                                <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-2.jpg" alt="Emily Rodriguez"></div>
-                                <div class="ag-testimonial-1-card-info">
-                                    <h3 class="ag-h-1 ag-testimonial-1-card-name">Emily Rodriguez</h3>
-                                    <p class="ag-p-1 ag-testimonial-1-card-role">Product Director, ScaleHub</p>
-                                </div>
-                                <p class="ag-p-2 ag-testimonial-1-card-text">“Their AI expertise and attention to detail were exceptional. We now have a scalable solution that improves decision-making and creates a much better experience for our customers.”</p>
+                        <div class="ag-testimonial-1-card">
+                            <div class="ag-testimonial-1-card-bg"></div>
+                            <div class="ag-testimonial-1-card-quote"></div>
+                            <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-2.jpg" alt="Emily Rodriguez"></div>
+                            <div class="ag-testimonial-1-card-info">
+                                <h3 class="ag-h-1 ag-testimonial-1-card-name">Emily Rodriguez</h3>
+                                <p class="ag-p-1 ag-testimonial-1-card-role">Product Director, ScaleHub</p>
                             </div>
+                            <p class="ag-p-2 ag-testimonial-1-card-text">“Their AI expertise and attention to detail were exceptional. We now have a scalable solution that improves decision-making and creates a much better experience for our customers.”</p>
                         </div>
 
-                        <div class="swiper-slide">
-                            <div class="ag-testimonial-1-card">
-                                <div class="ag-testimonial-1-card-bg"></div>
-                                <div class="ag-testimonial-1-card-quote"></div>
-                                <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-3.jpg" alt="Olivia Bennett"></div>
-                                <div class="ag-testimonial-1-card-info">
-                                    <h3 class="ag-h-1 ag-testimonial-1-card-name">Olivia Bennett</h3>
-                                    <p class="ag-p-1 ag-testimonial-1-card-role">Marketing Director, MarketFlow</p>
-                                </div>
-                                <p class="ag-p-2 ag-testimonial-1-card-text">“Our AI-powered platform has transformed how we analyze customer behavior and optimize campaigns. The results have been measurable, impactful, and beyond our expectations.”</p>
+                        <div class="ag-testimonial-1-card">
+                            <div class="ag-testimonial-1-card-bg"></div>
+                            <div class="ag-testimonial-1-card-quote"></div>
+                            <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-3.jpg" alt="Olivia Bennett"></div>
+                            <div class="ag-testimonial-1-card-info">
+                                <h3 class="ag-h-1 ag-testimonial-1-card-name">Olivia Bennett</h3>
+                                <p class="ag-p-1 ag-testimonial-1-card-role">Marketing Director, MarketFlow</p>
                             </div>
+                            <p class="ag-p-2 ag-testimonial-1-card-text">“Our AI-powered platform has transformed how we analyze customer behavior and optimize campaigns. The results have been measurable, impactful, and beyond our expectations.”</p>
                         </div>
 
-                        <div class="swiper-slide">
-                            <div class="ag-testimonial-1-card">
-                                <div class="ag-testimonial-1-card-bg"></div>
-                                <div class="ag-testimonial-1-card-quote"></div>
-                                <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-4.jpg" alt="Daniel Carter"></div>
-                                <div class="ag-testimonial-1-card-info">
-                                    <h3 class="ag-h-1 ag-testimonial-1-card-name">Daniel Carter</h3>
-                                    <p class="ag-p-1 ag-testimonial-1-card-role">Head of Operations, FlowCore</p>
-                                </div>
-                                <p class="ag-p-2 ag-testimonial-1-card-text">“They understood our business challenges from day one and delivered an intelligent automation system that reduced manual work while giving our team more time to focus on growth.”</p>
+                        <div class="ag-testimonial-1-card">
+                            <div class="ag-testimonial-1-card-bg"></div>
+                            <div class="ag-testimonial-1-card-quote"></div>
+                            <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-4.jpg" alt="Daniel Carter"></div>
+                            <div class="ag-testimonial-1-card-info">
+                                <h3 class="ag-h-1 ag-testimonial-1-card-name">Daniel Carter</h3>
+                                <p class="ag-p-1 ag-testimonial-1-card-role">Head of Operations, FlowCore</p>
                             </div>
+                            <p class="ag-p-2 ag-testimonial-1-card-text">“They understood our business challenges from day one and delivered an intelligent automation system that reduced manual work while giving our team more time to focus on growth.”</p>
                         </div>
 
-                        <div class="swiper-slide">
-                            <div class="ag-testimonial-1-card">
-                                <div class="ag-testimonial-1-card-bg"></div>
-                                <div class="ag-testimonial-1-card-quote"></div>
-                                <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-5.jpg" alt="Emma Marko"></div>
-                                <div class="ag-testimonial-1-card-info">
-                                    <h3 class="ag-h-1 ag-testimonial-1-card-name">Emma Marko</h3>
-                                    <p class="ag-p-1 ag-testimonial-1-card-role">Product Director, ScaleHub</p>
-                                </div>
-                                <p class="ag-p-2 ag-testimonial-1-card-text">“Their AI expertise and attention to detail were exceptional. We now have a scalable solution that improves decision-making and creates a much better experience for our customers.”</p>
+                        <div class="ag-testimonial-1-card">
+                            <div class="ag-testimonial-1-card-bg"></div>
+                            <div class="ag-testimonial-1-card-quote"></div>
+                            <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-5.jpg" alt="Emma Marko"></div>
+                            <div class="ag-testimonial-1-card-info">
+                                <h3 class="ag-h-1 ag-testimonial-1-card-name">Emma Marko</h3>
+                                <p class="ag-p-1 ag-testimonial-1-card-role">Product Director, ScaleHub</p>
                             </div>
+                            <p class="ag-p-2 ag-testimonial-1-card-text">“Their AI expertise and attention to detail were exceptional. We now have a scalable solution that improves decision-making and creates a much better experience for our customers.”</p>
                         </div>
 
-                        <div class="swiper-slide">
-                            <div class="ag-testimonial-1-card">
-                                <div class="ag-testimonial-1-card-bg"></div>
-                                <div class="ag-testimonial-1-card-quote"></div>
-                                <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-6.jpg" alt="Michael Anderson"></div>
-                                <div class="ag-testimonial-1-card-info">
-                                    <h3 class="ag-h-1 ag-testimonial-1-card-name">Michael Anderson</h3>
-                                    <p class="ag-p-1 ag-testimonial-1-card-role">Founder, BrightLabs</p>
-                                </div>
-                                <p class="ag-p-2 ag-testimonial-1-card-text">“What impressed us most was their business-first approach. They didn't just build AI technology; they created a solution that directly supports our long-term growth strategy.”</p>
+                        <div class="ag-testimonial-1-card">
+                            <div class="ag-testimonial-1-card-bg"></div>
+                            <div class="ag-testimonial-1-card-quote"></div>
+                            <div class="ag-testimonial-1-card-img wa-img-cover wa-fix"><img src="assets/img/testimonial/t1-img-6.jpg" alt="Michael Anderson"></div>
+                            <div class="ag-testimonial-1-card-info">
+                                <h3 class="ag-h-1 ag-testimonial-1-card-name">Michael Anderson</h3>
+                                <p class="ag-p-1 ag-testimonial-1-card-role">Founder, BrightLabs</p>
                             </div>
+                            <p class="ag-p-2 ag-testimonial-1-card-text">“What impressed us most was their business-first approach. They didn't just build AI technology; they created a solution that directly supports our long-term growth strategy.”</p>
                         </div>
-
                     </div>
                 </div>
 
@@ -1774,6 +1770,7 @@
         <script src="assets/js/appear.js"></script>
         <script src="assets/js/lenis.min.js"></script>
         <script src="assets/js/ScrollTrigger.min.js"></script>
+        <script src="assets/js/pixi.min.js"></script>
         <script src="assets/js/main-common.js"></script>
         <script src="assets/js/main.js"></script>
         

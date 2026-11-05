@@ -4683,7 +4683,7 @@ input:focus::placeholder, textarea:focus::placeholder {
 .ag-about-1-bg-shape-2 {
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: -22px;
   width: 349px;
   height: 607px;
 }
@@ -4821,18 +4821,6 @@ input:focus::placeholder, textarea:focus::placeholder {
   position: absolute;
   inset: 0;
   clip-path: url(#ag-about-img-clip);
-}
-.ag-about-1-img-scan {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 2;
-  height: 3px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff 50%, rgba(255, 255, 255, 0));
-  box-shadow: 0 0 24px 6px rgba(109, 27, 251, 0.7), 0 0 80px 18px rgba(109, 27, 251, 0.35);
-  opacity: 0;
-  pointer-events: none;
 }
 .ag-about-1-card {
   position: absolute;
@@ -7487,54 +7475,58 @@ input:focus::placeholder, textarea:focus::placeholder {
 .ag-testimonial-1-btn {
   margin-top: 32px;
 }
-.ag-testimonial-1-slider {
+.ag-testimonial-1-marquee {
   position: relative;
   z-index: 2;
+  overflow: hidden;
   margin-top: 135px;
 }
 @media only screen and (min-width: 1400px) and (max-width: 1599px) {
-  .ag-testimonial-1-slider {
+  .ag-testimonial-1-marquee {
     margin-top: 110px;
   }
 }
 @media only screen and (min-width: 1200px) and (max-width: 1399px) {
-  .ag-testimonial-1-slider {
+  .ag-testimonial-1-marquee {
     margin-top: 90px;
   }
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-  .ag-testimonial-1-slider {
+  .ag-testimonial-1-marquee {
     margin-top: 70px;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 767px) {
-  .ag-testimonial-1-slider {
+  .ag-testimonial-1-marquee {
     margin-top: 24px;
   }
 }
-.ag-testimonial-1-slider .swiper-slide {
+.ag-testimonial-1-cards {
+  display: flex;
+  width: max-content;
+}
+.ag-testimonial-1-card {
+  position: relative;
+  flex: none;
   width: 580px;
-  height: auto;
+  height: 363px;
+  margin-right: 20px;
+  padding: 199px 44px 0;
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-  .ag-testimonial-1-slider .swiper-slide {
+  .ag-testimonial-1-card {
     width: 520px;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  .ag-testimonial-1-slider .swiper-slide {
+  .ag-testimonial-1-card {
     width: 480px;
   }
 }
-@media (max-width: 767px) {
-  .ag-testimonial-1-slider .swiper-slide {
-    width: min(100vw - 72px, 520px);
+@media only screen and (min-width: 576px) and (max-width: 767px), (max-width: 767px) {
+  .ag-testimonial-1-card {
+    margin-right: 16px;
   }
-}
-.ag-testimonial-1-card {
-  position: relative;
-  height: 363px;
-  padding: 199px 44px 0;
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 767px) {
   .ag-testimonial-1-card {
@@ -7545,6 +7537,7 @@ input:focus::placeholder, textarea:focus::placeholder {
 }
 @media (max-width: 767px) {
   .ag-testimonial-1-card {
+    width: min(100vw - 72px, 520px);
     min-height: 0;
     padding: 158px 22px 32px;
   }
@@ -8857,7 +8850,7 @@ input:focus::placeholder, textarea:focus::placeholder {
 /* 
     home-page-css-start
 */
-.kf-home-1 {
+.ag-home-1 {
   background-color: #F4F4F4;
 }
 

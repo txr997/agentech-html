@@ -317,8 +317,8 @@ function agHero1Slider() {
 
 
 /*
-	about-1 (AI Agentech) — when the parts scroll into view they come up like an AI system starting: the photo is drawn by a scan line
-	that runs down it (out of a blur, a little zoomed), the small card rises and its number counts up, the key features card boots
+	about-1 (AI Agentech) — when the parts scroll into view they come up like an AI system starting: the photo comes in through the
+	liquid distortion (agLiquidImg2), the small card only comes down with the scroll, the key features card boots
 	(the face comes out of a blur, the hand reaches in, the sparkles spin in one after another with their lines, the chip pops last).
 	The tag and the 3d shapes of the background follow, the shapes also drift against the scroll. The title, the text and the button
 	have their own effects (wa_text_effect, wow)
@@ -361,41 +361,16 @@ function agAbout1In() {
 		});
 	});
 
-	// photo + small card: the line and the photo run down together (same time, same ease), so the line is always at the edge of what is drawn
+	// small card: no entrance, it only comes down from above with the scroll (400px in the 676 x 822 stage, which is scaled per breakpoint) and is in place when the photo is centred
 	var images = area.querySelector(".ag-about-1-images");
-	var photo = area.querySelector(".ag-about-1-img img");
-	var scan = area.querySelector(".ag-about-1-img-scan");
 	var card = area.querySelector(".ag-about-1-card");
-	var num = area.querySelector(".ag-about-1-card-num");
 
-	if (images && photo && scan && card && num) {
-		var goal = parseInt(num.textContent, 10);
-		var unit = num.textContent.replace(/[\d\s]/g, "");
-		var count = { v: 0 };
-
-		num.textContent = "0" + unit;
-
-		gsap.timeline({
-			defaults: { ease: "power3.out" },
-			scrollTrigger: { trigger: images, start: "top 78%", once: true },
-			onComplete: function () {
-				gsap.set([photo, card], { clearProps: "transform,opacity,filter,clipPath" });
-			}
-		})
-			.fromTo(scan, { top: "0%" }, { top: "100%", duration: 1.6, ease: "power2.inOut" }, 0)
-			.fromTo(scan, { opacity: 0 }, { opacity: 1, duration: .2, ease: "none" }, 0)
-			.to(scan, { opacity: 0, duration: .3, ease: "none" }, 1.3)
-			.fromTo(photo, { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.6, ease: "power2.inOut" }, 0)
-			.fromTo(photo, { scale: 1.15, filter: "blur(14px) saturate(1.8)" }, { scale: 1, filter: "blur(0px) saturate(1)", duration: 2, ease: "power2.out" }, 0)
-			.from(card, { y: 70, scale: .88, opacity: 0, transformOrigin: "0% 100%", duration: 1.2 }, .9)
-			.to(count, {
-				v: goal,
-				duration: 1.6,
-				ease: "power1.out",
-				onUpdate: function () {
-					num.textContent = Math.round(count.v) + unit;
-				}
-			}, 1.1);
+	if (images && card) {
+		gsap.fromTo(card, { y: -400 }, {
+			y: 0,
+			ease: "none",
+			scrollTrigger: { trigger: images, start: "top 80%", end: "center 40%", scrub: true }
+		});
 	}
 
 	// key features card
@@ -450,8 +425,9 @@ function agProcess1Title() {
 
 
 /*
-	cta-1 (AI Agentech) — when the box scrolls into view the robot comes up first (from below, out of a blur), and only when it is there
-	the neon lines fade in behind it. The title, the text and the button come up one after another beside it
+	cta-1 (AI Agentech) — when the box scrolls into view the robot comes up (from below, out of a blur) and right with it
+	the neon lines open up behind it like a circle that grows from the centre of their box. The title, the text and the button come
+	up one after another beside it
 */
 function agCta1In() {
 
@@ -468,13 +444,13 @@ function agCta1In() {
 		defaults: { ease: "power3.out" },
 		scrollTrigger: { trigger: box, start: "top 80%", once: true },
 		onComplete: function () {
-			gsap.set([robot, lines].concat(rest), { clearProps: "transform,opacity,filter" });
+			gsap.set([robot, lines].concat(rest), { clearProps: "transform,opacity,filter,clipPath" });
 		}
 	})
 		.from(robot, { y: 90, scale: .85, opacity: 0, filter: "blur(14px)", transformOrigin: "50% 100%", duration: 1.2 }, 0)
 		.from(rest, { y: 30, opacity: 0, filter: "blur(6px)", duration: .9, stagger: .15 }, .2)
-		// the lines wait for the robot (it takes 1.2s)
-		.from(lines, { opacity: 0, duration: 1.4, ease: "power2.out" }, 1.2);
+		// the lines start right behind the robot (.2s later, it is already coming), the circle grows from their centre; 75% of the box is a little more than the way to a corner (71%), so it ends with all of them shown
+		.fromTo(lines, { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(75% at 50% 50%)", duration: 1.6, ease: "power2.inOut" }, .2);
 }
 
 
@@ -560,10 +536,16 @@ function agServices1Slider() {
 
 
 /*
-	team-1 (AI Agentech) — the card under the pointer (or the focus) is the lit one
+	team-1 (AI Agentech) — no card starts lit: the card under the pointer (or the focus) is lit (is-active) and goes back when the pointer leaves
 */
 function agTeam1Cards() {
-	agLitOnHover($(".ag-team-1-card"));
+	$(".ag-team-1-card")
+		.on("mouseenter focusin", function () {
+			$(this).addClass("is-active");
+		})
+		.on("mouseleave focusout", function () {
+			$(this).removeClass("is-active");
+		});
 }
 
 
@@ -619,34 +601,6 @@ function agProjects1Slider() {
 		navigation: {
 			prevEl: ".ag-projects-1-btn.prev",
 			nextEl: ".ag-projects-1-btn.next"
-		}
-	});
-}
-
-
-/*
-	testimonial-1 (AI Agentech) — the cards run out to both edges of the screen, the first one starts cut by the left edge (slidesOffsetBefore,
-	the less room the less is cut), they loop and play by themselves (stop while the pointer is on them) and drag
-*/
-function agTestimonial1Slider() {
-
-	if (!$(".ag-testimonial-1-slider").length) return;
-
-	new Swiper(".ag-testimonial-1-slider", {
-		slidesPerView: "auto",
-		spaceBetween: 16,
-		slidesOffsetBefore: 36,
-		loop: true,
-		loopAdditionalSlides: 2,
-		speed: 700,
-		grabCursor: true,
-		autoplay: prefersReducedMotion() ? false : { delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true },
-		breakpoints: {
-			768: { spaceBetween: 20, slidesOffsetBefore: 48 },
-			992: { slidesOffsetBefore: 60 },
-			1200: { slidesOffsetBefore: -60 },
-			1400: { slidesOffsetBefore: -120 },
-			1600: { slidesOffsetBefore: -202 }
 		}
 	});
 }
@@ -732,6 +686,119 @@ function agTeam1Scroll() {
 
 
 /*
+	wa_liquid_img2 — the image comes in through a liquid distortion: pixi draws it through a displacement map that settles from -400
+	to 0 once the image is 30% in view and then keeps drifting. Needs pixi.min.js; the map file comes from data-displacement (no image
+	in js), without it the plain <img> stays. The box takes its size from its parent, use class="wa_liquid_img2" instead of the id when
+	it is used more than once:
+	<div id="wa_liquid_img2" class="w-100 h-100 wa-fix" data-displacement="assets/img/common/liquid-displacement.png"><img src="..." alt=""></div>
+*/
+function agLiquidImg2() {
+
+	var boxes = document.querySelectorAll("#wa_liquid_img2, .wa_liquid_img2");
+	if (!boxes.length || typeof PIXI === "undefined" || prefersReducedMotion()) return;
+
+	function liquid(box) {
+		var img = box.querySelector("img");
+		var mapURL = box.getAttribute("data-displacement");
+		if (!img || !mapURL) return;
+
+		var imgURL = img.getAttribute("src");
+		img.remove();
+
+		// the layout size (offsetWidth), not getBoundingClientRect: the box can sit inside a scaled stage (about-1) and the canvas is scaled with it
+		var app = new PIXI.Application({
+			width: box.offsetWidth,
+			height: box.offsetHeight,
+			transparent: true,
+			autoDensity: true,
+			resolution: window.devicePixelRatio
+		});
+		app.view.style.display = "block";
+		app.view.style.pointerEvents = "none";
+		box.appendChild(app.view);
+
+		app.loader
+			.add("hero", imgURL)
+			.add("map", mapURL)
+			.load(function (loader, res) {
+				var container = new PIXI.Container();
+				app.stage.addChild(container);
+
+				var hero = new PIXI.Sprite(res.hero.texture);
+				container.addChild(hero);
+
+				// cover the box: the image fills it and what overflows is cropped, centred
+				function fit() {
+					var w = box.offsetWidth;
+					var h = box.offsetHeight;
+					if (!w || !h) return;
+
+					app.renderer.resize(w, h);
+					hero.scale.set(Math.max(w / hero.texture.width, h / hero.texture.height));
+					hero.x = (w - hero.width) / 2;
+					hero.y = (h - hero.height) / 2;
+				}
+				fit();
+
+				// the box can change size after the first measure (breakpoints, fonts, layout shifts)
+				if ("ResizeObserver" in window) {
+					new ResizeObserver(fit).observe(box);
+				}
+
+				var map = new PIXI.Sprite(res.map.texture);
+				map.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+				map.scale.set(2);
+
+				var filter = new PIXI.filters.DisplacementFilter(map);
+				filter.scale.x = -400;
+				filter.scale.y = -400;
+
+				app.stage.addChild(map);
+				container.filters = [filter];
+
+				var drift = false;
+				app.ticker.add(function () {
+					if (drift) {
+						map.x += 1;
+						map.y += 1;
+					}
+				});
+
+				box._liquidPlay = function () {
+					gsap.to(filter.scale, {
+						x: 0,
+						y: 0,
+						duration: 2,
+						ease: "expo.out",
+						onComplete: function () {
+							drift = true;
+						}
+					});
+				};
+
+				// it was already 30% in view while the files were still loading
+				if (box._liquidSeen) box._liquidPlay();
+			});
+	}
+
+	var observer = new IntersectionObserver(function (entries, obs) {
+		entries.forEach(function (entry) {
+			if (!entry.isIntersecting) return;
+
+			entry.target._liquidSeen = true;
+			if (entry.target._liquidPlay) entry.target._liquidPlay();
+			obs.unobserve(entry.target);
+		});
+	}, { threshold: 0.3 });
+
+	boxes.forEach(function (box) {
+		liquid(box);
+		observer.observe(box);
+	});
+}
+
+
+/*
 	page lifecycle
 */
 function afterPreloader() {
@@ -781,10 +848,10 @@ agTeam1Cards();
 agTeam1Scroll();
 agFeatures1Slider();
 agProjects1Slider();
-agTestimonial1Slider();
 agProcess1Title();
 agCta1In();
 agFooter1In();
+agLiquidImg2();
 
 })(jQuery);
 

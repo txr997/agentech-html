@@ -5,7 +5,7 @@
     ag-testimonial-1-start
 */
 // the head is on the left, the robot on the right (--ds is its size, --rx / --ry its place from the middle of the screen and the top, drawn on 1920).
-// The cards are a swiper that runs out to both edges of the screen. From 1200 up every card is 580 x 363 with the real outline (the top left corner and
+// The cards are a marquee that runs out to both edges of the screen. From 1200 up every card is 580 x 363 with the real outline (the top left corner and
 // the bottom right corner are cut, the photo sits over the cut). Below 1200 the cut is a polygon, the card grows with its text and the robot goes
 // between the head and the cards
 .ag-testimonial-1 {
@@ -197,10 +197,11 @@
         margin-top: 32px;
     }
 
-    // slider
-    &-slider {
+    // marquee (overflow hidden also holds the floats the marquee makes of the cards, without it the box has no height)
+    &-marquee {
         position: relative;
         z-index: 2;
+        overflow: hidden;
         margin-top: 135px;
 
         @media #{$xxl} {
@@ -218,30 +219,34 @@
         @media #{$md,$sm,$xs} {
             margin-top: 24px;
         }
+    }
 
-        .swiper-slide {
-            width: 580px;
-            height: auto;
-
-            @media #{$lg} {
-                width: 520px;
-            }
-
-            @media #{$md} {
-                width: 480px;
-            }
-
-            @media #{$xs} {
-                width: min(calc(100vw - 72px), 520px);
-            }
-        }
+    // the cards in a row (as tall as the tallest one), the gap between them is a margin on the card so the copy the marquee makes joins on with the same gap
+    &-cards {
+        display: flex;
+        width: max-content;
     }
 
     // card: all the parts sit on a 580 x 363 box, the text is what holds the card open below 1200
     &-card {
         position: relative;
+        flex: none;
+        width: 580px;
         height: 363px;
+        margin-right: 20px;
         padding: 199px 44px 0;
+
+        @media #{$lg} {
+            width: 520px;
+        }
+
+        @media #{$md} {
+            width: 480px;
+        }
+
+        @media #{$sm,$xs} {
+            margin-right: 16px;
+        }
 
         @media #{$lg,$md,$sm,$xs} {
             height: auto;
@@ -250,6 +255,7 @@
         }
 
         @media #{$xs} {
+            width: min(calc(100vw - 72px), 520px);
             min-height: 0;
             padding: 158px 22px 32px;
         }

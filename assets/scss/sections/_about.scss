@@ -70,7 +70,7 @@
         &-shape-2 {
             position: absolute;
             right: 0;
-            bottom: 0;
+            bottom: -22px;
             width: 349px;
             height: 607px;
         }
@@ -207,20 +207,6 @@
         position: absolute;
         inset: 0;
         clip-path: url(#ag-about-img-clip);
-
-        // the line that scans the photo while it is drawn in (main.js, agAbout1In moves it down and shows it only for that); it stays inside the photo shape
-        &-scan {
-            position: absolute;
-            top: 0;
-            right: 0;
-            left: 0;
-            z-index: 2;
-            height: 3px;
-            background: linear-gradient(90deg, rgb(255 255 255 / 0%), #fff 50%, rgb(255 255 255 / 0%));
-            box-shadow: 0 0 24px 6px rgb(109 27 251 / 70%), 0 0 80px 18px rgb(109 27 251 / 35%);
-            opacity: 0;
-            pointer-events: none;
-        }
     }
 
     // the small card: the top left and the bottom right corners are cut
