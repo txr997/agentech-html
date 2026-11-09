@@ -467,3 +467,418 @@
 /*
     ag-projects-1-end
 */
+
+
+/*
+    ag-projects-2-start
+*/
+// the case studies of the home 2: three cards one under the other (flush, 1400 x 512 on the 1920 design: the picture on the left half, the
+// glass box with the text on the right half and the arrow button hanging on the corner of the box). From 992 up (and 640 high) every card
+// sticks to the top of the screen while the next one slides over it, the one that is covered shrinks to 0.9 and blurs (main.js,
+// agProjects2Stack; the effect of the project cards of novora-wbs.webflow.io). The white card turns purple on hover (the purple card of the
+// design is the lit state) and the picture zooms. Below 992 the cards are a plain list: the picture on top, the box under it, the arrow in the box
+// --fs is the size of the big title, the space above the cards follows it (the cards cover the lower part of the letters)
+
+// the 4 colours of the glass box (fill and 1px ring) are registered so they can fade on hover
+@property --ag-pj-box-a {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: rgb(240 242 244 / 0%);
+}
+
+@property --ag-pj-box-b {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #f0f2f4;
+}
+
+@property --ag-pj-ring-a {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #d7dee5;
+}
+
+@property --ag-pj-ring-b {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #f0f2f4;
+}
+
+.ag-projects-2 {
+    &-area {
+        --fs: 192px;
+        --pt: calc(var(--fs) * 0.625);
+        --pin: 24px;
+        position: relative;
+        padding-top: var(--pt);
+        background: var(--ag-clr-bg-2);
+        // clip, not hidden: a hidden box would take the sticky cards (they would stick to the box, not to the screen)
+        overflow: clip;
+
+        @media #{$xl} {
+            --fs: 170px;
+        }
+
+        @media #{$lg} {
+            --fs: 140px;
+        }
+
+        @media #{$md} {
+            --fs: 110px;
+        }
+
+        @media #{$xs} {
+            --fs: 13.5vw;
+        }
+    }
+
+    // the big word behind the cards: white at the top, it fades into the page colour (the gradient runs over the 0.7 line box)
+    &-heading {
+        position: absolute;
+        top: calc(var(--fs) * 0.0156);
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+        font-family: var(--ag-font-2);
+        font-weight: 700;
+        font-size: var(--fs);
+        line-height: 0.7;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: transparent;
+        background: linear-gradient(180deg, #fff 0%, #fbfbfc 48%, var(--ag-clr-bg-2) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    // the dark half behind the right half of the cards, it runs down into the dark band under them
+    &-panel {
+        position: absolute;
+        top: calc(var(--pt) + var(--fs) * 0.953);
+        right: 0;
+        bottom: 0;
+        left: 50%;
+        background: var(--ag-clr-h-1);
+
+        @media #{$md,$xs} {
+            display: none;
+        }
+    }
+
+    &-list {
+        position: relative;
+        z-index: 1;
+    }
+
+    // the later card lies over the earlier one (the order in the html)
+    &-item {
+        @media (min-width: 992px) and (min-height: 640px) {
+            position: sticky;
+            top: var(--pin);
+        }
+
+        &:first-child .ag-projects-2-card {
+            border-radius: 16px 16px 0 0;
+        }
+
+        &:last-child .ag-projects-2-card {
+            border-radius: 0 0 16px 16px;
+        }
+    }
+
+    &-card {
+        --pad-t: 44px;
+        --pad-r: 79px;
+        --pad-b: 80px;
+        --pad-l: 44px;
+        --box-pad: 40px;
+        --btn: 64px;
+        --fs-t: 32px;
+        --lh-t: 36px;
+        --fs-d: 18px;
+        --lh-d: 28px;
+        --fs-p: 15px;
+        --pill-x: 20px;
+        --gap-t: 60px;
+        --ag-pj-box-a: rgb(240 242 244 / 0%);
+        --ag-pj-box-b: #f0f2f4;
+        --ag-pj-ring-a: #d7dee5;
+        --ag-pj-ring-b: #f0f2f4;
+        --c-title: #000;
+        --c-text: var(--ag-clr-p-1);
+        --c-pill: var(--ag-clr-p-1);
+        --c-line: rgb(7 0 14 / 24%);
+        --c-btn: #f0f2f4;
+        --c-arrow: var(--ag-clr-pr-1);
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 512px;
+        overflow: hidden;
+        background-color: #fff;
+        transition: background-color 0.5s ease, --ag-pj-box-a 0.5s ease, --ag-pj-box-b 0.5s ease, --ag-pj-ring-a 0.5s ease, --ag-pj-ring-b 0.5s ease;
+
+        &:hover,
+        &:focus-visible {
+            --ag-pj-box-a: #a234fd;
+            --ag-pj-box-b: #be76fa;
+            --ag-pj-ring-a: #ce97fd;
+            --ag-pj-ring-b: #bd74f9;
+            --c-title: #fff;
+            --c-text: rgb(255 255 255 / 80%);
+            --c-pill: #fff;
+            --c-line: rgb(255 255 255 / 24%);
+            --c-btn: #bd74f9;
+            --c-arrow: #fff;
+            background-color: var(--ag-clr-pr-2);
+
+            .ag-projects-2-card-img {
+                transform: scale(1.08);
+            }
+        }
+
+        @media #{$xl,$lg} {
+            --pad-t: 32px;
+            --pad-r: 64px;
+            --pad-b: 72px;
+            --pad-l: 32px;
+            --box-pad: 32px;
+            --btn: 56px;
+            --fs-t: 28px;
+            --lh-t: 32px;
+            --fs-d: 16px;
+            --lh-d: 26px;
+            --gap-t: 40px;
+            min-height: 440px;
+        }
+
+        @media #{$lg} {
+            --fs-t: 26px;
+            --lh-t: 30px;
+            --fs-p: 14px;
+            --pill-x: 16px;
+        }
+
+        @media #{$md,$xs} {
+            --pad-t: 20px;
+            --pad-r: 20px;
+            --pad-b: 20px;
+            --pad-l: 20px;
+            --box-pad: 24px;
+            --btn: 52px;
+            --fs-t: 28px;
+            --lh-t: 32px;
+            --fs-d: 16px;
+            --lh-d: 26px;
+            --fs-p: 14px;
+            --pill-x: 16px;
+            --gap-t: 32px;
+            grid-template-columns: 1fr;
+            min-height: 0;
+        }
+
+        @media #{$xs} {
+            --pad-t: 16px;
+            --pad-r: 16px;
+            --pad-b: 16px;
+            --pad-l: 16px;
+            --box-pad: 20px;
+            --fs-t: 24px;
+            --lh-t: 28px;
+        }
+
+        &-media {
+            position: relative;
+
+            @media #{$md,$xs} {
+                aspect-ratio: 700 / 512;
+            }
+
+            @media #{$xs} {
+                aspect-ratio: 16 / 11;
+            }
+        }
+
+        &-img {
+            position: absolute;
+            inset: 0;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        &-body {
+            padding: var(--pad-t) var(--pad-r) var(--pad-b) var(--pad-l);
+        }
+
+        // the glass box: a flat corner at the bottom right, the arrow button hangs on it
+        &-box {
+            position: relative;
+            border-radius: 12px 12px 0 12px;
+            background: linear-gradient(123.9deg, var(--ag-pj-box-a) 0%, var(--ag-pj-box-b) 100%);
+
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                padding: 1px;
+                border-radius: inherit;
+                background: linear-gradient(123.9deg, var(--ag-pj-ring-a), var(--ag-pj-ring-b));
+                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                -webkit-mask-composite: xor;
+                mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                mask-composite: exclude;
+                pointer-events: none;
+            }
+        }
+
+        &-content {
+            position: relative;
+            padding: var(--box-pad);
+
+            @media #{$md,$xs} {
+                padding-bottom: calc(var(--box-pad) + var(--btn));
+            }
+        }
+
+        &-title {
+            font-size: var(--fs-t);
+            line-height: var(--lh-t);
+            letter-spacing: -0.02em;
+            color: var(--c-title);
+            transition: color 0.5s ease;
+        }
+
+        &-desc {
+            margin-top: 20px;
+            font-size: var(--fs-d);
+            line-height: var(--lh-d);
+            color: var(--c-text);
+            transition: color 0.5s ease;
+        }
+
+        // the button: it hangs on the bottom right corner of the box (below 992 it sits in that corner)
+        &-arrow {
+            position: absolute;
+            top: 100%;
+            left: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: var(--btn);
+            height: var(--btn);
+            border-radius: 0 12px 12px 12px;
+            background-color: var(--c-btn);
+            font-size: 24px;
+            color: var(--c-arrow);
+            transition: background-color 0.5s ease, color 0.5s ease;
+
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                padding: 1px;
+                border-radius: inherit;
+                background: linear-gradient(113deg, var(--ag-pj-ring-b), var(--ag-pj-ring-a));
+                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                -webkit-mask-composite: xor;
+                mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                mask-composite: exclude;
+                pointer-events: none;
+            }
+
+            i {
+                display: block;
+                line-height: 1;
+            }
+
+            @media #{$md,$xs} {
+                top: auto;
+                right: 0;
+                bottom: 0;
+                left: auto;
+                border-radius: 12px 0 0 0;
+            }
+        }
+    }
+
+    // the tags: a star circle and a pill touch each other, the groups touch each other, they wrap with the box
+    &-tags {
+        display: flex;
+        flex-wrap: wrap;
+        margin: var(--gap-t) 0 0;
+    }
+
+    &-tag {
+        display: inline-flex;
+        align-items: center;
+
+        &-star {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: none;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--c-line);
+            border-radius: 50%;
+            font-size: 14px;
+            color: var(--c-pill);
+            transition: border-color 0.5s ease, color 0.5s ease;
+
+            i {
+                display: block;
+                line-height: 1;
+            }
+        }
+
+        &-text {
+            display: inline-flex;
+            align-items: center;
+            height: 36px;
+            padding: 0 var(--pill-x);
+            border: 1px solid var(--c-line);
+            border-radius: 100px;
+            font-family: var(--ag-font-1);
+            font-size: var(--fs-p);
+            line-height: 1;
+            white-space: nowrap;
+            color: var(--c-pill);
+            transition: border-color 0.5s ease, color 0.5s ease;
+        }
+    }
+
+    // the dark band under the cards: the text and the button
+    &-foot {
+        position: relative;
+        z-index: 1;
+        padding: 48px 0 132px;
+        background: var(--ag-clr-h-1);
+        text-align: center;
+
+        @media #{$xl} {
+            padding-bottom: 110px;
+        }
+
+        @media #{$lg} {
+            padding-bottom: 100px;
+        }
+
+        @media #{$md} {
+            padding: 44px 0 90px;
+        }
+
+        @media #{$xs} {
+            padding: 40px 0 64px;
+        }
+
+        &-text {
+            max-width: 713px;
+            margin: 0 auto 32px;
+        }
+    }
+}
+/*
+    ag-projects-2-end
+*/

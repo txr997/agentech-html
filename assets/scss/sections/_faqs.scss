@@ -1,0 +1,457 @@
+@use 'sass:math';
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-faqs-2-start
+*/
+// the faqs of the home 2 (1920 design: 940 high, dark). It starts as one big picture over the whole section, made of two halves (the same
+// picture twice, every half shows its own side of it); when the section comes to the top of the screen it is pinned and the halves slide
+// apart to the left and to the right (main.js, agFaqs2Reveal) and the questions come up between them. A fifth of the screen of every half
+// stays at the sides. The halves are the 3rd layer, the questions the 1st (they are under the picture until it has slid away)
+// the questions are an accordion (wa_accordion_item in main-common.js: the click puts .active on the item, the others lose it): the closed one is
+// a glass bar, the open one is a dark card with a purple ring, a notch in its top right corner (the plus button sits in it), the picture and
+// the answer
+
+// the points of a rounded rectangle with a square notch in its top right corner, for clip-path: polygon() (the arcs are drawn with 6 steps;
+// a polygon has no arcs and the card has no fixed width, so the points are measured from the edges). $r the radius of every corner, $n the size
+// of the notch, $i how far the shape is pulled in (the inner shape of a ring: its corners are $i smaller, the inner one of the notch $i bigger)
+@function faq-n($v) {
+    @return math.div(math.round($v * 100), 100);
+}
+
+@function faq-x($side, $v) {
+    $v: faq-n($v);
+
+    @if $side == l {
+        @return #{$v}px;
+    }
+
+    @if $v == 0 {
+        @return 100%;
+    }
+
+    @return calc(100% - #{$v}px);
+}
+
+@function faq-y($side, $v) {
+    $v: faq-n($v);
+
+    @if $side == t {
+        @return #{$v}px;
+    }
+
+    @if $v == 0 {
+        @return 100%;
+    }
+
+    @return calc(100% - #{$v}px);
+}
+
+// the points of an arc: the centre is $cxv from the $cxs edge (l or r) and $cyv from the $cys edge (t or b), the angle runs from $a0 to $a1 (degrees,
+// 0 is to the right, 90 is down)
+@function faq-arc($cxs, $cxv, $cys, $cyv, $r, $a0, $a1, $steps: 6) {
+    $out: ();
+
+    @for $k from 0 through $steps {
+        $a: ($a0 + ($a1 - $a0) * math.div($k, $steps)) * 1deg;
+        $dx: $r * math.cos($a);
+        $dy: $r * math.sin($a);
+        $xv: if($cxs == l, $cxv + $dx, $cxv - $dx);
+        $yv: if($cys == t, $cyv + $dy, $cyv - $dy);
+        $out: append($out, faq-x($cxs, $xv) faq-y($cys, $yv), comma);
+    }
+
+    @return $out;
+}
+
+@function faq-notch($r, $n, $i: 0) {
+    $p: $r - $i;
+    $pts: faq-arc(l, $i + $p, t, $i + $p, $p, 180, 270);
+    $pts: join($pts, faq-arc(r, $n + $i + $p, t, $i + $p, $p, 270, 360), comma);
+    $pts: join($pts, faq-arc(r, $n - $r, t, $n - $r, $r + $i, 180, 90), comma);
+    $pts: join($pts, faq-arc(r, $i + $p, t, $n + $i + $p, $p, 270, 360), comma);
+    $pts: join($pts, faq-arc(r, $i + $p, b, $i + $p, $p, 0, 90), comma);
+    $pts: join($pts, faq-arc(l, $i + $p, b, $i + $p, $p, 90, 180), comma);
+
+    @return $pts;
+}
+
+.ag-faqs-2 {
+    &-area {
+        position: relative;
+        overflow: clip;
+        padding: 132px 0;
+        background: var(--ag-clr-h-1);
+
+        @media #{$xl} {
+            padding: 110px 0;
+        }
+
+        @media #{$lg} {
+            padding: 100px 0;
+        }
+
+        @media #{$md} {
+            padding: 90px 0;
+        }
+
+        @media #{$xs} {
+            padding: 64px 0;
+        }
+    }
+
+    // the two halves of the big picture: every half is half of the section wide and holds the whole picture (twice as wide as the half), the
+    // left one shows the left side of it and the right one the right side. They are the same picture, so together they are one
+    &-half {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 3;
+        width: 50%;
+        overflow: hidden;
+        pointer-events: none;
+
+        // below 1200 there is no animation: no picture, only the questions
+        @media #{$lg,$md,$xs} {
+            display: none;
+        }
+
+        &:is(.is-l) {
+            left: 0;
+        }
+
+        &:is(.is-r) {
+            right: 0;
+        }
+
+        &-img {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 200%;
+        }
+
+        &:is(.is-l) &-img {
+            left: 0;
+        }
+
+        &:is(.is-r) &-img {
+            right: 0;
+        }
+    }
+
+    &-wrap {
+        position: relative;
+        z-index: 1;
+    }
+
+    &-top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        max-width: 720px;
+        margin: 0 auto 48px;
+        text-align: center;
+
+        @media #{$xs} {
+            margin-bottom: 32px;
+        }
+    }
+
+    &-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-width: 880px;
+        margin: 0 auto;
+    }
+
+    // one question. --pad is the space inside the bar
+    &-item {
+        --pad: 20px;
+        position: relative;
+        border-radius: 14px;
+        cursor: pointer;
+
+        @media #{$xs} {
+            --pad: 16px;
+        }
+    }
+
+    // the closed bar: white 6% on the dark section and a purple light in two corners
+    &-glass {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: inherit;
+        background: rgb(255 255 255 / 6%);
+        transition: opacity 0.5s ease;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.68;
+        }
+
+        &::before {
+            right: 31px;
+            bottom: -14px;
+            width: 231px;
+            height: 29px;
+            background: var(--ag-clr-pr-1);
+            filter: blur(22px);
+        }
+
+        &::after {
+            top: -25px;
+            left: 0;
+            width: 277px;
+            height: 29px;
+            background: var(--ag-clr-pr-2);
+            filter: blur(27px);
+        }
+    }
+
+    // the open card: the outer shape is the purple ring (a gradient), the inner one (1.5px smaller on every side) is the dark card with the light
+    &-open {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(270deg, var(--ag-clr-pr-2), var(--ag-clr-pr-1));
+        clip-path: polygon(#{faq-notch(10, 40)});
+        opacity: 0;
+        transition: opacity 0.5s ease;
+
+        &-in {
+            position: absolute;
+            inset: 0;
+            background: var(--ag-clr-h-1);
+            clip-path: polygon(#{faq-notch(10, 40, 1.5)});
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                width: 279px;
+                height: 63px;
+                border-radius: 50%;
+            }
+
+            &::before {
+                right: 52px;
+                bottom: -31px;
+                background: var(--ag-clr-pr-1);
+                filter: blur(52px);
+            }
+
+            &::after {
+                top: -19px;
+                left: 102px;
+                background: var(--ag-clr-pr-2);
+                filter: blur(57px);
+            }
+        }
+    }
+
+    &-body {
+        position: relative;
+        z-index: 1;
+        padding: var(--pad);
+    }
+
+    // the picture is the first thing in the open card, the text moves aside for it (the picture has the notch of the card in its own corner)
+    &-media {
+        position: absolute;
+        top: var(--pad);
+        left: var(--pad);
+        z-index: 1;
+        width: 123px;
+        height: 128px;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+
+        @media (max-width: 575px) {
+            display: none;
+        }
+    }
+
+    &-img {
+        width: 100%;
+        height: 100%;
+        clip-path: polygon(#{faq-notch(10, 36)});
+    }
+
+    &-main {
+        transition: padding-left 0.5s ease;
+    }
+
+    &-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        min-height: 28px;
+        padding: 0 44px 0 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        letter-spacing: inherit;
+        text-align: left;
+        color: inherit;
+    }
+
+    &-star {
+        display: flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        font-size: 24px;
+        color: var(--ag-clr-pr-2);
+
+        i {
+            display: block;
+            line-height: 1;
+        }
+
+        @media #{$xs} {
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+        }
+    }
+
+    &-q {
+        font-size: 20px;
+        line-height: 28px;
+        letter-spacing: -0.02em;
+        color: #fff;
+        transition: font-weight 0.3s ease;
+
+        @media #{$xs} {
+            font-size: 17px;
+            line-height: 24px;
+        }
+    }
+
+    // the answer: the row grows from 0 to its own height
+    &-answer {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.5s ease;
+
+        &-in {
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        // the text lines up with the question (the star and the gap before it are 36px)
+        &-text {
+            padding: 16px 16px 0 36px;
+            color: rgb(255 255 255 / 80%);
+
+            @media #{$xs} {
+                padding-left: 32px;
+                font-size: 16px;
+                line-height: 26px;
+            }
+        }
+    }
+
+    // the plus button: a gradient square in the bar, it moves into the notch (the corner) of the open card and fills with purple
+    &-icon {
+        position: absolute;
+        top: var(--pad);
+        right: var(--pad);
+        z-index: 2;
+        isolation: isolate;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: linear-gradient(0deg, rgb(14 9 16 / 0%), var(--ag-clr-pr-2));
+        font-size: 16px;
+        color: #fff;
+        transition: top 0.5s ease, right 0.5s ease;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: inherit;
+            background: linear-gradient(0deg, var(--ag-clr-pr-2), rgb(14 9 16 / 0%));
+            opacity: 0.48;
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: inherit;
+            background: var(--ag-clr-pr-2);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        i {
+            display: block;
+            line-height: 1;
+        }
+    }
+
+    &-item:is(.active) {
+        .ag-faqs-2-glass {
+            opacity: 0;
+        }
+
+        .ag-faqs-2-open,
+        .ag-faqs-2-media {
+            opacity: 1;
+        }
+
+        .ag-faqs-2-body {
+            min-height: 168px;
+        }
+
+        .ag-faqs-2-main {
+            padding-left: 124px;
+
+            @media (max-width: 575px) {
+                padding-left: 0;
+            }
+        }
+
+        .ag-faqs-2-q {
+            font-weight: 700;
+        }
+
+        .ag-faqs-2-answer {
+            grid-template-rows: 1fr;
+        }
+
+        .ag-faqs-2-icon {
+            top: 0;
+            right: 0;
+
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
+}
+/*
+    ag-faqs-2-end
+*/

@@ -9,6 +9,7 @@
 
   --ag-clr-pr-1: #6D1BFB;
   --ag-clr-pr-2: #A234FD;
+  --ag-clr-pr-3: #370C57;
 
   --ag-clr-sd-1: #EC736C;
 
@@ -23,6 +24,7 @@
   --ag-clr-bg-1: #F4F4F4;
   --ag-clr-bg-2: #F0F2F4;
   --ag-clr-bg-3: #EBE1FD;
+  --ag-clr-bg-4: #E9EBED;
 
   --ag-clr-star-1: #EDB325;
 
@@ -32,6 +34,12 @@
   --ag-clr-gd-2: linear-gradient(90deg, rgb(109 27 251 / 25%) 0%, rgb(109 27 251 / 0%) 100%);
   // the same run backwards, it fades in over the buttons on hover
   --ag-clr-gd-3: linear-gradient(90deg, #EC736C 0%, #6D1BFB 100%);
+  // the pill of the header 2: lit purple at both ends, dark in the middle behind the text
+  --ag-clr-gd-4: linear-gradient(90deg, #A234FD 0%, #370C57 37%, #370C57 62%, #A234FD 96%);
+  // the call label of the header 2
+  --ag-clr-gd-5: linear-gradient(90deg, #EC04FB 0%, #5259EB 100%);
+  // the pill with the dark and the lit parts swapped, it fades in over it on hover
+  --ag-clr-gd-6: linear-gradient(90deg, #370C57 0%, #A234FD 37%, #A234FD 62%, #370C57 96%);
 
   --ag-cube-1: all .4s cubic-bezier(.18,.82,.41,1);
 

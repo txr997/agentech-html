@@ -1,0 +1,363 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-pricing-2-start
+*/
+// the pricing of the home 2 (1920 design: 1180 high): the head (label, title, text) and two cards in a row on the light page (the faint grid
+// picture at the top is the .ag-pricing-2-bg, its fade is in the picture). The starter card is white and 1/3 of the row (460), the professional
+// card is dark and 2/3 (920): its left half is the same as the starter card, its right half is a picture with a glass box on it. Every plan is a
+// panel (name, price, text), a button and the list of what is included. Below 1200 the cards are one under the other, below 768 the picture of the
+// professional card goes under its text
+// --price and --item are the sizes of the price and of the list, --pad is the space inside the panel and the list
+
+// the little icon of the list: a pale square behind a purple square with an arrow, the colour of the pale square is the only thing that changes
+@function pricing-icon($square) {
+    @return url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M19.9993 0H6.61304V13.3862H19.9993V0Z' fill='#{$square}'/%3E%3Cpath d='M10.5 9.5V19.375H0.625V9.5H10.5ZM11.125 8.875H0V20H11.125V8.875Z' fill='%236D1BFB'/%3E%3Cpath d='M9.30859 5.86805L15.792 4.13086L14.0548 10.6143L9.30859 5.86805Z' fill='%236D1BFB'/%3E%3Cpath d='M12.6898 6.79063L6.33594 13.1445L6.77787 13.5865L13.1318 7.23257L12.6898 6.79063Z' fill='%236D1BFB'/%3E%3C/svg%3E");
+}
+
+.ag-pricing-2 {
+    &-area {
+        position: relative;
+        padding: 132px 0;
+        background: var(--ag-clr-bg-2);
+
+        @media #{$xl} {
+            padding: 110px 0;
+        }
+
+        @media #{$lg} {
+            padding: 100px 0;
+        }
+
+        @media #{$md} {
+            padding: 90px 0;
+        }
+
+        @media #{$xs} {
+            padding: 64px 0;
+        }
+    }
+
+    &-bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 410px;
+        pointer-events: none;
+    }
+
+    // the head: 850 wide, the label, the title, the text
+    &-top {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 850px;
+        margin: 0 auto 48px;
+        text-align: center;
+
+        @media #{$xs} {
+            margin-bottom: 32px;
+        }
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    &-desc {
+        margin-top: 20px;
+    }
+
+    &-list {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 20px;
+
+        @media #{$lg,$md,$sm,$xs} {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &-card {
+        --price: 52px;
+        --price-lh: 56px;
+        --item: 18px;
+        --item-lh: 28px;
+        --pad: 24px;
+        --c-title: var(--ag-clr-h-1);
+        --c-panel: #f4f4f4;
+        --c-text: var(--ag-clr-p-1);
+        --c-unit: rgb(21 19 18 / 40%);
+        --c-inc: rgb(21 19 18 / 40%);
+        --c-item: var(--ag-clr-h-1);
+        padding: 10px;
+        border-radius: 16px;
+        background: #fff;
+
+        &:is(.is-dark) {
+            --c-title: #fff;
+            --c-panel: #231a31;
+            --c-text: rgb(255 255 255 / 80%);
+            --c-unit: rgb(255 255 255 / 40%);
+            --c-inc: rgb(255 255 255 / 40%);
+            --c-item: #fff;
+            display: grid;
+            grid-template-columns: 440fr 450fr;
+            gap: 10px;
+            background: var(--ag-clr-h-1);
+        }
+
+        @media #{$xl} {
+            --price: 46px;
+            --price-lh: 50px;
+            --item: 17px;
+            --item-lh: 26px;
+            --pad: 20px;
+        }
+
+        @media #{$lg,$md} {
+            --price: 48px;
+            --price-lh: 52px;
+        }
+
+        @media #{$xs} {
+            --price: 40px;
+            --price-lh: 44px;
+            --item: 16px;
+            --item-lh: 26px;
+            --pad: 16px;
+
+            &:is(.is-dark) {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+
+    // the panel: the name, the price and the text of the plan
+    &-head {
+        padding: var(--pad);
+        border-radius: 12px;
+        background: var(--c-panel);
+    }
+
+    &-name {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 28px;
+        color: var(--c-title);
+    }
+
+    &-price {
+        display: flex;
+        align-items: baseline;
+        margin: 18px 0 0;
+        font-family: var(--ag-font-2);
+        font-size: var(--price);
+        line-height: var(--price-lh);
+        letter-spacing: -0.02em;
+        color: var(--c-title);
+
+        &-cur {
+            font-weight: 300;
+            color: var(--ag-clr-pr-2);
+        }
+
+        &-num {
+            font-weight: 700;
+        }
+
+        &-unit {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 28px;
+            letter-spacing: 0;
+            color: var(--c-unit);
+        }
+    }
+
+    &-text {
+        margin-top: 10px;
+        color: var(--c-text);
+    }
+
+    // the plan button: a purple bar with a light under its middle (the dark card has a dark bar with a purple light)
+    &-btn {
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 52px;
+        margin-top: 4px;
+        overflow: hidden;
+        border: 1.5px solid rgb(255 255 255 / 20%);
+        border-radius: 10px;
+        background: var(--ag-clr-pr-2);
+        font-family: var(--ag-font-2);
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 38px;
+            left: 50%;
+            z-index: -1;
+            width: 73.6%;
+            height: 60px;
+            border-radius: 50%;
+            background: #fff;
+            opacity: 0.8;
+            filter: blur(12px);
+            transform: translateX(-50%);
+            transition: opacity 0.4s ease;
+        }
+
+        &:hover {
+            color: #fff;
+
+            &::before {
+                opacity: 1;
+            }
+        }
+    }
+
+    &-card:is(.is-dark) &-btn {
+        background: #221a31;
+
+        &::before {
+            top: 32px;
+            height: 66px;
+            background: var(--ag-clr-pr-2);
+        }
+    }
+
+    // what is included
+    &-inc {
+        padding: 24px var(--pad) var(--pad);
+
+        &-title {
+            font-size: 20px;
+            line-height: 28px;
+            color: var(--c-inc);
+        }
+    }
+
+    &-items {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 20px;
+    }
+
+    &-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: var(--item);
+        line-height: var(--item-lh);
+        color: var(--c-item);
+
+        &-icon {
+            flex: none;
+            width: 20px;
+            height: 20px;
+            background: pricing-icon('%23EBEBEB') center / contain no-repeat;
+        }
+    }
+
+    &-card:is(.is-dark) &-item-icon {
+        background-image: pricing-icon('%232F2D2C');
+    }
+
+    // the picture of the dark card: it fills its half, the glass box lies on its bottom
+    &-media {
+        position: relative;
+        min-height: 616px;
+
+        @media #{$xs} {
+            min-height: 440px;
+        }
+    }
+
+    &-img {
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+    }
+
+    &-quote {
+        position: absolute;
+        right: 16px;
+        bottom: 16px;
+        left: 16px;
+        isolation: isolate;
+        padding: 24px;
+        overflow: hidden;
+        border-radius: 8px;
+        background: #151312;
+        text-align: center;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(52px);
+        }
+
+        &::before {
+            top: -42px;
+            left: -42px;
+            width: 154px;
+            height: 154px;
+            background: var(--ag-clr-pr-1);
+        }
+
+        &::after {
+            right: -61px;
+            bottom: -70px;
+            width: 181px;
+            height: 181px;
+            background: var(--ag-clr-pr-2);
+        }
+
+        @media #{$xs} {
+            padding: 20px;
+        }
+
+        &-text {
+            margin-bottom: 20px;
+        }
+
+        &-btn {
+            display: inline-flex;
+            align-items: center;
+            height: 40px;
+            padding: 0 18px;
+            border-radius: 8px;
+            background: var(--ag-clr-pr-2);
+            font-family: var(--ag-font-2);
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 28px;
+            color: #fff;
+            transition: background-color 0.4s ease;
+
+            &:hover {
+                background: var(--ag-clr-pr-1);
+                color: #fff;
+            }
+        }
+    }
+}
+/*
+    ag-pricing-2-end
+*/

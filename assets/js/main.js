@@ -607,6 +607,175 @@ function agProjects1Slider() {
 
 
 /*
+	projects-2 (AI Agentech) — from 992px up (and 640px high) the cards stick to the top of the screen one after the other (position: sticky,
+	_projects.scss) and the card that is being covered shrinks to 0.9 and blurs to 8px while the next one slides over it: it starts when the
+	next card touches its bottom edge and is done when the next card has come up to 30% of the card's height from the top (the effect of the
+	project cards of novora-wbs.webflow.io). The place of the next card is read live, a trigger cannot measure a sticky card
+*/
+function agProjects2Stack() {
+
+	var list = document.querySelector(".ag-projects-2-list");
+	var items = gsap.utils.toArray(".ag-projects-2-item");
+	if (!list || items.length < 2 || prefersReducedMotion()) return;
+
+	var cards = items.map(function (item) {
+		return item.querySelector(".ag-projects-2-card");
+	});
+
+	var mm = gsap.matchMedia();
+
+	mm.add("(min-width: 992px) and (min-height: 640px)", function () {
+
+		var update = function () {
+			items.forEach(function (item, i) {
+				var next = items[i + 1];
+				if (!next) return;
+
+				var pin = parseFloat(getComputedStyle(item).top) || 0;
+				var height = item.offsetHeight;
+				// 0 while the next card is at the bottom edge of this one, 1 when it has come up to 30% of the height
+				var p = gsap.utils.clamp(0, 1, (pin + height - next.getBoundingClientRect().top) / (height * 0.7));
+
+				gsap.set(cards[i], {
+					scale: 1 - 0.1 * p,
+					filter: p > 0 ? "blur(" + (8 * p).toFixed(2) + "px)" : "none"
+				});
+			});
+		};
+
+		var trigger = ScrollTrigger.create({
+			trigger: list,
+			start: "top bottom",
+			end: "bottom top",
+			onUpdate: update,
+			onRefresh: update
+		});
+
+		update();
+
+		return function () {
+			trigger.kill();
+			gsap.set(cards, { clearProps: "transform,filter" });
+		};
+	});
+}
+
+
+/*
+	faqs-2 (AI Agentech) — the section starts as one big picture (two halves of the same picture, _faqs.scss). From 1200px up (and 700px high)
+	the section is pinned (a section that is taller than the screen is pinned by its bottom edge) and, while the page scrolls (scrubbed 0.6), the
+	halves slide apart to the left and to the right and the questions come up between them. From 1200px up but lower than 700px nothing is pinned,
+	the halves slide while the section comes up. A fifth of the screen of every half stays at the sides (400px on the 1920 design), but never so
+	much that it would reach the questions. With reduced motion the halves are just put where they end. Below 1200px there is no animation and no
+	picture: the halves are hidden in css, the section is the plain questions
+*/
+function agFaqs2Reveal() {
+
+	var area = document.querySelector(".ag-faqs-2-area");
+	if (!area) return;
+
+	var left = area.querySelector(".ag-faqs-2-half.is-l");
+	var right = area.querySelector(".ag-faqs-2-half.is-r");
+	var wrap = area.querySelector(".ag-faqs-2-wrap");
+	var list = area.querySelector(".ag-faqs-2-list");
+	var top = area.querySelector(".ag-faqs-2-top");
+
+	// how far a half slides: it is half of the section wide, the part that stays is a fifth of the section (nothing if it is only a sliver)
+	var slide = function () {
+		var width = area.offsetWidth;
+		var content = Math.max(list.offsetWidth, top.offsetWidth);
+		var visible = Math.min(width * 0.2083, (width - content) / 2 - 8);
+		return width / 2 - (visible < 24 ? 0 : visible);
+	};
+
+	if (prefersReducedMotion()) {
+		gsap.set(left, { x: function () { return -slide(); } });
+		gsap.set(right, { x: function () { return slide(); } });
+		return;
+	}
+
+	var build = function (tl) {
+		tl.fromTo(left, { x: 0 }, { x: function () { return -slide(); }, duration: 1, ease: "power2.inOut" }, 0);
+		tl.fromTo(right, { x: 0 }, { x: function () { return slide(); }, duration: 1, ease: "power2.inOut" }, 0);
+		// the questions come up from below the section (the section cuts them off), one to one with the scroll: they start when the halves have
+		// slid 60% of the way and are in place a little after the halves are done
+		tl.fromTo(wrap, { y: function () { return area.offsetHeight; } }, { y: 0, duration: 0.9, ease: "none" }, 0.6);
+	};
+
+	var mm = gsap.matchMedia();
+
+	mm.add("(min-width: 1200px) and (min-height: 700px)", function () {
+		build(gsap.timeline({
+			scrollTrigger: {
+				trigger: area,
+				start: function () {
+					return area.offsetHeight > window.innerHeight ? "bottom bottom" : "top top";
+				},
+				end: "+=110%",
+				pin: true,
+				scrub: 0.6,
+				anticipatePin: 1,
+				invalidateOnRefresh: true,
+				// measured before the other triggers, like the pin of the team section (the titles under it count the space it adds)
+				refreshPriority: 1
+			}
+		}));
+	});
+
+	mm.add("(min-width: 1200px) and (max-height: 699px)", function () {
+		build(gsap.timeline({
+			scrollTrigger: {
+				trigger: area,
+				start: "top 80%",
+				end: "top 10%",
+				scrub: 0.6,
+				invalidateOnRefresh: true
+			}
+		}));
+	});
+}
+
+// the question that is open tells the screen readers (wa_accordion_item in main-common.js only moves the .active class)
+$(document).on("click", ".ag-faqs-2-item", function () {
+	$(".ag-faqs-2-item").each(function () {
+		$(this).find(".ag-faqs-2-head").attr("aria-expanded", $(this).hasClass("active"));
+	});
+});
+
+
+/*
+	hero-2 (AI Agentech) — the card on the left is a slider of three (the picture and the number fade into each other, the dots and the round
+	arrow stay where they are): it turns by itself, the arrow brings the next one and a dot brings its own slide
+*/
+function agHero2Slider() {
+
+	if (!$(".ag-hero-2-slider").length) return;
+
+	var $dots = $(".ag-hero-2-dots .dot");
+
+	var swiper = new Swiper(".ag-hero-2-slider", {
+		slidesPerView: 1,
+		loop: true,
+		speed: 700,
+		effect: "fade",
+		fadeEffect: { crossFade: true },
+		grabCursor: true,
+		autoplay: prefersReducedMotion() ? false : { delay: 4000, disableOnInteraction: false },
+		navigation: { nextEl: ".ag-hero-2-next" },
+		on: {
+			slideChange: function () {
+				$dots.removeClass("is-active").eq(this.realIndex).addClass("is-active");
+			}
+		}
+	});
+
+	$dots.on("click", function () {
+		swiper.slideToLoop($dots.index(this));
+	});
+}
+
+
+/*
 	team-1 scroll — from 1200px up the section is pinned and the cards slide in from the right edge of their
 	box (.ag-team-1-overflow, it cuts them off) while the page scrolls (the row as a block, every card a little behind the one before it,
 	scrubbed 0.6), then they rest for a moment and the page goes on. The top of the section comes up once when it arrives.
@@ -842,12 +1011,15 @@ window.addEventListener("load", function () {
 ScrollTrigger.refresh();
 
 agHero1Slider();
+agHero2Slider();
 agAbout1In();
 agServices1Slider();
 agTeam1Cards();
 agTeam1Scroll();
 agFeatures1Slider();
 agProjects1Slider();
+agProjects2Stack();
+agFaqs2Reveal();
 agProcess1Title();
 agCta1In();
 agFooter1In();

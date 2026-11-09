@@ -902,3 +902,691 @@
 /*
     ag-hero-1-end
 */
+
+/*
+    ag-hero-2-start
+*/
+// the 1920 design is a light stage under the header: the title with the logo mark on the left, a dark panel with the robot (its top edge steps up
+// on the right, two corners are carved out for the slider card and the video card), the ghost title behind the robot. From 1400 up it is laid out as
+// drawn (the panel stretches between its two sides, everything else is anchored to the left / the middle / the right), below 1400 the boxes are stacked
+.ag-hero-2 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        height: 1194px;
+        overflow: hidden;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            height: auto;
+            padding: 140px 0 12px;
+        }
+
+        @media #{$md} {
+            padding-top: 140px;
+        }
+
+        @media #{$sm,$xs} {
+            padding-top: 160px;
+        }
+    }
+
+    // the colour: a 2170 x 1388 picture 125px / 80px past the top left corner and the lilac one hanging 207px over the top and 164px over the right edge
+    // (1185 x 1050), both blurred (the 614px and the 164px of the design are blur(307px) and blur(82px) in css), the page colour comes back over them from 767px down
+    &-bg-clr-1,
+    &-bg-clr-2 {
+        position: absolute;
+        background-repeat: no-repeat;
+        pointer-events: none;
+    }
+
+    &-bg-clr-1 {
+        top: -80px;
+        right: -125px;
+        left: -125px;
+        z-index: -3;
+        height: 1388px;
+        background-position: center;
+        background-size: cover;
+        filter: blur(307px);
+    }
+
+    &-bg-clr-2 {
+        top: -207px;
+        right: -164px;
+        z-index: -2;
+        width: 1185px;
+        height: 1050px;
+        background-position: center;
+        background-size: 100% 100%;
+        filter: blur(82px);
+    }
+
+    &-bg-fade {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        height: 427px;
+        background: linear-gradient(180deg, rgb(240 242 244 / 0%) 0%, var(--ag-clr-bg-2) 60%);
+        pointer-events: none;
+    }
+
+    // content: the left edge is the container, 186px from the top of the area
+    &-wrap {
+        position: absolute;
+        top: 186px;
+        right: 0;
+        left: 0;
+        z-index: 6;
+
+        .container {
+            position: relative;
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            top: auto;
+            padding-bottom: 48px;
+        }
+    }
+
+    // the light notch (216 x 17) in the top edge of the panel, under the button: 15px before the container, 333px under the top of the content
+    &-tab {
+        position: absolute;
+        top: 333px;
+        left: -15px;
+        width: 216px;
+        height: 17px;
+        background: #DFDCEE;
+        clip-path: path('M216 0C216 0 208.157 1.74276 204.5 5C202.735 6.57193 201.257 9.1094 200.159 11.447C198.655 14.6493 195.575 17 192.037 17H23.9633C20.4252 17 17.3454 14.6493 15.8409 11.447C14.7426 9.1094 13.2648 6.57193 11.5 5C7.84316 1.74276 0 0 0 0H216Z');
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            display: none;
+        }
+    }
+
+    // the logo mark (133 x 136, the picture is cut to it by the mask) and the title sit on one base line
+    &-top {
+        display: flex;
+        align-items: flex-end;
+        gap: 32px;
+        margin-bottom: 44px;
+
+        @media #{$xs} {
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+    }
+
+    &-fav {
+        flex: none;
+        width: 133px;
+        height: 136px;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+
+        @media #{$md} {
+            width: 110px;
+            height: 112px;
+        }
+
+        @media #{$xs} {
+            width: 84px;
+            height: 86px;
+        }
+
+        @media #{$sm} {
+            width: 96px;
+            height: 98px;
+        }
+    }
+
+    &-text {
+        max-width: 450px;
+        margin-bottom: 24px;
+    }
+
+    // the stage: from 1400 up it is the whole area and every box in it is placed by the 1920 numbers, below it is a row of boxes under the
+    // ghost title (--a is the height of the ghost title)
+    &-stage {
+        --a: 112px;
+        position: absolute;
+        inset: 0;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            inset: auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 12px;
+            padding: var(--a) 12px 0;
+        }
+
+        @media #{$lg} {
+            --a: 92px;
+        }
+
+        @media #{$md} {
+            --a: 74px;
+        }
+
+        @media #{$xs} {
+            --a: 44px;
+        }
+
+        @media #{$sm} {
+            --a: 58px;
+        }
+    }
+
+    // the ghost title: white, 264px, the panel and the robot cover its lower part
+    &-agency {
+        position: absolute;
+        top: 351px;
+        left: calc(50% - 228px);
+        z-index: 1;
+        font-family: var(--ag-font-2);
+        font-size: 264px;
+        font-weight: 700;
+        line-height: 185px;
+        letter-spacing: -0.05em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: #fff;
+        user-select: none;
+        pointer-events: none;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            top: 0;
+            left: 50%;
+            font-size: calc(var(--a) * 1.34);
+            line-height: var(--a);
+            transform: translateX(-50%);
+        }
+    }
+
+    &-star {
+        position: absolute;
+        top: 232px;
+        left: calc(50% + 502px);
+        z-index: 1;
+        width: 172px;
+        height: 172px;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            display: none;
+        }
+    }
+
+    // panel: 20px in from the sides, 442px from the top, 732px high. The shape is one polygon (the rounded corners are drawn in as points): the
+    // left half is measured from the left edge, the right half from the right edge, so it stretches
+    &-panel {
+        position: absolute;
+        top: 442px;
+        right: 20px;
+        left: 20px;
+        z-index: 3;
+        height: 732px;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            inset: auto;
+            flex: 0 0 100%;
+            height: 640px;
+        }
+
+        @media #{$lg} {
+            height: 600px;
+        }
+
+        @media #{$md} {
+            height: 520px;
+        }
+
+        @media #{$xs} {
+            height: 400px;
+        }
+
+        @media #{$sm} {
+            height: 460px;
+        }
+    }
+
+    &-panel-bg {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background: var(--ag-clr-h-1);
+        clip-path: polygon(100% 700px, calc(100% - 0.8px) 707.3px, calc(100% - 3.3px) 714.1px, calc(100% - 7px) 720px, calc(100% - 12px) 725px, calc(100% - 17.9px) 728.7px, calc(100% - 24.7px) 731.2px, calc(100% - 32px) 732px, calc(100% - 114px) 732px, calc(100% - 121.3px) 731.2px, calc(100% - 128.1px) 728.7px, calc(100% - 134px) 725px, calc(100% - 139px) 720px, calc(100% - 142.7px) 714.1px, calc(100% - 145.2px) 707.3px, calc(100% - 146px) 700px, calc(100% - 146px) 481px, calc(100% - 146.8px) 473.7px, calc(100% - 149.3px) 466.9px, calc(100% - 153px) 461px, calc(100% - 158px) 456px, calc(100% - 163.9px) 452.3px, calc(100% - 170.7px) 449.8px, calc(100% - 178px) 449px, calc(100% - 542px) 449px, calc(100% - 549.3px) 449.8px, calc(100% - 556.1px) 452.3px, calc(100% - 562px) 456px, calc(100% - 567px) 461px, calc(100% - 570.7px) 466.9px, calc(100% - 573.2px) 473.7px, calc(100% - 574px) 481px, calc(100% - 574px) 700px, calc(100% - 574.8px) 707.3px, calc(100% - 577.3px) 714.1px, calc(100% - 581px) 720px, calc(100% - 586px) 725px, calc(100% - 591.9px) 728.7px, calc(100% - 598.7px) 731.2px, calc(100% - 606px) 732px, 109px 732px, 101.7px 731.2px, 94.9px 728.7px, 89px 725px, 84px 720px, 80.3px 714.1px, 77.8px 707.3px, 77px 700px, 77px 322.4px, 76.7px 317.8px, 75.7px 313.3px, 74.1px 309.1px, 72px 305.2px, 69.3px 301.5px, 66.1px 298.3px, 62.4px 295.5px, 14.6px 264.5px, 10.9px 261.7px, 7.7px 258.5px, 5px 254.8px, 2.9px 250.9px, 1.3px 246.7px, 0.3px 242.2px, 0 237.6px, 0 109px, 0.8px 101.7px, 3.3px 94.9px, 7px 89px, 12px 84px, 17.9px 80.3px, 24.7px 77.8px, 32px 77px, calc(100% - 475.4px) 77px, calc(100% - 470.8px) 76.7px, calc(100% - 466.4px) 75.7px, calc(100% - 462.1px) 74.1px, calc(100% - 458.2px) 72px, calc(100% - 454.5px) 69.3px, calc(100% - 451.3px) 66.1px, calc(100% - 448.5px) 62.4px, calc(100% - 417.5px) 14.6px, calc(100% - 414.7px) 10.9px, calc(100% - 411.5px) 7.7px, calc(100% - 407.8px) 5px, calc(100% - 403.9px) 2.9px, calc(100% - 399.6px) 1.3px, calc(100% - 395.2px) 0.3px, calc(100% - 390.6px) 0, calc(100% - 32px) 0, calc(100% - 24.7px) 0.8px, calc(100% - 17.9px) 3.3px, calc(100% - 12px) 7px, calc(100% - 7px) 12px, calc(100% - 3.3px) 17.9px, calc(100% - 0.8px) 24.7px, 100% 32px, 100% 700px);
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            border-radius: 20px;
+            clip-path: none;
+        }
+    }
+
+    // the wave picture is a little see-through over the dark
+    &-panel-img {
+        position: absolute;
+        inset: 0;
+        opacity: .9;
+    }
+
+    // the cyan light on the lower left, 628 x 210 (the 244px blur of the design is blur(122px) in css)
+    &-glow {
+        position: absolute;
+        top: 581px;
+        left: -74px;
+        width: 628px;
+        height: 210px;
+        border-radius: 50%;
+        background: #00B9EB;
+        filter: blur(122px);
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            top: auto;
+            bottom: -60px;
+        }
+    }
+
+    // the robot stands 339px above the top of the panel and is cut by the carved corner of the video card (the same shape as in the panel,
+    // 574px from the right edge, 146px wide of the right column); --s scales the 935 x 1071 picture around its bottom middle
+    &-robot-clip {
+        position: absolute;
+        top: -339px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, calc(100% - 146px) 100%, calc(100% - 146px) 820px, calc(100% - 146.8px) 812.7px, calc(100% - 149.3px) 805.9px, calc(100% - 153px) 800px, calc(100% - 158px) 795px, calc(100% - 163.9px) 791.3px, calc(100% - 170.7px) 788.8px, calc(100% - 178px) 788px, calc(100% - 542px) 788px, calc(100% - 549.3px) 788.8px, calc(100% - 556.1px) 791.3px, calc(100% - 562px) 795px, calc(100% - 567px) 800px, calc(100% - 570.7px) 805.9px, calc(100% - 573.2px) 812.7px, calc(100% - 574px) 820px, calc(100% - 574px) 1039px, calc(100% - 574.8px) 1046.3px, calc(100% - 577.3px) 1053.1px, calc(100% - 581px) 1059px, calc(100% - 586px) 1064px, calc(100% - 591.9px) 1067.7px, calc(100% - 598.7px) 1070.2px, calc(100% - 606px) 100%, 0 100%);
+        pointer-events: none;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            top: 0;
+            overflow: hidden;
+            clip-path: none;
+        }
+    }
+
+    // the frame of the robot is the 935 x 1071 box of the design (x 571 - 1506, y 103 - 1174): the robot (850 x 1056) and its light (851 x 896, the
+    // 14px blur is in the picture) are put in it as drawn, so --s scales both of them together
+    // 571px from the left in the design = the middle of the frame is 78px right of the middle of the area
+    &-robot {
+        --s: 1;
+        position: absolute;
+        bottom: 0;
+        left: calc(50% + 78px);
+        width: calc(935px * var(--s));
+        height: calc(1071px * var(--s));
+        transform: translateX(-50%);
+
+        @media #{$xxxl} {
+            --s: 0.95;
+        }
+
+        @media #{$xxl} {
+            --s: 0.82;
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            --s: 0.6;
+            left: 50%;
+        }
+
+        @media #{$lg} {
+            --s: 0.55;
+        }
+
+        @media #{$md} {
+            --s: 0.47;
+        }
+
+        @media #{$xs} {
+            --s: 0.3;
+        }
+
+        @media #{$sm} {
+            --s: 0.41;
+        }
+    }
+
+    // the robot is 85px in and 42px under the top of the frame, its light is over it: 0 in and 1px over the top (it starts at 571 / 102 in the design)
+    &-robot-img,
+    &-robot-light {
+        position: absolute;
+    }
+
+    &-robot-img {
+        top: calc(42px * var(--s));
+        left: calc(85px * var(--s));
+        width: calc(850px * var(--s));
+        height: calc(1056px * var(--s));
+    }
+
+    &-robot-light {
+        top: calc(-1px * var(--s));
+        left: 0;
+        z-index: 1;
+        width: calc(851px * var(--s));
+        height: calc(896px * var(--s));
+        pointer-events: none;
+    }
+
+    // the round button: 168px, the dark thin ring 8px in, the text (128px) turns, the dark disc (72px) with the arrow stays
+    &-explore {
+        position: absolute;
+        top: 445px;
+        left: calc(50% - 314px);
+        z-index: 7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 168px;
+        height: 168px;
+        border-radius: 50%;
+        background: linear-gradient(90deg, #A234FD 0%, #6D1BFB 49%, #1BDAD6 100%);
+        box-shadow: inset 0 0 8px #D6DBF3;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 4.76%;
+            border: 1.5px solid #190139;
+            border-radius: 50%;
+        }
+
+        .ring {
+            width: 76.19%;
+            height: 76.19%;
+            animation: ag-hero-2-ring 16s linear infinite;
+
+            @media (prefers-reduced-motion: reduce) {
+                animation: none;
+            }
+        }
+
+        .arrow {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42.86%;
+            height: 42.86%;
+            border-radius: 50%;
+            background: var(--ag-clr-h-1);
+            box-shadow: inset 0 0 9px #A254E9;
+            transition: var(--ag-cube-1);
+
+            svg {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        &:hover .arrow {
+            transform: scale(1.1);
+        }
+
+        @media #{$xxl} {
+            left: calc(50% - 250px);
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            top: calc(var(--a) + 16px);
+            left: 16px;
+        }
+
+        @media #{$md} {
+            width: 140px;
+            height: 140px;
+        }
+
+        @media #{$xs} {
+            width: 108px;
+            height: 108px;
+            left: 12px;
+        }
+
+        @media #{$sm} {
+            width: 120px;
+            height: 120px;
+            left: 16px;
+        }
+    }
+
+    // card: 379 x 559, 80px from the left, 567px from the top. The shape (the tab of 65px on the upper left, the white 4px outline) is the svg, it
+    // stretches with the card; the picture and the text are placed from the left by the share of the tab (65 of 379), so they follow it
+    &-card {
+        position: absolute;
+        top: 567px;
+        left: 80px;
+        z-index: 4;
+        width: 379px;
+        height: 559px;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            top: auto;
+            left: auto;
+            max-width: 100%;
+        }
+
+        @media (max-width: 419px) {
+            width: 100%;
+        }
+    }
+
+    &-card-shape {
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        display: block;
+        width: calc(100% + 8px);
+        height: calc(100% + 8px);
+    }
+
+    &-slider {
+        position: absolute;
+        inset: 0;
+
+        .swiper-slide {
+            height: 100%;
+        }
+    }
+
+    // 347 x 244, 16px in from the top and the sides; the corner of the tab is cut
+    &-card-img {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        left: 16px;
+        height: 244px;
+        clip-path: polygon(96.54% 0, 97.33% 0.3px, 98.06% 1.2px, 98.7% 2.6px, 99.24% 4.5px, 99.65% 6.7px, 99.91% 9.2px, 100% 12px, 100% 232px, 99.91% 234.8px, 99.65% 237.3px, 99.24% 239.5px, 98.7% 241.4px, 98.06% 242.8px, 97.33% 243.7px, 96.54% 244px, 22.19% 244px, 21.4% 243.7px, 20.67% 242.8px, 20.03% 241.4px, 19.49% 239.5px, 19.08% 237.3px, 18.82% 234.8px, 18.73% 232px, 18.73% 135.9px, 18.69% 134.1px, 18.58% 132.3px, 18.39% 130.7px, 18.14% 129.2px, 17.82% 127.8px, 17.45% 126.6px, 17.02% 125.5px, 1.71% 94.5px, 1.28% 93.4px, 0.91% 92.2px, 0.59% 90.8px, 0.34% 89.3px, 0.15% 87.7px, 0.04% 85.9px, 0 84.1px, 0 12px, 0.09% 9.2px, 0.35% 6.7px, 0.76% 4.5px, 1.3% 2.6px, 1.94% 1.2px, 2.67% 0.3px, 3.46% 0, 96.54% 0);
+    }
+
+    // the text sits in the body of the card, to the right of the tab (258px wide in the design)
+    &-card-body {
+        position: absolute;
+        top: 296px;
+        right: 0;
+        left: calc(100% * 65 / 379);
+        padding: 0 28px;
+        text-align: center;
+
+        @media (max-width: 419px) {
+            padding: 0 16px;
+        }
+    }
+
+    &-card-count {
+        margin-bottom: 20px;
+        font-family: var(--ag-font-2);
+        font-size: 56px;
+        font-weight: 700;
+        line-height: 60px;
+        letter-spacing: -0.02em;
+        color: var(--ag-clr-h-1);
+
+        .unit {
+            color: rgb(7 0 14 / 35%);
+        }
+    }
+
+    &-card-text {
+        margin-bottom: 0;
+        font-family: var(--ag-font-1);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--ag-clr-p-1);
+    }
+
+    // the dots: 32px for the slide that is on, 6px for the others
+    &-dots {
+        position: absolute;
+        top: 452px;
+        right: 0;
+        left: calc(100% * 65 / 379);
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        height: 6px;
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            padding: 0;
+            border-radius: 40px;
+            background: var(--ag-clr-h-1);
+            opacity: .12;
+            transition: var(--ag-cube-1);
+
+            &.is-active {
+                width: 32px;
+                background: var(--ag-clr-pr-2);
+                opacity: 1;
+            }
+        }
+    }
+
+    // the people and the round arrow on the lowest line (40px high)
+    &-card-foot {
+        position: absolute;
+        top: 491px;
+        right: 28px;
+        left: calc(100% * 93 / 379);
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        @media (max-width: 419px) {
+            right: 20px;
+            left: 20px;
+        }
+    }
+
+    &-card-avatars {
+        display: flex;
+        align-items: center;
+    }
+
+    // 40 x 40, 8px corners (the 2px frame of the design is in the picture), every one 12px over the one before it
+    &-card-avatar {
+        flex: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+
+        & + & {
+            margin-left: -12px;
+        }
+    }
+
+    // the line and the circle (85 x 40); the svg is 88 x 46 because of the light behind the circle
+    &-next {
+        position: relative;
+        flex: none;
+        width: 85px;
+        height: 40px;
+        padding: 0;
+        background: none;
+        transition: var(--ag-cube-1);
+
+        svg {
+            position: absolute;
+            top: -3px;
+            left: 0;
+            display: block;
+            overflow: visible;
+        }
+
+        &:hover {
+            transform: translateX(4px);
+        }
+    }
+
+    // the video card sits in the carved corner of the panel: 388 wide, 186px from the right edge, 911px from the top
+    &-video-card {
+        position: absolute;
+        top: 911px;
+        right: 186px;
+        z-index: 2;
+        width: 388px;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            top: auto;
+            right: auto;
+            max-width: 100%;
+            padding: 20px;
+            border: 1px solid rgb(7 0 14 / 8%);
+            border-radius: 24px;
+            background: var(--ag-clr-bg-2);
+        }
+
+        @media #{$xs} {
+            padding: 16px;
+        }
+    }
+
+    &-video-img {
+        height: 167px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+    }
+
+    &-video-text {
+        margin-bottom: 0;
+        padding: 0 12px;
+        font-family: var(--ag-font-2);
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 28px;
+        letter-spacing: -0.01em;
+        color: var(--ag-clr-h-1);
+
+        @media #{$xs} {
+            padding: 0 4px;
+            font-size: 18px;
+            line-height: 26px;
+        }
+    }
+}
+
+// the text of the round button turns all the time
+@keyframes ag-hero-2-ring {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/*
+    ag-hero-2-end
+*/

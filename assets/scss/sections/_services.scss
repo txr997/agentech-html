@@ -376,3 +376,380 @@
 /*
     ag-services-1-end
 */
+
+
+/*
+    ag-services-2-start
+*/
+// dark section: four glass cards, two in a row (one under the other below 1200). The outline of a card (694 x 396 in the design) is a polygon: 12px
+// corners, a 32px notch under the header (from 111px down) and the 60px cut of the bottom right corner. $s2-out is the outline, $s2-in the same outline
+// 1px inside it, the 1px stroke is the ring between the two (one clip-path, even-odd). The card under the pointer is the lit one (--lit: 1)
+$s2-out: 0 12px, 1.6px 6px, 6px 1.6px, 12px 0, calc(100% - 12px) 0, calc(100% - 6px) 1.6px, calc(100% - 1.6px) 6px, 100% 12px, 100% calc(100% - 60.9px), calc(100% - 1.2px) calc(100% - 54.7px), calc(100% - 3.4px) calc(100% - 52.5px), calc(100% - 51.5px) calc(100% - 3.6px), calc(100% - 55.3px) calc(100% - 1.2px), calc(100% - 60px) 100%, 44px 100%, 38px calc(100% - 1.6px), 33.6px calc(100% - 6px), 32px calc(100% - 12px), 32px 123px, 30.4px 117px, 26px 112.6px, 20px 111px, 12px 111px, 6px 109.4px, 1.6px 105px, 0 99px;
+$s2-in: 1px 12px, 2.5px 6.5px, 6.5px 2.5px, 12px 1px, calc(100% - 12px) 1px, calc(100% - 6.5px) 2.5px, calc(100% - 2.5px) 6.5px, calc(100% - 1px) 12px, calc(100% - 1px) calc(100% - 60.5px), calc(100% - 2.3px) calc(100% - 55px), calc(100% - 4.1px) calc(100% - 53.2px), calc(100% - 52.1px) calc(100% - 4.3px), calc(100% - 55.9px) calc(100% - 2px), calc(100% - 60px) calc(100% - 1px), 44px calc(100% - 1px), 38.5px calc(100% - 2.5px), 34.5px calc(100% - 6.5px), 33px calc(100% - 12px), 33px 123px, 31.3px 116.5px, 26.5px 111.7px, 20px 110px, 12px 110px, 6.5px 108.5px, 2.5px 104.5px, 1px 99px;
+
+.ag-services-2 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background-color: var(--ag-clr-h-1);
+
+        > .container {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    // background: the swirl picture (1920 x 1148) from the top of the section (the 28% of the design is already in the picture, so it has no opacity of its own)
+    &-bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        height: 1148px;
+        max-height: 100%;
+        pointer-events: none;
+    }
+
+    // sec-title
+    &-sec-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 830px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    // grid: the cards are 694px wide in a 1400px box, 12px between them
+    &-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 48px;
+
+        @media #{$lg,$md,$sm,$xs} {
+            grid-template-columns: minmax(0, 694px);
+            justify-content: center;
+        }
+    }
+
+    // card: the layers under the content are the glow of the lit card, the glass with the lit gradient over it and the stroke. The header sits in the
+    // notch (10px in), the text and the list are 64px from the left, the picture (220px) is 20px from the right
+    &-card {
+        --lit: 0;
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        flex-direction: column;
+        min-height: 396px;
+        padding: 133px 256px 39px 64px;
+
+        // the glow (74px blur in the design = blur(37px)): the shape of the card (the top strip and the body, the notch is left out) painted and blurred,
+        // so the haze also fills the notch instead of leaving a dark box there (a box-shadow is never drawn inside the box)
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background:
+                linear-gradient(#9933ED, #9933ED) 0 0 / 100% 111px no-repeat,
+                linear-gradient(#9933ED, #9933ED) 32px 0 / calc(100% - 32px) 100% no-repeat;
+            filter: blur(37px);
+            opacity: var(--lit);
+            transition: var(--ag-cube-1);
+        }
+
+        &:hover {
+            --lit: 1;
+        }
+
+        &-bg,
+        &-line {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        &-bg {
+            background-color: rgb(36 36 36 / 75%);
+            backdrop-filter: blur(20px);
+            clip-path: polygon(#{$s2-out});
+
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(90deg, var(--ag-clr-pr-2) 0%, #382D46 100%);
+                opacity: var(--lit);
+                transition: var(--ag-cube-1);
+            }
+        }
+
+        // the stroke: 52% of a gradient from the left to the right, the lit card has its own (white to deep violet)
+        &-line {
+            opacity: 0.52;
+            clip-path: polygon(evenodd, #{$s2-out}, 0 12px, #{$s2-in}, 1px 12px);
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                transition: var(--ag-cube-1);
+            }
+
+            &::before {
+                background: linear-gradient(90deg, var(--ag-clr-pr-2) 0%, #382D46 100%);
+                opacity: calc(1 - var(--lit));
+            }
+
+            &::after {
+                background: linear-gradient(90deg, #fff 0%, #2E0065 100%);
+                opacity: var(--lit);
+            }
+        }
+
+        // header: 428 x 91 in the notch, the icon (56px) and the title sit 18px in
+        &-hd {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            width: calc(100% - 266px);
+            height: 91px;
+            padding: 0 18px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--ag-clr-pr-2) 0%, rgb(93 36 141 / 10%) 30.29%, rgb(26 20 33 / 0%) 100%);
+
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                padding: 1px;
+                border-radius: inherit;
+                background: linear-gradient(90deg, rgb(255 255 255 / 48%) 0%, rgb(255 255 255 / 0%) 100%);
+                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                -webkit-mask-composite: xor;
+                mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                mask-composite: exclude;
+                pointer-events: none;
+            }
+        }
+
+        // the icon is the flaticon font, its size is the font size
+        &-icon {
+            display: flex;
+            flex: none;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            font-size: 56px;
+            color: #fff;
+
+            i {
+                display: block;
+            }
+        }
+
+        &-title {
+            margin: 0;
+            font-size: 28px;
+            line-height: 32px;
+        }
+
+        &-body {
+            position: relative;
+            max-width: 358px;
+        }
+
+        &-text {
+            margin-bottom: 32px;
+            opacity: 0.8;
+        }
+
+        &-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        // the plus before each line: four bars (2 x 6) round a gap in the middle of 16 x 16
+        &-item {
+            position: relative;
+            padding-left: 28px;
+            font-family: var(--ag-font-1);
+            font-size: 18px;
+            line-height: 28px;
+            color: rgb(255 255 255 / 80%);
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 6px;
+                left: 0;
+                width: 16px;
+                height: 16px;
+                color: var(--ag-clr-pr-2);
+                background:
+                    linear-gradient(currentColor, currentColor) 7px 0 / 2px 6px no-repeat,
+                    linear-gradient(currentColor, currentColor) 7px 10px / 2px 6px no-repeat,
+                    linear-gradient(currentColor, currentColor) 0 7px / 6px 2px no-repeat,
+                    linear-gradient(currentColor, currentColor) 10px 7px / 6px 2px no-repeat;
+            }
+        }
+
+        &-media {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            bottom: 21px;
+            width: 220px;
+        }
+
+        // the picture is grey (the luminosity of the design) and turns to colour on the lit card, its bottom right corner is cut (55 x 50)
+        &-img {
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 50px), calc(100% - 55px) 100%, 0 100%);
+            filter: grayscale(calc(1 - var(--lit)));
+            transition: var(--ag-cube-1);
+        }
+
+        // the arrow in the middle of the picture: three rings (170 / 128 / 88) round the white disc (64px), it shows on the lit card
+        &-arrow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 170px;
+            height: 170px;
+            margin: -85px 0 0 -85px;
+            border: 1px solid rgb(255 255 255 / 10%);
+            border-radius: 50%;
+            opacity: var(--lit);
+            transition: var(--ag-cube-1);
+            pointer-events: none;
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                border: 1px solid #fff;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            &::before {
+                width: 128px;
+                height: 128px;
+                opacity: 0.2;
+            }
+
+            &::after {
+                width: 88px;
+                height: 88px;
+                opacity: 0.32;
+            }
+        }
+
+        &-link {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: var(--ag-clr-h-1);
+            transition: var(--ag-cube-1);
+            pointer-events: auto;
+
+            &:hover {
+                color: var(--ag-clr-pr-1);
+                transform: scale(1.06);
+            }
+        }
+
+        // 1400 - 1599 the card is 642px wide, 1200 - 1399 552px: the text column and the picture get narrower
+        @media #{$xxl} {
+            padding-left: 48px;
+        }
+
+        @media #{$xl} {
+            padding: 125px 236px 24px 40px;
+
+            &-hd {
+                gap: 20px;
+                width: calc(100% - 246px);
+            }
+
+            &-title {
+                font-size: 26px;
+                line-height: 30px;
+            }
+
+            &-media {
+                width: 200px;
+            }
+        }
+
+        // below 768 the picture goes under the list (the full width of the text column)
+        @media #{$xs} {
+            min-height: 0;
+            padding: 133px 16px 20px 48px;
+
+            &-hd {
+                gap: 16px;
+                width: calc(100% - 20px);
+                padding: 0 16px;
+            }
+
+            &-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 44px;
+            }
+
+            &-title {
+                font-size: 22px;
+                line-height: 28px;
+            }
+
+            &-media {
+                position: relative;
+                top: auto;
+                right: auto;
+                bottom: auto;
+                width: 100%;
+                height: 240px;
+                margin-top: 28px;
+            }
+        }
+
+        @media #{$sm} {
+            &-media {
+                height: 300px;
+            }
+        }
+    }
+}
+/*
+    ag-services-2-end
+*/

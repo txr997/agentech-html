@@ -230,6 +230,283 @@
 */
 
 /*
+    ag-header-2-start
+*/
+.ag-header-2 {
+    // laid over the hero, the 72px bar sits 20px from the top (1920 design)
+    &-area {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        width: 100%;
+        z-index: 3;
+
+        @media #{$md} {
+            top: 16px;
+        }
+
+        @media #{$sm,$xs} {
+            top: 12px;
+        }
+    }
+
+    // the two see-through cards behind the bar, 8px and 16px of them show under it (26px and 57px in from its sides)
+    &-wrap {
+        position: relative;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            height: 72px;
+            border-radius: 8px;
+            backdrop-filter: blur(12px);
+        }
+
+        &::before {
+            top: 16px;
+            right: 57px;
+            left: 57px;
+            background: rgb(255 255 255 / 24%);
+        }
+
+        &::after {
+            top: 8px;
+            right: 26px;
+            left: 26px;
+            background: rgb(255 255 255 / 36%);
+        }
+
+        @media #{$xs} {
+            &::before {
+                right: 26px;
+                left: 26px;
+            }
+
+            &::after {
+                right: 12px;
+                left: 12px;
+            }
+        }
+    }
+
+    &-bar {
+        display: flex;
+        align-items: center;
+        height: 72px;
+        padding: 0 14px 0 20px;
+        border-radius: 8px;
+        background: #fff;
+
+        @media #{$xs} {
+            padding: 0 12px 0 16px;
+        }
+    }
+
+    &-logo-box {
+        flex: none;
+    }
+
+    &-logo-elm {
+        display: block;
+    }
+
+    &-logo-img {
+        width: 172px;
+        height: 52px;
+
+        @media #{$xs} {
+            width: 132px;
+            height: 40px;
+        }
+    }
+
+    // 128px from the logo in the design, it gives way as the bar gets narrower
+    &-menu {
+        margin-left: 128px;
+
+        @media #{$xxxl} {
+            margin-left: 80px;
+        }
+
+        @media #{$xxl} {
+            margin-left: 48px;
+        }
+
+        @media #{$xl} {
+            margin-left: 40px;
+        }
+
+        .ag-main-navigation .navbar-nav {
+            gap: 52px;
+
+            @media #{$xxxl} {
+                gap: 44px;
+            }
+
+            @media #{$xxl} {
+                gap: 36px;
+            }
+
+            @media #{$xl} {
+                gap: 28px;
+            }
+
+            // the links sit on the middle line of the bar, the card of the sub menu opens just under the bar
+            > li > a {
+                padding-bottom: 0;
+            }
+
+            .dropdown-menu {
+                top: calc(100% + 30px);
+
+                &::before {
+                    top: -31px;
+                    height: 31px;
+                }
+            }
+        }
+    }
+
+    &-action-link {
+        display: flex;
+        align-items: center;
+        gap: 33px;
+        margin-left: auto;
+
+        @media #{$xxxl} {
+            gap: 28px;
+        }
+
+        @media #{$xxl} {
+            gap: 24px;
+        }
+
+        @media #{$xl,$lg} {
+            gap: 20px;
+        }
+
+        @media #{$md,$sm,$xs} {
+            gap: 16px;
+        }
+
+        // the search is icon only from 1200px to 1599px and on the narrow screens
+        .ag-search-btn-2 .text {
+            @media #{$xxl,$xl} {
+                display: none;
+            }
+
+            @media #{$xs} {
+                display: none;
+            }
+        }
+
+        .ag-header-2-call .info {
+            @media #{$xl,$md} {
+                display: none;
+            }
+        }
+
+        .ag-header-2-call {
+            @media #{$xs} {
+                display: none;
+            }
+        }
+
+        .ag-header-2-divider {
+            @media #{$xs} {
+                display: none;
+            }
+        }
+
+        .ag-header-2-button {
+            @media (max-width: 575px) {
+                display: none;
+            }
+        }
+
+        .ag-offcanvas-btn-2 {
+            @media #{$over,$xxxl,$xxl,$xl} {
+                display: none;
+            }
+        }
+    }
+
+    // "Call Us Now:" over the number, the round phone icon on the right
+    &-call {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .label {
+            font-family: var(--ag-font-1);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            background: var(--ag-clr-gd-5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .number {
+            font-family: var(--ag-font-1);
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 28px;
+            white-space: nowrap;
+            color: var(--ag-clr-h-1);
+            transition: var(--ag-cube-1);
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--ag-clr-bg-4);
+            color: var(--ag-clr-h-1);
+            transition: var(--ag-cube-1);
+
+            svg {
+                display: block;
+            }
+        }
+
+        &:hover {
+            .number {
+                color: var(--ag-clr-pr-1);
+            }
+
+            .icon {
+                background: var(--ag-clr-pr-1);
+                color: #fff;
+            }
+        }
+    }
+
+    &-divider {
+        flex: none;
+        width: 1px;
+        height: 36px;
+        background: var(--ag-clr-bd-2);
+    }
+}
+/*
+    ag-header-2-end
+*/
+
+/*
     sticky-header-css-start
 */
 

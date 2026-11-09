@@ -429,3 +429,389 @@
 /*
     ag-about-1-end
 */
+
+
+/*
+    ag-about-2-start
+*/
+// light section (977 high on 1920): the collage (472 x 744) hangs from the top edge on the left, the title, the text and the photo (394 x 484) are in
+// the container, the collage hangs out of it by --ox. One grid for all of it: the title over the text and the photo on the right (from 1200 up), one
+// under the other below. The collage and the photo are boards drawn in design pixels and scaled by --s, --g1 / --g2 are the spaces round the text,
+// --rg is the space between the title and the text and --pt the space over the label
+.ag-about-2 {
+    &-area {
+        --s: 1;
+        --ox: 127px;
+        --g1: 92px;
+        --g2: 57px;
+        --rg: 76px;
+        --pt: 133px;
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: var(--pt) 0 132px;
+        background-color: var(--ag-clr-bg-2);
+
+        @media #{$xxxl} {
+            --s: 0.9;
+            --ox: 80px;
+            --g1: 64px;
+            --g2: 48px;
+            --rg: 64px;
+            --pt: 120px;
+        }
+
+        @media #{$xxl} {
+            --s: 0.8;
+            --ox: 40px;
+            --g1: 48px;
+            --g2: 40px;
+            --rg: 56px;
+            --pt: 110px;
+        }
+
+        @media #{$xl} {
+            --s: 0.7;
+            --ox: 0px;
+            --g1: 40px;
+            --g2: 32px;
+            --rg: 48px;
+            --pt: 100px;
+            padding-bottom: 110px;
+        }
+
+        @media #{$lg} {
+            --s: 0.9;
+            --pt: 100px;
+            padding-bottom: 100px;
+        }
+
+        @media #{$md} {
+            --s: 0.65;
+            --pt: 90px;
+            padding-bottom: 90px;
+        }
+
+        @media #{$xs} {
+            --s: 0.6;
+            --pt: 64px;
+            padding-bottom: 64px;
+        }
+
+        @media #{$sm} {
+            --s: 0.8;
+            --pt: 80px;
+            padding-bottom: 80px;
+        }
+    }
+
+    // background: the colour picture (1407 x 838, the 24% and the blur of the design are in it) starts 40px from the left and 139px from the top, the waves
+    // (481 x 977, the 8% is in it) fill the right edge from top to bottom
+    &-bg-clr {
+        position: absolute;
+        top: calc(139px * var(--s));
+        left: 2.1%;
+        z-index: -2;
+        width: 73.3%;
+        aspect-ratio: 1407 / 838;
+        pointer-events: none;
+    }
+
+    &-bg-shape {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        height: 100%;
+        aspect-ratio: 481 / 977;
+        pointer-events: none;
+    }
+
+    // wrap: [collage] [space] [text] [space] [photo], the title runs over the three on the right
+    &-wrap {
+        position: relative;
+        display: grid;
+        grid-template-columns: calc(472px * var(--s)) var(--g1) minmax(0, 1fr) var(--g2) calc(394px * var(--s));
+        grid-template-areas:
+            "collage . title title title"
+            "collage . text . photo";
+        row-gap: var(--rg);
+        margin-left: calc(var(--ox) * -1);
+
+        @media #{$lg,$md,$sm,$xs} {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-areas:
+                "title title"
+                "text text"
+                "collage photo";
+            row-gap: 40px;
+            margin-left: 0;
+        }
+
+        @media #{$xs} {
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-areas:
+                "title"
+                "text"
+                "collage"
+                "photo";
+        }
+    }
+
+    &-content {
+        grid-area: title;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    // text: the paragraph is 512px wide, 24px under it the list (the lines are 11px apart), 32px under it the button
+    &-text {
+        grid-area: text;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 512px;
+
+        @media #{$lg,$md,$sm,$xs} {
+            max-width: none;
+        }
+    }
+
+    &-list {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+        margin: 24px 0 32px;
+    }
+
+    // the three stars (20 x 20) before each line fade from purple to dark
+    &-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--ag-font-1);
+        font-size: 18px;
+        line-height: 28px;
+        color: var(--ag-clr-h-1);
+
+        &::before {
+            content: "";
+            flex: none;
+            width: 20px;
+            height: 20px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='13.75' y1='10.9375' x2='1.25' y2='10.9375' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23A234FD'/%3E%3Cstop offset='1' stop-color='%230E0910'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='18.75' y1='15' x2='11.875' y2='15' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23A234FD'/%3E%3Cstop offset='1' stop-color='%230E0910'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' x1='16.5625' y1='5' x2='9.6875' y2='5' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23A234FD'/%3E%3Cstop offset='1' stop-color='%230E0910'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23a)' d='M1.25 10.9375C7.06906 12.2531 7.5 18.125 7.5 18.125C7.5 18.125 7.93094 12.2531 13.75 10.9375C7.93094 9.62187 7.5 3.75 7.5 3.75C7.5 3.75 7.06906 9.62187 1.25 10.9375Z'/%3E%3Cpath fill='url(%23b)' d='M11.875 15C15.0753 15.6875 15.3125 18.75 15.3125 18.75C15.3125 18.75 15.5497 15.6875 18.75 15C15.5497 14.3125 15.3125 11.25 15.3125 11.25C15.3125 11.25 15.0753 14.3125 11.875 15Z'/%3E%3Cpath fill='url(%23c)' d='M9.6875 5C12.8878 5.6875 13.125 8.75 13.125 8.75C13.125 8.75 13.3622 5.6875 16.5625 5C13.3622 4.3125 13.125 1.25 13.125 1.25C13.125 1.25 12.8878 4.3125 9.6875 5Z'/%3E%3C/svg%3E") center / contain no-repeat;
+        }
+    }
+
+    // collage: the board is 472 x 744 (design pixels), the box round it has the scaled size. It hangs up to the top edge of the section
+    &-collage-box {
+        grid-area: collage;
+        align-self: start;
+        width: calc(472px * var(--s));
+        height: calc(744px * var(--s));
+        margin-top: calc(var(--pt) * -1);
+
+        @media #{$lg,$md,$sm,$xs} {
+            margin-top: 0;
+        }
+    }
+
+    &-collage {
+        position: relative;
+        width: 472px;
+        height: 744px;
+        transform: scale(var(--s));
+        transform-origin: 0 0;
+    }
+
+    // left column: the second picture is under the first one, the first has an 8px edge in the colour of the section that cuts it off the second
+    &-pic-1,
+    &-pic-2 {
+        position: absolute;
+        left: 0;
+        width: 232px;
+    }
+
+    &-pic-2 {
+        top: 493px;
+        height: 251px;
+        border-radius: 0 0 80px 0;
+    }
+
+    &-pic-1 {
+        top: 251px;
+        height: 328px;
+        border-radius: 80px 0 80px 0;
+        box-shadow: 0 0 0 8px var(--ag-clr-bg-2);
+    }
+
+    // right column: the light block on the top, the lilac card (a quarter round on the top right, a half circle of 232px cut out of the bottom) and the
+    // round picture with a white ring sitting in the cut
+    &-fade {
+        position: absolute;
+        top: 0;
+        left: 240px;
+        width: 232px;
+        height: 243px;
+        border-radius: 0 0 80px 0;
+        background: linear-gradient(180deg, var(--ag-clr-bg-2) 0%, #fff 100%);
+    }
+
+    &-card {
+        position: absolute;
+        top: 251px;
+        left: 240px;
+        isolation: isolate;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 232px;
+        height: 328px;
+        padding: 30px 32px 0;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 0 80px 0 0;
+            background-color: rgb(216 177 248 / 80%);
+            -webkit-mask-image: radial-gradient(circle 116px at 50% 100%, transparent 115.5px, #000 116.5px);
+            mask-image: radial-gradient(circle 116px at 50% 100%, transparent 115.5px, #000 116.5px);
+        }
+
+        &-logo {
+            width: 47px;
+            height: 48px;
+            margin-bottom: 24px;
+        }
+
+        &-avatars {
+            display: flex;
+            width: 140px;
+            margin-bottom: 6px;
+        }
+
+        &-avatar {
+            position: relative;
+            flex: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+
+            & + & {
+                margin-left: -12px;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                border-radius: 50%;
+                box-shadow: inset 0 0 0 1.5px #DDBEF7;
+            }
+        }
+
+        // the plus: a glass disc with a purple cross (12 x 2)
+        &-plus {
+            position: relative;
+            flex: none;
+            width: 44px;
+            height: 44px;
+            margin-left: -12px;
+            border-radius: 50%;
+            background-color: rgb(255 255 255 / 6%);
+            box-shadow: inset 0 0 0 1.5px #DDBEF7;
+            backdrop-filter: blur(17px);
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                background-color: var(--ag-clr-pr-1);
+                transform: translate(-50%, -50%);
+            }
+
+            &::before {
+                width: 12px;
+                height: 2px;
+            }
+
+            &::after {
+                width: 2px;
+                height: 12px;
+            }
+        }
+
+        &-text {
+            margin: 0;
+            font-family: var(--ag-font-1);
+            font-size: 16px;
+            line-height: 24px;
+            text-align: center;
+            color: var(--ag-clr-p-1);
+
+            strong {
+                font-weight: 500;
+                color: var(--ag-clr-h-1);
+            }
+        }
+    }
+
+    &-brain {
+        position: absolute;
+        top: 478px;
+        left: 255px;
+        width: 202px;
+        height: 202px;
+        border-radius: 50%;
+        box-shadow: 0 0 0 5px #fff;
+    }
+
+    // photo: the board is 394 x 484, it starts 60px over the text. The cut is one path: the top left corner (73px), the bottom right corner (a long
+    // diagonal) and the two strips that are left of it. The glass shape (223 x 247, it is already turned) lies 142px over its left edge
+    &-photo-box {
+        grid-area: photo;
+        justify-self: end;
+        width: calc(394px * var(--s));
+        height: calc(484px * var(--s));
+        margin-top: calc(-60px * var(--s));
+
+        @media #{$lg,$md,$sm,$xs} {
+            margin-top: 0;
+        }
+    }
+
+    &-photo {
+        position: relative;
+        width: 394px;
+        height: 484px;
+        transform: scale(var(--s));
+        transform-origin: 0 0;
+    }
+
+    &-photo-img {
+        position: absolute;
+        inset: 0;
+        clip-path: path("M73 0L386 0A8 8 0 0 1 394 8L394 335L273.3 484L8 484A8 8 0 0 1 0 476L0 73Z M326.45 478.32L390.65 397.92A13.5 13.5 0 0 0 369.55 381.08L305.35 461.48A13.5 13.5 0 0 0 326.45 478.32Z M384 437L386 437A8 8 0 0 1 394 445L394 476A8 8 0 0 1 386 484L365 484A10 10 0 0 1 355 474L384 437Z");
+    }
+
+    &-blob {
+        position: absolute;
+        top: 163px;
+        left: -142px;
+        width: 223px;
+        height: 247px;
+        pointer-events: none;
+    }
+}
+/*
+    ag-about-2-end
+*/
