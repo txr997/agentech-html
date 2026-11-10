@@ -56,7 +56,6 @@
         &-img {
             position: absolute;
             inset: 0;
-            opacity: 0.13;
         }
 
         &-glow {
@@ -368,4 +367,466 @@
 }
 /*
     ag-choose-1-end
+*/
+
+
+/*
+    ag-choose-2-start
+*/
+// light section (1920 design: 983 high): the portrait with two notches on the left (512 x 587), the head and the list of reasons on the right.
+// The list (4 glass cards, 351 wide) lies on a row of photos that runs out to the right edge of the screen: the first photo is in colour, the others
+// are smaller and pale (luminosity at 32%). The photos keep their 352 x 406 shape at every width (aspect-ratio), so their cut corners scale with
+// them (the outlines are in the svg above, drawn once). Below 992 the row of photos and the list go under the portrait and the head, below 768
+// everything is stacked
+// --l and --g are the width of the portrait and the gap next to it; on the lower part --fw is the width of the first photo, --fl the space on its
+// left, --cw the width of the list, --cl the space on its left and --ct the space over it
+.ag-choose-2 {
+    &-area {
+        --pt: 132px;
+        --pb: 132px;
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: var(--pt) 0 var(--pb);
+        background-color: var(--ag-clr-bg-2);
+
+        @media #{$xxl} {
+            --pt: 120px;
+            --pb: 120px;
+        }
+
+        @media #{$xl} {
+            --pt: 110px;
+            --pb: 110px;
+        }
+
+        @media #{$lg} {
+            --pt: 100px;
+            --pb: 100px;
+        }
+
+        @media #{$md} {
+            --pt: 90px;
+            --pb: 90px;
+        }
+
+        @media #{$xs} {
+            --pt: 64px;
+            --pb: 64px;
+        }
+
+        // above the background, without a z-index (that would make a stacking context and the pale photos could not blend with the plate)
+        > .container {
+            position: relative;
+        }
+    }
+
+    // background: it comes first in the markup and nothing here (or around the photos) makes a stacking context, so the pale photos blend with it
+    &-bg {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+
+        // the faint waves on the left edge
+        &-wave {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 492px;
+
+            @media #{$lg} {
+                width: 400px;
+            }
+
+            @media #{$md} {
+                width: 300px;
+            }
+
+            @media #{$xs} {
+                display: none;
+            }
+        }
+
+        // the lavender plate: it starts under the portrait and runs to the right edge, it ends at the photos and its lower 209px fade into the page
+        &-clr {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: var(--pb);
+            width: 73.44%;
+            border-radius: 120px 0 0;
+
+            &::after {
+                content: "";
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                height: 209px;
+                background: linear-gradient(180deg, rgb(240 242 244 / 0%) 0%, var(--ag-clr-bg-2) 100%);
+            }
+
+            &-img {
+                position: absolute;
+                inset: 0;
+            }
+
+            @media #{$xxl} {
+                border-top-left-radius: 100px;
+            }
+
+            @media #{$xl} {
+                border-top-left-radius: 80px;
+            }
+
+            @media #{$lg} {
+                width: 82%;
+                border-top-left-radius: 60px;
+            }
+
+            @media #{$md} {
+                width: 90%;
+                border-top-left-radius: 48px;
+            }
+
+            @media #{$xs} {
+                width: 100%;
+                border-top-left-radius: 40px;
+            }
+        }
+
+        // the glass shape in the top right corner (240 x 242)
+        &-glass {
+            position: absolute;
+            top: 46px;
+            right: 4.58%;
+            width: 240px;
+            aspect-ratio: 240 / 242;
+
+            @media #{$xxl} {
+                top: 40px;
+                right: 3%;
+                width: 210px;
+            }
+
+            @media #{$xl} {
+                top: 36px;
+                right: 2%;
+                width: 180px;
+            }
+
+            @media #{$lg} {
+                top: 24px;
+                right: 2%;
+                width: 130px;
+            }
+
+            @media #{$md} {
+                top: 20px;
+                right: 3%;
+                width: 100px;
+            }
+
+            @media #{$xs} {
+                top: 8px;
+                right: 8px;
+                width: 72px;
+            }
+        }
+    }
+
+    // wrap: the portrait spans both rows, the head is next to it and the lower part is under the head
+    &-wrap {
+        --l: 512px;
+        --g: 72px;
+        display: grid;
+        grid-template-columns: var(--l) minmax(0, 1fr);
+        grid-template-areas:
+            "media head"
+            "media lower";
+        column-gap: var(--g);
+        align-items: start;
+
+        @media #{$xxl} {
+            --l: 480px;
+            --g: 56px;
+        }
+
+        @media #{$xl} {
+            --l: 400px;
+            --g: 48px;
+        }
+
+        // the lower part goes under both
+        @media #{$lg} {
+            --l: 360px;
+            --g: 40px;
+            grid-template-areas:
+                "media head"
+                "lower lower";
+            row-gap: 40px;
+        }
+
+        @media #{$md} {
+            --l: 280px;
+            --g: 32px;
+            grid-template-areas:
+                "media head"
+                "lower lower";
+            row-gap: 32px;
+        }
+
+        @media #{$xs} {
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-areas:
+                "head"
+                "media"
+                "lower";
+            row-gap: 36px;
+        }
+    }
+
+    // media
+    &-media {
+        grid-area: media;
+
+        @media #{$xs} {
+            max-width: 512px;
+        }
+    }
+
+    &-img {
+        aspect-ratio: 512 / 587;
+        clip-path: url(#ag-choose-2-img-clip);
+    }
+
+    // head: the text is 628 wide
+    &-head {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        grid-area: head;
+        max-width: 628px;
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    &-desc {
+        margin-top: 20px;
+    }
+
+    &-btn {
+        margin-top: 32px;
+    }
+
+    // lower: it starts 31px above the end of the head (the row of photos is taller than the list), it is as high as the first photo
+    &-lower {
+        --fw: 352px;
+        --fl: 464px;
+        --cw: 351px;
+        --cl: 264px;
+        --ct: 71px;
+        --fg: 16px;
+        position: relative;
+        grid-area: lower;
+        min-height: calc(var(--fw) * 406 / 352);
+        margin-top: -31px;
+
+        @media #{$xxl} {
+            --fw: 320px;
+            --fl: 408px;
+            --cw: 340px;
+            --cl: 220px;
+            --ct: 64px;
+        }
+
+        @media #{$xl} {
+            --fw: 280px;
+            --fl: 350px;
+            --cw: 320px;
+            --cl: 190px;
+            --ct: 56px;
+            --fg: 14px;
+        }
+
+        @media #{$lg} {
+            --fw: 280px;
+            --fl: 190px;
+            --cw: 330px;
+            --cl: 0px;
+            --ct: 56px;
+            --fg: 14px;
+            margin-top: 0;
+        }
+
+        @media #{$md} {
+            --fw: 230px;
+            --fl: 160px;
+            --cw: 300px;
+            --cl: 0px;
+            --ct: 40px;
+            --fg: 12px;
+            margin-top: 0;
+        }
+
+        // stacked: the list, then the row of photos
+        @media #{$xs} {
+            --fw: 200px;
+            --cw: 100%;
+            --cl: 0px;
+            --ct: 0px;
+            --fg: 12px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            margin-top: 0;
+        }
+
+        @media #{$sm} {
+            --fw: 260px;
+            --fg: 16px;
+        }
+    }
+
+    // the head made of lines, on the left of the list
+    &-robot {
+        position: absolute;
+        top: calc(var(--ct) + 21px);
+        left: 0;
+        width: 181px;
+        aspect-ratio: 181 / 218;
+        pointer-events: none;
+
+        @media #{$xxl,$xl} {
+            width: 160px;
+        }
+
+        @media #{$lg,$md,$sm,$xs} {
+            display: none;
+        }
+    }
+
+    // gallery: the photos sit on one line at the bottom, the first one is 352 wide, the others are 208, 146 and 104 (the part of the row
+    // that is out of the screen is cut off by the section). The card under the pointer brings its photo to the front (main.js, agChoose2Gallery):
+    // the class on a photo is its place in the row (is-p0 the first one, is-p1.. the ones that follow, is-out the ones that have gone). A photo that
+    // goes out keeps its size and takes its own width + gap as a negative margin on the left, so the row slides to the left and the next photo
+    // grows into the first place
+    &-gallery {
+        position: absolute;
+        bottom: 0;
+        left: var(--fl);
+        display: flex;
+        align-items: flex-end;
+
+        @media #{$xs} {
+            position: relative;
+            bottom: auto;
+            left: auto;
+            order: 2;
+            margin-top: 24px;
+        }
+    }
+
+    &-pic {
+        --k: 1;
+        flex: none;
+        width: calc(var(--fw) * var(--k));
+        aspect-ratio: 352 / 406;
+        margin-right: var(--fg);
+        clip-path: url(#ag-choose-2-pic-clip);
+        transition: width 0.6s cubic-bezier(0.18, 0.82, 0.41, 1), margin 0.6s cubic-bezier(0.18, 0.82, 0.41, 1), opacity 0.4s cubic-bezier(0.18, 0.82, 0.41, 1);
+
+        &.is-p1 {
+            --k: 0.5909;
+        }
+
+        &.is-p2 {
+            --k: 0.4148;
+        }
+
+        &.is-p3 {
+            --k: 0.2955;
+        }
+
+        // the pale ones
+        &:not(.is-p0) {
+            opacity: 0.32;
+            mix-blend-mode: luminosity;
+        }
+
+        &.is-out {
+            margin-left: calc((var(--fw) + var(--fg)) * -1);
+            opacity: 0;
+        }
+    }
+
+    // cards: 60 high with 6px between them, the card is glass (blurs the photo under it), the lit one (is-active, the card under the pointer) is dark
+    &-cards {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: var(--cw);
+        margin: var(--ct) 0 0 var(--cl);
+    }
+
+    &-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        height: 60px;
+        padding: 0 9px;
+        border: 1px solid #fff;
+        border-radius: 10px;
+        background-color: rgb(255 255 255 / 32%);
+        backdrop-filter: blur(40px);
+        color: var(--ag-clr-h-1);
+        transition: var(--ag-cube-1);
+
+        &:is(.is-active) {
+            background-color: var(--ag-clr-h-1);
+            color: #fff;
+        }
+
+        @media #{$xs} {
+            background-color: rgb(255 255 255 / 60%);
+
+            &:is(.is-active) {
+                background-color: var(--ag-clr-h-1);
+            }
+        }
+
+        &-icon {
+            display: flex;
+            flex: none;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(180deg, #A234FD 0%, #0E0910 100%);
+            font-size: 24px;
+            color: #fff;
+
+            i {
+                display: block;
+                line-height: 1;
+            }
+        }
+
+        &-title {
+            margin: 0;
+            font-family: var(--ag-font-2);
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 28px;
+            color: inherit;
+        }
+    }
+}
+/*
+    ag-choose-2-end
 */

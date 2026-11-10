@@ -292,10 +292,12 @@
     }
 }
 
-// the same pill on the hero 2, with the text only
+// the same pill on the hero 2, with the text only. Hover (the header button of Hayler): the swapped gradient fades in, the text rolls up and its copy
+// (data-hover) rises from below, the text steps 18px to the left and the white box with the arrow scales in at the right end. The width of the pill does not change
 .ag-pr-btn-2 {
     position: relative;
     isolation: isolate;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -311,6 +313,51 @@
     white-space: nowrap;
     color: #fff;
 
+    .text {
+        position: relative;
+        display: inline-flex;
+        transition: transform 0.8s cubic-bezier(0.2, 1.33, 0.25, 1), translate 0.3s ease-out;
+
+        // the copy of the text waits under the pill
+        &::before {
+            content: attr(data-hover);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(150%);
+        }
+    }
+
+    .icon {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        width: 28px;
+        height: 28px;
+        margin-top: -14px;
+        transform: scale(0);
+        transition: transform 0.3s ease-out;
+    }
+
+    // the white box leans toward the pointer inside the place of the icon, which stays where it is (agPrBtn2Magnet, main.js)
+    .icon-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
+        background: #fff;
+        font-size: 13px;
+        line-height: 1;
+        color: var(--ag-clr-pr-2);
+
+        i {
+            display: block;
+            line-height: 1;
+        }
+    }
+
     &::before {
         content: "";
         position: absolute;
@@ -318,6 +365,62 @@
         z-index: -1;
         border-radius: inherit;
         background: var(--ag-clr-gd-6);
+        opacity: 0;
+        transition: var(--ag-cube-1);
+    }
+
+    &:hover {
+        color: #fff;
+
+        &::before {
+            opacity: 1;
+        }
+
+        .text {
+            transform: translateY(-150%);
+            translate: -18px 0;
+        }
+
+        .icon {
+            transform: scale(1);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .text,
+        .icon {
+            transition: none;
+        }
+    }
+}
+
+// the outline pill that stands next to .ag-pr-btn-2 on a dark section: dark with a purple ring, the lit pill fades in over it on hover
+.ag-sc-btn-1 {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    padding: 0 27px;
+    border: 1px solid var(--ag-clr-pr-2);
+    border-radius: 6px;
+    background-color: var(--ag-clr-h-1);
+    font-family: var(--ag-font-2);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    color: #fff;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        z-index: -1;
+        border-radius: inherit;
+        background: var(--ag-clr-gd-4);
         opacity: 0;
         transition: var(--ag-cube-1);
     }

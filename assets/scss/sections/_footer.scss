@@ -581,3 +581,675 @@
 /*
     ag-footer-1-end
 */
+
+
+/*
+    ag-footer-2-start
+*/
+// dark footer (1920 design: 871 high), the waves picture (1920 x 606) lies on its bottom edge. A light bar with a flared end on each side closes the
+// page at the top and another one (flipped) holds the copyright at the bottom, the ends of the bars are drawn in the svg above. In between: the hero
+// (the "Ai" mark, the four social boxes, the title and the round button), a line, and the page content (the logo and the text on the left, the two
+// lists of links and the contact on the right). Below 992 the text goes over the lists, below 768 the hero and the lists are one under the other
+// --cw, --cx and --ch are the width of the flared end, the space of the bar from the edges of the screen and its height
+.ag-footer-2 {
+    &-area {
+        --cw: 112px;
+        --cx: 148px;
+        --ch: 44px;
+        position: relative;
+        overflow: hidden;
+        padding-top: 148px;
+        background-color: var(--ag-clr-h-1);
+
+        @media #{$xxl} {
+            --cx: 100px;
+            padding-top: 136px;
+        }
+
+        @media #{$xl} {
+            --cx: 60px;
+            padding-top: 124px;
+        }
+
+        @media #{$lg} {
+            --cx: 40px;
+            padding-top: 112px;
+        }
+
+        @media #{$md} {
+            --cw: 84px;
+            --cx: 24px;
+            --ch: 33px;
+            padding-top: 100px;
+        }
+
+        @media #{$xs} {
+            --cw: 56px;
+            --cx: 16px;
+            --ch: 22px;
+            padding-top: 84px;
+        }
+
+        @media #{$sm} {
+            --cw: 72px;
+            --cx: 24px;
+            --ch: 28px;
+        }
+
+        // above the background
+        > .container {
+            position: relative;
+        }
+    }
+
+    // background: it comes first in the markup, so everything else is above it
+    &-bg {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+
+        // the waves (1920 x 606) on the bottom edge
+        &-img {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 606px;
+        }
+    }
+
+    // the light bars (the same for the top one and the bottom one): a bar with a flared end on each side, the bottom one is turned upside down
+    &-cut {
+        position: absolute;
+        right: var(--cx);
+        left: var(--cx);
+
+        &:is(.is-up) {
+            top: 0;
+            height: var(--ch);
+        }
+
+        &:is(.is-down) {
+            top: 0;
+            bottom: 0;
+        }
+
+        // the bar runs 1px in under both ends, so there is no hairline between them
+        &-mid {
+            position: absolute;
+            top: 0;
+            right: calc(var(--cw) - 1px);
+            bottom: 0;
+            left: calc(var(--cw) - 1px);
+            background-color: var(--ag-clr-bg-2);
+        }
+
+        &-end {
+            position: absolute;
+            top: 0;
+            width: var(--cw);
+            height: 100%;
+            background-color: var(--ag-clr-bg-2);
+
+            &.is-l {
+                left: 0;
+                clip-path: url(#ag-footer-2-cut-l-clip);
+            }
+
+            &.is-r {
+                right: 0;
+                clip-path: url(#ag-footer-2-cut-r-clip);
+            }
+        }
+
+        &:is(.is-down) &-end {
+            transform: scaleY(-1);
+        }
+    }
+
+    // hero: the mark and the content on the left (58px apart, centred on each other), the round button on the right
+    &-hero {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px 40px;
+    }
+
+    &-brand {
+        --mw: 207px;
+        display: flex;
+        align-items: center;
+        gap: 58px;
+
+        @media #{$xxl} {
+            --mw: 190px;
+            gap: 50px;
+        }
+
+        @media #{$xl} {
+            --mw: 170px;
+            gap: 44px;
+        }
+
+        @media #{$lg} {
+            --mw: 150px;
+            gap: 36px;
+        }
+
+        @media #{$md} {
+            --mw: 120px;
+            gap: 28px;
+        }
+
+        @media #{$xs} {
+            --mw: 96px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+        }
+    }
+
+    // the mark: 207 x 212, the svg is drawn on 208 x 212 and shows what is outside its box (the parts pop in, main.js)
+    &-mark {
+        flex: none;
+        width: var(--mw);
+        aspect-ratio: 207 / 212;
+
+        &-svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+    }
+
+    // social boxes: 48 x 48, 12px apart, the ring is the two ends of a gradient (it fades out in the middle), the one under the pointer is purple
+    &-social {
+        display: flex;
+        gap: 12px;
+
+        &-link {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background-color: var(--ag-clr-h-1);
+            font-size: 20px;
+            color: #fff;
+            transition: var(--ag-cube-1);
+
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                padding: 2px;
+                border-radius: inherit;
+                background: linear-gradient(135deg, var(--ag-clr-pr-2) 0%, rgb(162 52 253 / 0%) 35%, rgb(162 52 253 / 0%) 65%, var(--ag-clr-pr-2) 100%);
+                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                -webkit-mask-composite: xor;
+                mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                mask-composite: exclude;
+                pointer-events: none;
+            }
+
+            &:hover {
+                background-color: var(--ag-clr-pr-2);
+                box-shadow: 0 0 24px rgb(162 52 253 / 45%);
+                color: #fff;
+            }
+
+            i {
+                display: block;
+                line-height: 1;
+            }
+        }
+    }
+
+    &-title {
+        max-width: 590px;
+        margin: 16px 0 0;
+        font-family: var(--ag-font-2);
+        font-size: 48px;
+        font-weight: 500;
+        line-height: 52px;
+        letter-spacing: -0.02em;
+        color: #fff;
+
+        @media #{$xxl} {
+            font-size: 46px;
+            line-height: 50px;
+        }
+
+        @media #{$xl} {
+            font-size: 44px;
+            line-height: 48px;
+        }
+
+        @media #{$lg} {
+            font-size: 38px;
+            line-height: 42px;
+        }
+
+        @media #{$md} {
+            font-size: 34px;
+            line-height: 38px;
+        }
+
+        @media #{$xs} {
+            font-size: 28px;
+            line-height: 32px;
+        }
+
+        @media #{$sm} {
+            font-size: 32px;
+            line-height: 36px;
+        }
+    }
+
+    // the round button: 168 across, a 1px ring, the purple dot sits on its rim at the bottom right (the circle cuts it) and fills the button on hover
+    &-round {
+        position: relative;
+        display: flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        width: 168px;
+        aspect-ratio: 1;
+        border: 1px solid rgb(255 255 255 / 20%);
+        border-radius: 50%;
+        background-color: var(--ag-clr-h-1);
+        box-shadow: inset 0 0 24px rgb(255 255 255 / 25%);
+        transition: var(--ag-cube-1);
+
+        @media #{$lg} {
+            width: 150px;
+        }
+
+        @media #{$md} {
+            width: 136px;
+        }
+
+        @media #{$xs} {
+            width: 128px;
+        }
+
+        &-dot {
+            position: absolute;
+            top: 82.7%;
+            left: 72.6%;
+            width: 14.3%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background-color: var(--ag-clr-pr-2);
+            transition: transform 0.7s cubic-bezier(0.18, 0.82, 0.41, 1);
+        }
+
+        &-text {
+            position: relative;
+            font-family: var(--ag-font-2);
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 28px;
+            letter-spacing: -0.01em;
+            color: #fff;
+        }
+
+        &:hover {
+            border-color: var(--ag-clr-pr-2);
+        }
+
+        &:hover &-dot {
+            transform: scale(14);
+        }
+    }
+
+    &-line {
+        height: 1px;
+        margin: 32px 0 80px;
+        background-color: rgb(255 255 255 / 20%);
+
+        @media #{$xs} {
+            margin-bottom: 48px;
+        }
+    }
+
+    // page: the about (490 wide) on the left, the lists on the right
+    &-page {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 48px;
+
+        @media #{$lg,$md,$sm,$xs} {
+            flex-direction: column;
+            gap: 40px;
+        }
+    }
+
+    &-about {
+        flex: 0 1 490px;
+        min-width: 0;
+
+        @media #{$xxl} {
+            flex-basis: 460px;
+        }
+
+        @media #{$xl} {
+            flex-basis: 400px;
+        }
+
+        // stacked: the page is a column here, so the 490 basis would be the height of the about (it is the width on the row)
+        @media #{$lg,$md,$sm,$xs} {
+            flex: none;
+            max-width: 560px;
+        }
+    }
+
+    &-logo-img {
+        width: 172px;
+        aspect-ratio: 172 / 52;
+    }
+
+    &-text {
+        margin-top: 28px;
+    }
+
+    // columns: 116, 188 and 208 wide, 120px apart
+    &-cols {
+        display: flex;
+        flex: none;
+        gap: 120px;
+
+        @media #{$xxl} {
+            gap: 100px;
+        }
+
+        @media #{$xl} {
+            gap: 80px;
+        }
+
+        @media #{$lg} {
+            gap: 60px;
+        }
+
+        @media #{$md} {
+            gap: 40px;
+        }
+
+        @media #{$xs} {
+            flex-wrap: wrap;
+            gap: 40px 32px;
+            width: 100%;
+        }
+    }
+
+    &-col {
+        min-width: 116px;
+
+        &:is(.is-services) {
+            width: 188px;
+        }
+    }
+
+    // the heading: 116 wide, a faint line under it with a short purple one on its left end
+    &-head {
+        position: relative;
+        width: 116px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgb(255 255 255 / 20%);
+        font-family: var(--ag-font-2);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 14px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #fff;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 28px;
+            height: 2px;
+            background-color: var(--ag-clr-pr-2);
+        }
+    }
+
+    &-links {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 24px;
+    }
+
+    // a link: the quick links get a purple arrow on the left (the text moves 20px over), the services are underlined, both turn purple
+    &-link {
+        position: relative;
+        display: flex;
+        width: fit-content;
+        align-items: center;
+        font-family: var(--ag-font-1);
+        font-size: 16px;
+        line-height: 24px;
+        color: #fff;
+        transition: var(--ag-cube-1);
+
+        .text {
+            transition: var(--ag-cube-1);
+        }
+
+        i {
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+            line-height: 1;
+            opacity: 0;
+            transition: var(--ag-cube-1);
+        }
+
+        &:hover {
+            color: var(--ag-clr-pr-2);
+        }
+
+        &:is(.is-arrow):hover {
+            .text {
+                transform: translateX(20px);
+            }
+
+            i {
+                opacity: 1;
+            }
+        }
+
+        &:is(.is-line):hover {
+            text-decoration: underline;
+        }
+    }
+
+    // contact: the call (a ring with the phone in it and two lines of text), 40px under it the join link
+    &-contact {
+        flex: none;
+        width: 208px;
+    }
+
+    &-call {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        &-icon {
+            display: flex;
+            flex: none;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--ag-clr-pr-1);
+            border-radius: 50%;
+            font-size: 16px;
+            color: var(--ag-clr-pr-1);
+
+            i {
+                display: block;
+                line-height: 1;
+            }
+        }
+
+        &-text {
+            margin: 0;
+            font-family: var(--ag-font-1);
+            font-size: 16px;
+            line-height: 22px;
+            color: rgb(255 255 255 / 70%);
+
+            a {
+                font-weight: 500;
+                color: #fff;
+                transition: var(--ag-cube-1);
+
+                &:hover {
+                    color: var(--ag-clr-pr-2);
+                }
+            }
+        }
+    }
+
+    &-join {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 40px;
+        font-family: var(--ag-font-1);
+        font-size: 14px;
+        line-height: 18px;
+        color: rgb(255 255 255 / 70%);
+        transition: var(--ag-cube-1);
+
+        b {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        i {
+            font-size: 16px;
+            line-height: 1;
+            color: #fff;
+            transition: var(--ag-cube-1);
+        }
+
+        &:hover {
+            color: #fff;
+
+            i {
+                transform: translate(2px, -2px);
+            }
+        }
+    }
+
+    // bar: the copyright and the legal links on the light bar at the bottom, 90px under the page content
+    &-bar {
+        position: relative;
+        margin-top: 90px;
+
+        @media #{$xxl} {
+            margin-top: 80px;
+        }
+
+        @media #{$xl} {
+            margin-top: 70px;
+        }
+
+        @media #{$lg} {
+            margin-top: 64px;
+        }
+
+        @media #{$md} {
+            margin-top: 56px;
+        }
+
+        @media #{$xs} {
+            margin-top: 48px;
+        }
+
+        &-in {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px 32px;
+            padding: 10px 0;
+
+            @media #{$md} {
+                padding: 14px 0;
+            }
+
+            @media #{$xs} {
+                flex-direction: column;
+                padding: 20px 0 22px;
+                text-align: center;
+            }
+        }
+    }
+
+    &-copy {
+        margin: 0;
+        font-family: var(--ag-font-1);
+        font-size: 16px;
+        line-height: 24px;
+        color: var(--ag-clr-p-1);
+
+        span {
+            color: var(--ag-clr-pr-2);
+        }
+    }
+
+    // legal links: 32px apart with a dot between them
+    &-legal {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 32px;
+
+        @media #{$xs} {
+            justify-content: center;
+        }
+
+        li {
+            position: relative;
+            font-family: var(--ag-font-1);
+            font-size: 16px;
+            line-height: 24px;
+            color: var(--ag-clr-p-1);
+
+            & + li::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: -18px;
+                width: 4px;
+                height: 4px;
+                margin-top: -2px;
+                border-radius: 50%;
+                background-color: currentcolor;
+            }
+
+            a {
+                color: inherit;
+                transition: var(--ag-cube-1);
+
+                &:hover {
+                    color: var(--ag-clr-pr-2);
+                }
+            }
+        }
+    }
+}
+/*
+    ag-footer-2-end
+*/

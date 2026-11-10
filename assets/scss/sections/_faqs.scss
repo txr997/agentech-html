@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use 'sass:math';
 @use '../abstracts/variables' as *;
 
@@ -59,7 +60,7 @@
         $dy: $r * math.sin($a);
         $xv: if($cxs == l, $cxv + $dx, $cxv - $dx);
         $yv: if($cys == t, $cyv + $dy, $cyv - $dy);
-        $out: append($out, faq-x($cxs, $xv) faq-y($cys, $yv), comma);
+        $out: list.append($out,faq-x($cxs, $xv) faq-y($cys, $yv), comma);
     }
 
     @return $out;
@@ -68,11 +69,11 @@
 @function faq-notch($r, $n, $i: 0) {
     $p: $r - $i;
     $pts: faq-arc(l, $i + $p, t, $i + $p, $p, 180, 270);
-    $pts: join($pts, faq-arc(r, $n + $i + $p, t, $i + $p, $p, 270, 360), comma);
-    $pts: join($pts, faq-arc(r, $n - $r, t, $n - $r, $r + $i, 180, 90), comma);
-    $pts: join($pts, faq-arc(r, $i + $p, t, $n + $i + $p, $p, 270, 360), comma);
-    $pts: join($pts, faq-arc(r, $i + $p, b, $i + $p, $p, 0, 90), comma);
-    $pts: join($pts, faq-arc(l, $i + $p, b, $i + $p, $p, 90, 180), comma);
+    $pts: list.join($pts, faq-arc(r, $n + $i + $p, t, $i + $p, $p, 270, 360), comma);
+    $pts: list.join($pts, faq-arc(r, $n - $r, t, $n - $r, $r + $i, 180, 90), comma);
+    $pts: list.join($pts, faq-arc(r, $i + $p, t, $n + $i + $p, $p, 270, 360), comma);
+    $pts: list.join($pts, faq-arc(r, $i + $p, b, $i + $p, $p, 0, 90), comma);
+    $pts: list.join($pts, faq-arc(l, $i + $p, b, $i + $p, $p, 90, 180), comma);
 
     @return $pts;
 }

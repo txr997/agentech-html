@@ -44,19 +44,14 @@ function agPreloaderInit() {
 		if (exited) return;
 		exited = true;
 
-		var tl = gsap.timeline();
+		// the fade is a css transition (is-leaving, 1s), run by the compositor, so it does not stutter while the page behind starts its intro
+		loader.classList.add("is-leaving");
 
-		tl.to(loader, {
-			opacity: 0,
-			duration: .8,
-			ease: "power2.inOut"
-		});
-
-		// the intro starts while the panel is still fading
-		tl.call(afterPreloader, null, .3);
-		tl.call(function () {
+		// the intro starts while the panel is still fading, the panel goes when the fade is over
+		gsap.delayedCall(.4, afterPreloader);
+		gsap.delayedCall(1.1, function () {
 			loader.remove();
-		}, null, .85);
+		});
 	}
 
 	return {
@@ -455,6 +450,98 @@ function agCta1In() {
 
 
 /*
+	cta-2 (AI Agentech) — the tiles of the video open when it scrolls into view: every tile has a dark cover (the colour of the section) that folds
+	away to its bottom edge, the covers go one after another from the middle of the grid (5 x 4) to its edges, and the video settles from a slight zoom
+*/
+function agCta2Video() {
+
+	if (prefersReducedMotion()) return;
+
+	var box = document.querySelector(".ag-cta-2-video");
+	var video = document.querySelector(".ag-cta-2-video video");
+	var tiles = gsap.utils.toArray(".ag-cta-2-video-tile");
+
+	if (!box || !video || !tiles.length) return;
+
+	gsap.timeline({
+		scrollTrigger: { trigger: box, start: "top 80%", once: true },
+		onComplete: function () {
+			// back to the css (the covers are folded there)
+			gsap.set(tiles.concat(video), { clearProps: "transform" });
+		}
+	})
+		.fromTo(tiles, { scaleY: 1, transformOrigin: "50% 100%" }, { scaleY: 0, duration: .8, ease: "power3.inOut", stagger: { grid: [4, 5], from: "center", amount: .9 } }, 0)
+		.fromTo(video, { scale: 1.15 }, { scale: 1, duration: 1.7, ease: "power2.out" }, 0);
+}
+
+
+/*
+	footer-2 (AI Agentech) — the "Ai" mark builds itself when it scrolls into view: the arch of the A and the stem of the i grow up from the
+	baseline, then the dot in the A and the dot of the i pop in (the mark is one svg in four parts, they share the gradient)
+*/
+function agFooter2Mark() {
+
+	if (prefersReducedMotion()) return;
+
+	var mark = document.querySelector(".ag-footer-2-mark");
+
+	if (!mark) return;
+
+	var arch = mark.querySelector(".ag-footer-2-mark-a");
+	var stem = mark.querySelector(".ag-footer-2-mark-i");
+	var inner = mark.querySelector(".ag-footer-2-mark-c");
+	var dot = mark.querySelector(".ag-footer-2-mark-d");
+
+	if (!arch || !stem || !inner || !dot) return;
+
+	gsap.timeline({
+		scrollTrigger: { trigger: mark, start: "top 85%", once: true },
+		onComplete: function () {
+			gsap.set([arch, stem, inner, dot], { clearProps: "transform,opacity" });
+		}
+	})
+		.fromTo(arch, { scaleY: 0, opacity: 0, transformOrigin: "50% 100%" }, { scaleY: 1, opacity: 1, duration: 1.1, ease: "power3.out" }, 0)
+		.fromTo(stem, { scaleY: 0, opacity: 0, transformOrigin: "50% 100%" }, { scaleY: 1, opacity: 1, duration: 1.1, ease: "power3.out" }, .15)
+		.fromTo(inner, { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: .7, ease: "back.out(2)" }, .75)
+		.fromTo(dot, { scale: 0, y: -30, transformOrigin: "50% 50%" }, { scale: 1, y: 0, duration: .8, ease: "back.out(2.4)" }, .95);
+}
+
+
+/*
+	pr-btn-2 (AI Agentech) — a light magnetic pull, like the header button of Hayler: while the pointer is on the arrow, its white box leans toward
+	the pointer (up to 6px off the centre), and it goes back when the pointer leaves. The icon is the place that stays, the box is what moves
+*/
+function agPrBtn2Magnet() {
+
+	if (prefersReducedMotion() || !window.matchMedia("(hover: hover)").matches) return;
+
+	var strength = 12;
+
+	document.querySelectorAll(".ag-pr-btn-2 .icon").forEach(function (icon) {
+		var box = icon.querySelector(".icon-box");
+
+		if (!box) return;
+
+		icon.addEventListener("mousemove", function (e) {
+			var r = icon.getBoundingClientRect();
+
+			gsap.to(box, {
+				x: ((e.clientX - r.left) / r.width - .5) * strength,
+				y: ((e.clientY - r.top) / r.height - .5) * strength,
+				duration: .3,
+				ease: "power2.out",
+				overwrite: "auto"
+			});
+		});
+
+		icon.addEventListener("mouseleave", function () {
+			gsap.to(box, { x: 0, y: 0, duration: .3, ease: "power2.out", overwrite: "auto" });
+		});
+	});
+}
+
+
+/*
 	footer-1 (AI Agentech) — the robot powers on when its row scrolls into view: it comes up out of a blur and its light flickers
 	like a hologram before it holds. The big brand text (its own trigger) rises out of a blur and its letters close in from a wide
 	spacing, like a line being set
@@ -573,6 +660,32 @@ function agFeatures1Slider() {
 
 	$items.on("mouseenter focusin", function () {
 		swiper.slideTo($items.index(this));
+	});
+}
+
+
+/*
+	choose-2 (AI Agentech) — one photo for every card: the card under the pointer (or the focus) is the lit one and brings its photo to the front,
+	the photos before it slide out to the left and the ones after it line up behind it (is-p0 is the first photo, is-p1.. the ones that follow,
+	is-out the ones that have gone, the sizes and the slide are in css)
+*/
+function agChoose2Gallery() {
+
+	var $cards = $(".ag-choose-2-card");
+	var $pics = $(".ag-choose-2-pic");
+
+	if (!$cards.length || !$pics.length) return;
+
+	agLitOnHover($cards);
+
+	$cards.on("mouseenter focusin", function () {
+		var now = $cards.index(this);
+
+		$pics.each(function (i) {
+			var d = i - now;
+
+			$(this).removeClass("is-out is-p0 is-p1 is-p2 is-p3").addClass(d < 0 ? "is-out" : "is-p" + d);
+		});
 	});
 }
 
@@ -765,6 +878,23 @@ function agHero2Slider() {
 		on: {
 			slideChange: function () {
 				$dots.removeClass("is-active").eq(this.realIndex).addClass("is-active");
+
+				if (prefersReducedMotion()) return;
+
+				// the picture of the new slide settles into its frame: it starts zoomed in and a little to the side and glides to its place while the
+				// slides cross-fade
+				var img = this.slides[this.activeIndex].querySelector(".ag-hero-2-card-img img");
+
+				if (img) {
+					gsap.fromTo(img, { scale: 1.3, xPercent: 6 }, {
+						scale: 1,
+						xPercent: 0,
+						duration: 1.6,
+						ease: "power3.out",
+						overwrite: true,
+						clearProps: "transform"
+					});
+				}
 			}
 		}
 	});
@@ -772,6 +902,184 @@ function agHero2Slider() {
 	$dots.on("click", function () {
 		swiper.slideToLoop($dots.index(this));
 	});
+}
+
+
+/*
+	hero-2 (AI Agentech) — built in order right after the preloader: the two colours fade in, the logo mark and the words of the title come up
+	(the words from behind their line), the text and the button follow, the dark panel rises, the robot climbs out of the bottom of it and, once it
+	stands, its light switches on (it flickers like a lamp before it holds). The ghost title, the star, the round button and the two cards come in
+	around them. After that the robot leans a little left / right with the pointer while the pointer is over the hero
+*/
+var agHero2First = null;
+
+function agHero2Intro() {
+
+	var area = document.querySelector(".ag-hero-2-area");
+
+	if (!area || prefersReducedMotion()) return;
+
+	var q = function (selector) {
+		return area.querySelector(selector);
+	};
+
+	var title = q(".ag-hero-2-title");
+	var words = title ? agHeroWords(title, "ag-hero-2-word-mask", "ag-hero-2-word") : [];
+	var rest = gsap.utils.toArray(".ag-hero-2-text, .ag-pr-btn-2", q(".ag-hero-2-wrap"));
+	var colours = gsap.utils.toArray(".ag-hero-2-bg-clr-1, .ag-hero-2-bg-clr-2", area);
+	var fav = q(".ag-hero-2-fav");
+	var tab = q(".ag-hero-2-tab");
+	var agency = q(".ag-hero-2-agency");
+	var star = q(".ag-hero-2-star");
+	var panel = q(".ag-hero-2-panel");
+	var robot = q(".ag-hero-2-robot");
+	var robotImg = q(".ag-hero-2-robot-img");
+	var light = q(".ag-hero-2-robot-light");
+	var explore = q(".ag-hero-2-explore");
+	var card = q(".ag-hero-2-card");
+	var video = q(".ag-hero-2-video-card");
+
+	var all = [].concat(colours, words, rest, [fav, tab, agency, star, panel, robotImg, light, explore, card, video]).filter(Boolean);
+
+	// parked: everything waits for its turn. The robot waits under the bottom edge of the panel (the clip of the panel cuts it off there)
+	// the two blurred colours wait a hair above 0, not at 0: they are drawn (the big blur is worked out) now, behind the preloader, and not at the first
+	// frame of their fade, where it would make the page stutter. The blur is also left off the big pieces (the mark with its video, the ghost title)
+	gsap.set(colours, { opacity: .001 });
+	gsap.set(fav, { scale: .6, opacity: 0, transformOrigin: "0% 100%" });
+	gsap.set(words, { yPercent: 115, rotate: 5, opacity: 0, filter: "blur(10px)", transformOrigin: "0% 100%" });
+	gsap.set(rest, { y: 28, opacity: 0, filter: "blur(6px)" });
+	gsap.set(agency, { y: 60, opacity: 0 });
+	gsap.set(tab, { scaleX: .2, opacity: 0, transformOrigin: "0% 50%" });
+	gsap.set(star, { scale: 0, rotate: -180, opacity: 0 });
+	gsap.set(panel, { y: 110, opacity: 0 });
+	gsap.set(robotImg, { yPercent: 100 });
+	gsap.set(light, { opacity: 0 });
+	gsap.set(explore, { scale: .4, opacity: 0 });
+	gsap.set(card, { y: 90, opacity: 0 });
+	gsap.set(video, { y: 70, opacity: 0 });
+
+	agHero2First = {
+		play: function () {
+			gsap.timeline({
+				defaults: { ease: "power3.out" },
+				onComplete: function () {
+					gsap.set(all, { clearProps: "transform,opacity,filter" });
+				}
+			})
+				.to(colours[0], { opacity: 1, duration: 1.8, ease: "power2.out" }, 0)
+				// the lilac colour on the right comes in a little later
+				.to(colours[1], { opacity: 1, duration: 2, ease: "power2.out" }, 1.3)
+				.to(fav, { scale: 1, opacity: 1, duration: 1.2 }, .15)
+				.to(agency, { y: 0, opacity: 1, duration: 1.4 }, .3)
+				.to(panel, { y: 0, opacity: 1, duration: 1.4 }, .3)
+				.to(words, { yPercent: 0, rotate: 0, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "power4.out", stagger: .08 }, .35)
+				.to(robotImg, { yPercent: 0, duration: 1.7 }, .8)
+				.to(rest, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: .15 }, .9)
+				.to(card, { y: 0, opacity: 1, duration: 1.3 }, 1)
+				.to(star, { scale: 1, rotate: 0, opacity: 1, duration: 1.3, ease: "back.out(1.7)" }, 1.1)
+				.to(tab, { scaleX: 1, opacity: 1, duration: .9 }, 1.2)
+				.to(video, { y: 0, opacity: 1, duration: 1.2 }, 1.25)
+				.to(explore, { scale: 1, opacity: 1, duration: 1, ease: "back.out(1.7)" }, 1.3)
+				// the light of the robot switches on once it stands: a lamp that flickers before it holds
+				.to(light, { opacity: .9, duration: .1, ease: "none" }, 2.35)
+				.to(light, { opacity: .1, duration: .09, ease: "none" })
+				.to(light, { opacity: 1, duration: .12, ease: "none" })
+				.to(light, { opacity: .35, duration: .08, ease: "none" })
+				.to(light, { opacity: 1, duration: .6, ease: "power2.out" });
+		}
+	};
+
+	// the robot (its picture and its light together) leans a little with the pointer, left and right (28px from one side of the hero to the other)
+	if (robot && window.matchMedia("(hover: hover)").matches) {
+		var lean = gsap.quickTo(robot, "x", { duration: .9, ease: "power3.out" });
+
+		area.addEventListener("mousemove", function (e) {
+			var r = area.getBoundingClientRect();
+
+			lean(((e.clientX - r.left) / r.width - .5) * 28);
+		});
+
+		area.addEventListener("mouseleave", function () {
+			lean(0);
+		});
+	}
+}
+
+
+/*
+	clients-2 (AI Agentech) — when the section comes into view the glass ribbon slides in from the upper right (turning, out of a blur) and settles
+	over the end of the title, then it floats a little all the time
+*/
+function agClients2Shape() {
+
+	var area = document.querySelector(".ag-clients-2-area");
+	var shape = area ? area.querySelector(".ag-clients-2-shape") : null;
+
+	if (!shape || prefersReducedMotion()) return;
+
+	gsap.fromTo(shape, { x: 140, y: -60, rotate: 14, scale: .8, opacity: 0, filter: "blur(14px)" }, {
+		x: 0,
+		y: 0,
+		rotate: 0,
+		scale: 1,
+		opacity: 1,
+		filter: "blur(0px)",
+		duration: 1.7,
+		ease: "power3.out",
+		scrollTrigger: { trigger: area, start: "top 70%", once: true },
+		onComplete: function () {
+			gsap.set(shape, { clearProps: "filter" });
+			gsap.to(shape, { y: 10, rotate: 1.5, duration: 3.6, ease: "sine.inOut", yoyo: true, repeat: -1 });
+		}
+	});
+}
+
+
+/*
+	about-2 (AI Agentech) — the collage is built piece by piece WITH the scroll (scrubbed, it runs back when the page is scrolled back up). The box of
+	the collage cuts off what is outside it, so, in two pairs: the light block (1) comes down from the top edge and the lilac card (4) with its round
+	picture slides out from under its bottom edge, then the girl picture (2) comes down from the top edge and the picture under it (3) slides out from
+	under its bottom edge
+*/
+function agAbout2Collage() {
+
+	var box = document.querySelector(".ag-about-2-collage-box");
+
+	if (!box || prefersReducedMotion()) return;
+
+	var q = function (selector) {
+		return box.querySelector(selector);
+	};
+
+	var fade = q(".ag-about-2-fade");
+	var card = q(".ag-about-2-card");
+	var cardParts = gsap.utils.toArray(".ag-about-2-card-logo, .ag-about-2-card-avatars, .ag-about-2-card-text", box);
+	var brain = q(".ag-about-2-brain");
+	var pic1 = q(".ag-about-2-pic-1");
+	var pic2 = q(".ag-about-2-pic-2");
+
+	if (!fade || !card || !brain || !pic1 || !pic2) return;
+
+	// the pixels of y are the pixels of the board (472 x 744), which is scaled as a whole. The timeline is 1.15 long, the scroll runs it from the moment
+	// the top of the collage is 90% down the screen until it is 5% down. The tweens are linear (ease none): the page scroll is already smoothed (Lenis)
+	// and so is the scrub, an ease on top of them makes every piece rush off and brake, which shows as a shake when the pieces follow one another
+	gsap.timeline({
+		defaults: { ease: "none" },
+		scrollTrigger: { trigger: box, start: "top 90%", end: "top 5%", scrub: 1 }
+	})
+		.fromTo(fade, { yPercent: -105 }, { yPercent: 0, duration: .28 }, 0)
+		// the same on the right: the lilac card and its round picture start hidden behind the light block (the block is over them, z-index in the css)
+		// and slide down out from under its lower edge. They fade in while still behind it, so the corner of the card that would show at the rounded
+		// corner of the block is not seen
+		.fromTo([card, brain], { y: -437 }, { y: 0, duration: .3 }, .24)
+		.fromTo([card, brain], { opacity: 0 }, { opacity: 1, duration: .08, ease: "none" }, .24)
+		.fromTo(cardParts, { opacity: 0 }, { opacity: 1, duration: .15, stagger: .04 }, .4)
+		// the girl picture comes down from over the top edge (it is 579px from the top edge to its lower edge)
+		.fromTo(pic1, { y: -600 }, { y: 0, duration: .3 }, .55)
+		// the last picture starts hidden behind the girl picture and slides down out from under its lower edge (it only fades in while it is still
+		// behind it, so the corner of it that would show at the rounded corner of the girl picture is not seen)
+		.fromTo(pic2, { y: -240 }, { y: 0, duration: .3 }, .85)
+		.fromTo(pic2, { opacity: 0 }, { opacity: 1, duration: .08, ease: "none" }, .85);
 }
 
 
@@ -972,6 +1280,7 @@ function agLiquidImg2() {
 */
 function afterPreloader() {
 	if (agHero1First) agHero1First.play();
+	if (agHero2First) agHero2First.play();
 	if (agHero1Swiper && !prefersReducedMotion()) agHero1Swiper.autoplay.start();
 
 	// the titles that waited behind the curtain (wa_text_effect with data-wa-text-wait, see main-common.js) come in now
@@ -1012,6 +1321,9 @@ ScrollTrigger.refresh();
 
 agHero1Slider();
 agHero2Slider();
+agHero2Intro();
+agClients2Shape();
+agAbout2Collage();
 agAbout1In();
 agServices1Slider();
 agTeam1Cards();
@@ -1020,9 +1332,13 @@ agFeatures1Slider();
 agProjects1Slider();
 agProjects2Stack();
 agFaqs2Reveal();
+agChoose2Gallery();
 agProcess1Title();
 agCta1In();
+agCta2Video();
 agFooter1In();
+agFooter2Mark();
+agPrBtn2Magnet();
 agLiquidImg2();
 
 })(jQuery);

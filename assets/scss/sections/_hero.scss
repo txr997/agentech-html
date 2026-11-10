@@ -936,6 +936,8 @@
     &-bg-clr-2 {
         position: absolute;
         background-repeat: no-repeat;
+        // the blur is worked out once and kept on a layer of its own, the fade of the intro (and the scroll) only changes its opacity
+        will-change: opacity;
         pointer-events: none;
     }
 
@@ -1042,6 +1044,19 @@
             width: 96px;
             height: 98px;
         }
+    }
+
+    // the words of the title (agHeroWords, main.js): every word is cut off at its line, so it can come up from behind it
+    &-word-mask {
+        display: inline-block;
+        padding-bottom: .12em;
+        margin-bottom: -.12em;
+        overflow: hidden;
+        vertical-align: top;
+    }
+
+    &-word {
+        display: inline-block;
     }
 
     &-text {
@@ -1222,7 +1237,8 @@
         left: calc(50% + 78px);
         width: calc(935px * var(--s));
         height: calc(1071px * var(--s));
-        transform: translateX(-50%);
+        // centred with a margin, not a transform: the transform is left to gsap (the robot leans with the pointer)
+        margin-left: calc(935px * var(--s) / -2);
 
         @media #{$xxxl} {
             --s: 0.95;

@@ -1,0 +1,294 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-technology-2-start
+*/
+// light section (1920 design: 750 high): the centred head (label, title) and under it 8 white logo cards (231 x 140, 2px between them) on a grid
+// of 6 x 2 where four places stay empty. The card under the pointer is the lit one (none starts lit): its logo is in colour, the card gets a purple
+// ring and two purple glows. The logos are all drawn in colour (the picture of the lit state); a card that is not lit greys and fades its logo (css). Behind the head: the faint plate (the blur and its 12% are in the picture) and the shape that hangs out of the
+// top right corner. Below 1200 the cards are in order on a grid of 4 (2 below 768)
+// --s is the scale of the logos (they are 63% of the card at the design size), --c and --r the place of a card on the grid of 6 x 2
+.ag-technology-2 {
+    &-area {
+        position: relative;
+        overflow: hidden;
+        padding: 132px 0;
+        background-color: var(--ag-clr-bg-2);
+
+        @media #{$xxl} {
+            padding: 120px 0;
+        }
+
+        @media #{$xl} {
+            padding: 110px 0;
+        }
+
+        @media #{$lg} {
+            padding: 100px 0;
+        }
+
+        @media #{$md} {
+            padding: 90px 0;
+        }
+
+        @media #{$xs} {
+            padding: 64px 0;
+        }
+
+        // above the background, without a z-index
+        > .container {
+            position: relative;
+        }
+        
+    }
+
+    // background: it comes first in the markup, so everything else is above it
+    &-bg {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+
+        // the plate: 1766 x 1101 (the blur is in the picture), it hangs 215px out of the top
+        &-clr {
+            position: absolute;
+            top: -215px;
+            right: 0;
+            left: 0;
+            height: 1101px;
+        }
+
+        // the shape: 323 x 321, half of it is out of the top, 70px from the right edge, it turns all the time (wa-rotated, wow-plus)
+        &-shape {
+            position: absolute;
+            top: -160px;
+            right: 3.65%;
+            width: 323px;
+            aspect-ratio: 323 / 321;
+            animation: wa-rotated 30s linear infinite;
+
+            @media (prefers-reduced-motion: reduce) {
+                animation: none;
+            }
+
+            @media #{$xxl} {
+                top: -140px;
+                width: 280px;
+            }
+
+            @media #{$xl} {
+                top: -120px;
+                width: 240px;
+            }
+
+            @media #{$lg} {
+                top: -100px;
+                width: 200px;
+            }
+
+            @media #{$md} {
+                top: -75px;
+                width: 150px;
+            }
+
+            @media #{$xs} {
+                top: -60px;
+                width: 120px;
+            }
+        }
+    }
+
+    // top: the head is 730 wide and centred
+    &-top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 730px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    // list: 1396 wide (2px in from the container), the cards are 2px apart
+    &-list {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 2px;
+        margin: 48px 2px 0;
+
+        @media #{$xl} {
+            margin-top: 44px;
+        }
+
+        @media #{$lg} {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            margin: 40px 0 0;
+        }
+
+        @media #{$md} {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            margin: 36px 0 0;
+        }
+
+        @media #{$xs} {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin: 32px 0 0;
+        }
+    }
+
+    // card: white, 231 x 140 (the shape is kept at every width), the logo is in the middle
+    &-card {
+        --s: 1;
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        grid-column: var(--c);
+        grid-row: var(--r);
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        aspect-ratio: 231 / 140;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        background-color: #fff;
+        transition: var(--ag-cube-1);
+
+        // the two glows of the lit card: lilac in the top left corner and purple in the bottom right one (86px circles, blur 94 of the design is 47px)
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            width: 86px;
+            height: 86px;
+            border-radius: 50%;
+            filter: blur(47px);
+            opacity: 0;
+            transition: var(--ag-cube-1);
+        }
+
+        &::before {
+            top: -24px;
+            left: -23px;
+            background-color: var(--ag-clr-pr-2);
+        }
+
+        &::after {
+            top: 90px;
+            left: 170px;
+            background-color: var(--ag-clr-pr-1);
+        }
+
+        &:hover {
+            border-color: rgb(162 52 253 / 70%);
+
+            &::before,
+            &::after {
+                opacity: 1;
+            }
+        }
+
+        // the places on the grid of 6 x 2 and the size of the logo of every card (the size of its picture)
+        &.is-1 {
+            --c: 1;
+            --r: 1;
+            --lp: 146px;
+            --lr: 146 / 40;
+        }
+
+        &.is-2 {
+            --c: 2;
+            --r: 1;
+            --lp: 115px;
+            --lr: 115 / 28;
+        }
+
+        &.is-3 {
+            --c: 4;
+            --r: 1;
+            --lp: 138px;
+            --lr: 138 / 40;
+        }
+
+        &.is-4 {
+            --c: 6;
+            --r: 1;
+            --lp: 87px;
+            --lr: 87 / 61;
+        }
+
+        &.is-5 {
+            --c: 2;
+            --r: 2;
+            --lp: 127px;
+            --lr: 127 / 32;
+        }
+
+        &.is-6 {
+            --c: 3;
+            --r: 2;
+            --lp: 67px;
+            --lr: 67 / 40;
+        }
+
+        &.is-7 {
+            --c: 5;
+            --r: 2;
+            --lp: 119px;
+            --lr: 119 / 32;
+        }
+
+        &.is-8 {
+            --c: 6;
+            --r: 2;
+            --lp: 86px;
+            --lr: 86 / 60;
+        }
+
+        @media #{$xxl} {
+            --s: 0.93;
+        }
+
+        @media #{$xl} {
+            --s: 0.8;
+        }
+
+        // in order on the grid of 4
+        @media #{$lg,$md,$sm,$xs} {
+            grid-column: auto;
+            grid-row: auto;
+        }
+
+        @media #{$md} {
+            --s: 0.72;
+        }
+
+        @media #{$xs} {
+            --s: 0.8;
+        }
+
+        @media #{$sm} {
+            --s: 1;
+        }
+
+        // the logo: the picture is the lit one (in colour), so it is greyed and faded until the card is lit
+        &-logo {
+            width: calc(var(--lp) * var(--s));
+            aspect-ratio: var(--lr);
+            filter: grayscale(1);
+            opacity: 0.6;
+            transition: var(--ag-cube-1);
+        }
+
+        &:hover &-logo {
+            filter: none;
+            opacity: 1;
+        }
+    }
+}
+/*
+    ag-technology-2-end
+*/

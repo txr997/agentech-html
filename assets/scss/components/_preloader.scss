@@ -2,7 +2,7 @@
 
 /*
     ag-preloader-1-start
-    a light sweeps over the logo again and again until the page is loaded, then gsap in main.js fades the panel out
+    a light sweeps over the logo again and again until the page is loaded, then main.js gives the panel is-leaving and it fades out
 */
 
 @keyframes ag-preloader-1-shine {
@@ -39,6 +39,14 @@
     background-color: #07000E;
     background-image: radial-gradient(50% 40% at 50% 50%, rgb(109 27 251 / 18%) 0%, rgb(109 27 251 / 0%) 100%);
     color: #fff;
+    // the fade is a css transition on a layer of its own, so the compositor runs it: it stays smooth even while the page behind is busy starting
+    will-change: opacity;
+    transition: opacity 1s cubic-bezier(.4, 0, .2, 1);
+
+    &.is-leaving {
+        opacity: 0;
+        pointer-events: none;
+    }
 
     // the logo is dim, the light runs over its shape (the mask of the light is the logo, set by data-mask-image) and a glow breathes behind it
     &-logo {

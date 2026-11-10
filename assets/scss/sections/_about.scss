@@ -608,13 +608,15 @@
         }
     }
 
-    // collage: the board is 472 x 744 (design pixels), the box round it has the scaled size. It hangs up to the top edge of the section
+    // collage: the board is 472 x 744 (design pixels), the box round it has the scaled size. It hangs up to the top edge of the section. The box cuts off
+    // what is outside it: the pieces come in from over its top edge (agAbout2Collage, main.js)
     &-collage-box {
         grid-area: collage;
         align-self: start;
         width: calc(472px * var(--s));
         height: calc(744px * var(--s));
         margin-top: calc(var(--pt) * -1);
+        overflow: hidden;
 
         @media #{$lg,$md,$sm,$xs} {
             margin-top: 0;
@@ -630,11 +632,14 @@
     }
 
     // left column: the second picture is under the first one, the first has an 8px edge in the colour of the section that cuts it off the second
+    // the pieces of the collage slide with the scroll (agAbout2Collage), every one is kept on a layer of its own so the pictures are not drawn again on
+    // every step
     &-pic-1,
     &-pic-2 {
         position: absolute;
         left: 0;
         width: 232px;
+        will-change: transform;
     }
 
     &-pic-2 {
@@ -656,9 +661,11 @@
         position: absolute;
         top: 0;
         left: 240px;
+        z-index: 1;
         width: 232px;
         height: 243px;
         border-radius: 0 0 80px 0;
+        will-change: transform;
         background: linear-gradient(180deg, var(--ag-clr-bg-2) 0%, #fff 100%);
     }
 
@@ -673,6 +680,7 @@
         width: 232px;
         height: 328px;
         padding: 30px 32px 0;
+        will-change: transform;
 
         &::before {
             content: "";
@@ -773,6 +781,7 @@
         height: 202px;
         border-radius: 50%;
         box-shadow: 0 0 0 5px #fff;
+        will-change: transform;
     }
 
     // photo: the board is 394 x 484, it starts 60px over the text. The cut is one path: the top left corner (73px), the bottom right corner (a long

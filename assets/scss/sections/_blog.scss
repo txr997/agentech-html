@@ -323,3 +323,292 @@
 /*
     ag-blog-1-end
 */
+
+
+/*
+    ag-blog-2-start
+*/
+// light section (1920 design: 1050 high): the lavender glow at the top, the head (label, title) with the button at the bottom right of it, and three
+// cards in a row (448 wide, 28px apart). A card is a picture (448 x 360, 14px radius) with a notch in its top left corner for the date and one in its
+// bottom left corner for the two chips; the notches are blocks in the colour of the page that lie on the picture (so they keep their size, in px, at every
+// width), the round ends of the picture where it meets them are the small quarter pieces on the blocks. Under the picture: the title and the text
+// --nc is the colour of the page (of the notches), --nr the radius of the picture and of the notches
+.ag-blog-2 {
+    &-area {
+        --nc: var(--ag-clr-bg-2);
+        --nr: 14px;
+        position: relative;
+        overflow: hidden;
+        padding: 202px 0 132px;
+        background-color: var(--nc);
+        margin-top: -120px;
+
+        @media #{$xxl} {
+            padding: 180px 0 120px;
+        }
+
+        @media #{$xl} {
+            padding: 160px 0 110px;
+        }
+
+        @media #{$lg} {
+            padding: 140px 0 100px;
+        }
+
+        @media #{$md} {
+            padding: 120px 0 90px;
+        }
+
+        @media #{$xs} {
+            padding: 96px 0 64px;
+            margin-top: -60px;
+        }
+
+        // above the background
+        > .container {
+            position: relative;
+        }
+    }
+
+    // background: the glow (1920 x 531, the blur and its opacity are in the picture) at the top edge
+    &-bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 531px;
+        pointer-events: none;
+    }
+
+    // top: the head on the left, the button on the right at the bottom of the head (it goes under it when there is no room)
+    &-top {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 28px 24px;
+    }
+
+    &-head {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    // list
+    &-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
+        margin-top: 48px;
+
+        @media #{$xl} {
+            gap: 24px;
+        }
+
+        @media #{$lg} {
+            gap: 20px;
+        }
+
+        @media #{$md} {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+
+            .ag-blog-2-card:last-child {
+                grid-column: 1 / -1;
+                justify-self: center;
+                width: calc(50% - 12px);
+            }
+        }
+
+        @media #{$xs} {
+            grid-template-columns: minmax(0, 448px);
+            gap: 40px;
+            justify-content: center;
+            margin-top: 36px;
+        }
+    }
+
+    // card
+    &-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    // media: the picture and the two notches on it
+    &-media {
+        position: relative;
+        aspect-ratio: 448 / 360;
+    }
+
+    &-img {
+        position: absolute;
+        inset: 0;
+        border-radius: var(--nr);
+    }
+
+    // date notch: 88 x 86 in the top left corner, the date box (80 x 78) is in it. Its bottom right corner is round (the picture goes round it),
+    // the two quarter pieces round the ends of the picture where it meets the notch
+    &-date {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 88px;
+        height: 86px;
+        border-radius: 0 0 var(--nr);
+        background-color: var(--nc);
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            width: var(--nr);
+            height: var(--nr);
+            background: radial-gradient(circle at 100% 100%, transparent calc(var(--nr) - 0.5px), var(--nc) var(--nr));
+        }
+
+        &::before {
+            top: 100%;
+            left: 0;
+        }
+
+        &::after {
+            top: 0;
+            left: 100%;
+        }
+
+        &-box {
+            display: flex;
+            flex-direction: column;
+            width: 80px;
+            height: 78px;
+            border-radius: 8px;
+            background-color: var(--ag-clr-pr-2);
+        }
+
+        // the day is on white (48 high), the month on the purple under it
+        &-day {
+            display: flex;
+            flex: none;
+            align-items: center;
+            justify-content: center;
+            height: 48px;
+            border-radius: 8px 8px 0 0;
+            background-color: #fff;
+            font-family: var(--ag-font-2);
+            font-size: 36px;
+            font-weight: 500;
+            line-height: 1;
+            color: var(--ag-clr-h-1);
+        }
+
+        &-month {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ag-font-1);
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1;
+            color: #fff;
+        }
+    }
+
+    // meta notch: 39 high in the bottom left corner, as wide as the chips and 8px, its top right corner is round, the chips sit on its bottom edge
+    &-meta {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: flex-end;
+        gap: 6px;
+        height: 39px;
+        padding-right: 8px;
+        border-radius: 0 var(--nr) 0 0;
+        background-color: var(--nc);
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            width: var(--nr);
+            height: var(--nr);
+            background: radial-gradient(circle at 100% 0, transparent calc(var(--nr) - 0.5px), var(--nc) var(--nr));
+        }
+
+        &::before {
+            bottom: 100%;
+            left: 0;
+        }
+
+        &::after {
+            bottom: 0;
+            left: 100%;
+        }
+    }
+
+    &-chip {
+        display: inline-flex;
+        align-items: center;
+        height: 31px;
+        padding: 0 12px;
+        border: 1px solid var(--ag-clr-p-1);
+        border-radius: 6px;
+        background-color: var(--nc);
+        font-family: var(--ag-font-1);
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1;
+        white-space: nowrap;
+        color: var(--ag-clr-p-1);
+
+        &:is(.is-cat) {
+            border-color: var(--ag-clr-pr-2);
+            color: var(--ag-clr-pr-2);
+        }
+    }
+
+    // body: the title and the text are 424 wide (24px short of the card), 28px under the picture
+    &-body {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 28px 24px 0 0;
+
+        @media #{$xs} {
+            padding-top: 24px;
+        }
+    }
+
+    &-card-title {
+        font-size: 24px;
+        line-height: 28px;
+        letter-spacing: -0.01em;
+
+        a {
+            color: inherit;
+            transition: var(--ag-cube-1);
+
+            &:hover {
+                color: var(--ag-clr-pr-2);
+            }
+        }
+
+        @media #{$xs} {
+            font-size: 22px;
+            line-height: 26px;
+        }
+    }
+
+    &-dots {
+        color: var(--ag-clr-pr-2);
+    }
+}
+/*
+    ag-blog-2-end
+*/

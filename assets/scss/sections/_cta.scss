@@ -229,3 +229,300 @@
 /*
     ag-cta-1-end
 */
+
+
+/*
+    ag-cta-2-start
+*/
+// dark closing section (1920 design: 1319 high): the head (label, title) with the two buttons, a line, the text with the three trust points, and under
+// them the video cut into 5 x 4 tiles. The tiles are one outline (the svg above, drawn on 1876 x 780 and scaled to the box), so the video keeps its shape
+// and the tiles keep their radius at every width. On top: the glow (the picture is the blurred plate, it hangs 505px out of the top), the face in the
+// top right corner (its fade and its 32% are in the picture) and the light bar that ends the section before (a bar with a flared end on each side, the
+// ends are drawn in the svg above). Below 992 the text and the points are one under the other
+// --pt is the space over the head and --vt the space over the video
+.ag-cta-2 {
+    &-area {
+        --pt: 132px;
+        --vt: 80px;
+        position: relative;
+        overflow: hidden;
+        padding: var(--pt) 0 22px;
+        background-color: var(--ag-clr-h-1);
+
+        @media #{$xxl} {
+            --pt: 120px;
+            --vt: 72px;
+        }
+
+        @media #{$xl} {
+            --pt: 110px;
+            --vt: 64px;
+        }
+
+        @media #{$lg} {
+            --pt: 100px;
+            --vt: 56px;
+        }
+
+        @media #{$md} {
+            --pt: 90px;
+            --vt: 48px;
+            padding-bottom: 16px;
+        }
+
+        @media #{$xs} {
+            --pt: 76px;
+            --vt: 40px;
+            padding-bottom: 12px;
+        }
+
+        // above the background, without a z-index
+        > .container {
+            position: relative;
+        }
+    }
+
+    // background: it comes first in the markup, so everything else is above it
+    &-bg {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+
+        // the glow: the plate is 1920 x 899 (the blur is in the picture), only its lower part shows
+        &-clr {
+            position: absolute;
+            top: -505px;
+            right: 0;
+            left: 0;
+            height: 899px;
+        }
+
+        // the face: 407 x 407, 119px out of the right edge and 40px out of the top
+        &-face {
+            position: absolute;
+            top: -40px;
+            right: -6.2%;
+            width: 21.2%;
+            aspect-ratio: 1;
+
+            @media #{$lg} {
+                width: 24%;
+            }
+
+            @media #{$md} {
+                top: -24px;
+                width: 30%;
+            }
+
+            @media #{$xs} {
+                top: -12px;
+                right: -10%;
+                width: 46%;
+            }
+        }
+
+        // the light bar (the end of the section before): a bar with a flared end on each side, the ends are drawn in the svg above
+        &-cut {
+            --cw: 112px;
+            --ch: 44px;
+            position: absolute;
+            top: 0;
+            right: 148px;
+            left: 148px;
+            height: var(--ch);
+
+            @media #{$xxl} {
+                right: 100px;
+                left: 100px;
+            }
+
+            @media #{$xl} {
+                right: 60px;
+                left: 60px;
+            }
+
+            @media #{$lg} {
+                right: 40px;
+                left: 40px;
+            }
+
+            @media #{$md} {
+                --cw: 84px;
+                --ch: 33px;
+                right: 24px;
+                left: 24px;
+            }
+
+            @media #{$xs} {
+                --cw: 56px;
+                --ch: 22px;
+                right: 16px;
+                left: 16px;
+            }
+
+            @media #{$sm} {
+                --cw: 72px;
+                --ch: 28px;
+                right: 24px;
+                left: 24px;
+            }
+
+            // the bar runs 1px in under both ends, so there is no hairline between them
+            &-mid {
+                position: absolute;
+                top: 0;
+                right: calc(var(--cw) - 1px);
+                bottom: 0;
+                left: calc(var(--cw) - 1px);
+                background-color: var(--ag-clr-bg-2);
+            }
+
+            &-end {
+                position: absolute;
+                top: 0;
+                width: var(--cw);
+                height: var(--ch);
+                background-color: var(--ag-clr-bg-2);
+
+                &.is-l {
+                    left: 0;
+                    clip-path: url(#ag-cta-2-cut-l-clip);
+                }
+
+                &.is-r {
+                    right: 0;
+                    clip-path: url(#ag-cta-2-cut-r-clip);
+                }
+            }
+        }
+    }
+
+    // wrap: the head, the line and the bottom row are 32px apart
+    &-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    // top: the head on the left, the buttons on the right at the bottom of the head (they go under it when there is no room)
+    &-top {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 28px 24px;
+    }
+
+    &-head {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &-title {
+        margin-top: 16px;
+    }
+
+    &-btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    &-line {
+        height: 1px;
+        background-color: rgb(255 255 255 / 28%);
+    }
+
+    // bottom: the text is 648 wide, the points are 424 wide (two in a row, then the third)
+    &-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 48px;
+
+        @media #{$lg,$md,$sm,$xs} {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 28px;
+        }
+    }
+
+    &-text {
+        flex: 1 1 0;
+        max-width: 648px;
+        opacity: 0.8;
+    }
+
+    &-points {
+        display: flex;
+        flex: none;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        width: 424px;
+        max-width: 100%;
+    }
+
+    &-point {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+
+        &-icon {
+            flex: none;
+            font-size: 20px;
+            line-height: 1;
+            color: var(--ag-clr-pr-2);
+
+            i {
+                display: block;
+                line-height: 1;
+            }
+        }
+
+        &-text {
+            opacity: 0.8;
+        }
+    }
+
+    // video: it keeps the 1876 x 780 shape, 22px from the edges of the screen
+    &-video {
+        position: relative;
+        width: calc(100% - 44px);
+        aspect-ratio: 1876 / 780;
+        margin: var(--vt) auto 0;
+        clip-path: url(#ag-cta-2-tiles-clip);
+
+        @media #{$xl} {
+            width: calc(100% - 32px);
+        }
+
+        @media #{$lg,$md} {
+            width: calc(100% - 24px);
+        }
+
+        @media #{$xs} {
+            width: calc(100% - 16px);
+        }
+
+        // the covers of the tiles (main.js, agCta2Video): 5 x 4 cells in the colour of the section on the video, every cell is folded to its bottom edge (hidden)
+        // from the start, so the video shows when the script does not run. The script closes them and folds them away again one after another. The lines
+        // between the cells are in the 4px between the tiles, the outline cuts them off
+        &-tiles {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            grid-template-rows: repeat(4, minmax(0, 1fr));
+        }
+
+        &-tile {
+            background-color: var(--ag-clr-h-1);
+            transform: scaleY(0);
+            transform-origin: 50% 100%;
+        }
+    }
+}
+/*
+    ag-cta-2-end
+*/
