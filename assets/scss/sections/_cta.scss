@@ -505,6 +505,12 @@
             width: calc(100% - 16px);
         }
 
+        // a block, not a line: an inline video leaves the gap of the line under itself, the box grows by it and the outline of the tiles is drawn
+        // over a box that is taller than the video (the last row of tiles was cut flat at the bottom)
+        video {
+            display: block;
+        }
+
         // the covers of the tiles (main.js, agCta2Video): 5 x 4 cells in the colour of the section on the video, every cell is folded to its bottom edge (hidden)
         // from the start, so the video shows when the script does not run. The script closes them and folds them away again one after another. The lines
         // between the cells are in the 4px between the tiles, the outline cuts them off

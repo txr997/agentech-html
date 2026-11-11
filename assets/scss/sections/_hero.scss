@@ -993,15 +993,17 @@
         }
     }
 
-    // the light notch (216 x 17) in the top edge of the panel, under the button: 15px before the container, 333px under the top of the content
+    // the light notch (244 x 26) in the top edge of the panel, under the button: 15px before the container, 333px under the top of the content.
+    // It is the drawn notch (216 x 17) made deeper (the button sits 7px in, so 19px stay under it) and wider (the flat bottom is as long as the button
+    // with the 9px of the curve on each side)
     &-tab {
         position: absolute;
         top: 333px;
         left: -15px;
-        width: 216px;
-        height: 17px;
+        width: 244px;
+        height: 26px;
         background: #DFDCEE;
-        clip-path: path('M216 0C216 0 208.157 1.74276 204.5 5C202.735 6.57193 201.257 9.1094 200.159 11.447C198.655 14.6493 195.575 17 192.037 17H23.9633C20.4252 17 17.3454 14.6493 15.8409 11.447C14.7426 9.1094 13.2648 6.57193 11.5 5C7.84316 1.74276 0 0 0 0H216Z');
+        clip-path: path('M244 0C244 0 236.157 2.6656 232.5 7.6471C230.735 10.0509 229.257 13.9319 228.159 17.5072C226.655 22.4048 223.575 26 220.037 26H23.9633C20.4252 26 17.3454 22.4048 15.8409 17.5072C14.7426 13.9319 13.2648 10.0509 11.5 7.6471C7.84316 2.6656 0 0 0 0H244Z');
 
         @media #{$xl,$lg,$md,$sm,$xs} {
             display: none;

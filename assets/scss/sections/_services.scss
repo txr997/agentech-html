@@ -478,7 +478,7 @@ $s2-in: 1px 12px, 2.5px 6.5px, 6.5px 2.5px, 12px 1px, calc(100% - 12px) 1px, cal
         }
 
         &-bg {
-            background-color: rgb(36 36 36 / 75%);
+            background-color: #1A1421;
             backdrop-filter: blur(20px);
             clip-path: polygon(#{$s2-out});
 
@@ -529,20 +529,6 @@ $s2-in: 1px 12px, 2.5px 6.5px, 6.5px 2.5px, 12px 1px, calc(100% - 12px) 1px, cal
             padding: 0 18px;
             border-radius: 10px;
             background: linear-gradient(90deg, var(--ag-clr-pr-2) 0%, rgb(93 36 141 / 10%) 30.29%, rgb(26 20 33 / 0%) 100%);
-
-            &::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                border-radius: inherit;
-                background: linear-gradient(90deg, rgb(255 255 255 / 48%) 0%, rgb(255 255 255 / 0%) 100%);
-                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-                -webkit-mask-composite: xor;
-                mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-                mask-composite: exclude;
-                pointer-events: none;
-            }
         }
 
         // the icon is the flaticon font, its size is the font size
@@ -605,7 +591,13 @@ $s2-in: 1px 12px, 2.5px 6.5px, 6.5px 2.5px, 12px 1px, calc(100% - 12px) 1px, cal
                     linear-gradient(currentColor, currentColor) 7px 10px / 2px 6px no-repeat,
                     linear-gradient(currentColor, currentColor) 0 7px / 6px 2px no-repeat,
                     linear-gradient(currentColor, currentColor) 10px 7px / 6px 2px no-repeat;
+                transition: var(--ag-cube-1);
             }
+        }
+
+        // the plus turns white on the lit card
+        &:hover &-item::before {
+            color: #fff;
         }
 
         &-media {

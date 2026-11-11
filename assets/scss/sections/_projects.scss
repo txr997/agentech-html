@@ -475,8 +475,8 @@
 // the case studies of the home 2: three cards one under the other (flush, 1400 x 512 on the 1920 design: the picture on the left half, the
 // glass box with the text on the right half and the arrow button hanging on the corner of the box). From 992 up (and 640 high) every card
 // sticks to the top of the screen while the next one slides over it, the one that is covered shrinks to 0.9 and blurs (main.js,
-// agProjects2Stack; the effect of the project cards of novora-wbs.webflow.io). The white card turns purple on hover (the purple card of the
-// design is the lit state) and the picture zooms. Below 992 the cards are a plain list: the picture on top, the box under it, the arrow in the box
+// agProjects2Stack; the effect of the project cards of novora-wbs.webflow.io). The second card is the purple one (the lit state of the design), the others are
+// white; on hover the picture zooms and the arrow button turns purple. Below 992 the cards are a plain list: the picture on top, the box under it, the arrow in the box
 // --fs is the size of the big title, the space above the cards follows it (the cards cover the lower part of the letters)
 
 // the 4 colours of the glass box (fill and 1px ring) are registered so they can fade on hover
@@ -587,6 +587,21 @@
         &:last-child .ag-projects-2-card {
             border-radius: 0 0 16px 16px;
         }
+
+        // the second card is the purple (lit) one, the others are white
+        &:nth-child(2) .ag-projects-2-card {
+            --ag-pj-box-a: #a234fd;
+            --ag-pj-box-b: #be76fa;
+            --ag-pj-ring-a: #ce97fd;
+            --ag-pj-ring-b: #bd74f9;
+            --c-title: #fff;
+            --c-text: rgb(255 255 255 / 80%);
+            --c-pill: #fff;
+            --c-line: rgb(255 255 255 / 24%);
+            --c-btn: #bd74f9;
+            --c-arrow: #fff;
+            background-color: var(--ag-clr-pr-2);
+        }
     }
 
     &-card {
@@ -623,18 +638,6 @@
 
         &:hover,
         &:focus-visible {
-            --ag-pj-box-a: #a234fd;
-            --ag-pj-box-b: #be76fa;
-            --ag-pj-ring-a: #ce97fd;
-            --ag-pj-ring-b: #bd74f9;
-            --c-title: #fff;
-            --c-text: rgb(255 255 255 / 80%);
-            --c-pill: #fff;
-            --c-line: rgb(255 255 255 / 24%);
-            --c-btn: #bd74f9;
-            --c-arrow: #fff;
-            background-color: var(--ag-clr-pr-2);
-
             .ag-projects-2-card-img {
                 transform: scale(1.08);
             }
@@ -773,6 +776,12 @@
             font-size: 24px;
             color: var(--c-arrow);
             transition: background-color 0.5s ease, color 0.5s ease;
+
+            // the button is the only part that changes on hover: it turns purple with a white arrow
+            &:hover {
+                --c-btn: var(--ag-clr-pr-2);
+                --c-arrow: #fff;
+            }
 
             &::before {
                 content: "";

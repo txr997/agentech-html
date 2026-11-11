@@ -293,7 +293,7 @@
 }
 
 // the same pill on the hero 2, with the text only. Hover (the header button of Hayler): the swapped gradient fades in, the text rolls up and its copy
-// (data-hover) rises from below, the text steps 18px to the left and the white box with the arrow scales in at the right end. The width of the pill does not change
+// (data-hover) rises from below, the text steps 21px to the left (a 10px gap to the box, 15px on its left) and the white box with the arrow scales in at the right end. The width of the pill does not change
 .ag-pr-btn-2 {
     position: relative;
     isolation: isolate;
@@ -302,7 +302,7 @@
     align-items: center;
     justify-content: center;
     height: 52px;
-    padding: 0 28px;
+    padding: 0 36px;
     border-radius: 6px;
     background: var(--ag-clr-gd-4);
     font-family: var(--ag-font-2);
@@ -331,10 +331,10 @@
     .icon {
         position: absolute;
         top: 50%;
-        right: 8px;
-        width: 28px;
-        height: 28px;
-        margin-top: -14px;
+        right: 5px;
+        width: 42px;
+        height: 42px;
+        margin-top: -21px;
         transform: scale(0);
         transition: transform 0.3s ease-out;
     }
@@ -348,7 +348,7 @@
         height: 100%;
         border-radius: 4px;
         background: #fff;
-        font-size: 13px;
+        font-size: 16px;
         line-height: 1;
         color: var(--ag-clr-pr-2);
 
@@ -378,7 +378,7 @@
 
         .text {
             transform: translateY(-150%);
-            translate: -18px 0;
+            translate: -21px 0;
         }
 
         .icon {
