@@ -705,6 +705,23 @@
         &:is(.is-down) &-end {
             transform: scaleY(-1);
         }
+
+        // below 768 the bottom bar is a plain bar from edge to edge, without the flared ends
+        @media #{$xs} {
+            &:is(.is-down) {
+                right: 0;
+                left: 0;
+            }
+
+            &:is(.is-down) &-mid {
+                right: 0;
+                left: 0;
+            }
+
+            &:is(.is-down) &-end {
+                display: none;
+            }
+        }
     }
 
     // hero: the mark and the content on the left (58px apart, centred on each other), the round button on the right

@@ -9649,6 +9649,7 @@ input:focus::placeholder, textarea:focus::placeholder {
   font-weight: 700;
   line-height: 1;
   color: #fff;
+  transition: color 0.4s ease;
 }
 .ag-pricing-2-btn::before {
   content: "";
@@ -9663,12 +9664,16 @@ input:focus::placeholder, textarea:focus::placeholder {
   opacity: 0.8;
   filter: blur(12px);
   transform: translateX(-50%);
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, top 0.4s ease, width 0.4s ease, height 0.4s ease, border-radius 0.4s ease;
 }
 .ag-pricing-2-btn:hover {
-  color: #fff;
+  color: var(--ag-clr-pr-2);
 }
 .ag-pricing-2-btn:hover::before {
+  top: -14px;
+  width: 120%;
+  height: 80px;
+  border-radius: 10px;
   opacity: 1;
 }
 .ag-pricing-2-card:is(.is-dark) .ag-pricing-2-btn {
@@ -9678,6 +9683,13 @@ input:focus::placeholder, textarea:focus::placeholder {
   top: 33.5px;
   height: 66px;
   background: var(--ag-clr-pr-2);
+}
+.ag-pricing-2-card:is(.is-dark) .ag-pricing-2-btn:hover {
+  color: #fff;
+}
+.ag-pricing-2-card:is(.is-dark) .ag-pricing-2-btn:hover::before {
+  top: -14px;
+  height: 80px;
 }
 .ag-pricing-2-inc {
   padding: 24px var(--pad) var(--pad);
@@ -13284,6 +13296,19 @@ input:focus::placeholder, textarea:focus::placeholder {
 }
 .ag-footer-2-cut:is(.is-down) .ag-footer-2-cut-end {
   transform: scaleY(-1);
+}
+@media (max-width: 767px) {
+  .ag-footer-2-cut:is(.is-down) {
+    right: 0;
+    left: 0;
+  }
+  .ag-footer-2-cut:is(.is-down) .ag-footer-2-cut-mid {
+    right: 0;
+    left: 0;
+  }
+  .ag-footer-2-cut:is(.is-down) .ag-footer-2-cut-end {
+    display: none;
+  }
 }
 .ag-footer-2-hero {
   display: flex;

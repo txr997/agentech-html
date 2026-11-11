@@ -204,6 +204,7 @@
         font-weight: 700;
         line-height: 1;
         color: #fff;
+        transition: color 0.4s ease;
 
         &::before {
             content: "";
@@ -218,13 +219,18 @@
             opacity: 0.8;
             filter: blur(12px);
             transform: translateX(-50%);
-            transition: opacity 0.4s ease;
+            transition: opacity 0.4s ease, top 0.4s ease, width 0.4s ease, height 0.4s ease, border-radius 0.4s ease;
         }
 
+        // on hover the glow grows past the button edges (the blur fades at its rim) so it fills the whole bar; the white glow turns the bar white, so the label takes the purple
         &:hover {
-            color: #fff;
+            color: var(--ag-clr-pr-2);
 
             &::before {
+                top: -14px;
+                width: 120%;
+                height: 80px;
+                border-radius: 10px;
                 opacity: 1;
             }
         }
@@ -237,6 +243,16 @@
             top: 33.5px;
             height: 66px;
             background: var(--ag-clr-pr-2);
+        }
+
+        // the purple glow fills the dark bar, the label stays white
+        &:hover {
+            color: #fff;
+
+            &::before {
+                top: -14px;
+                height: 80px;
+            }
         }
     }
 
