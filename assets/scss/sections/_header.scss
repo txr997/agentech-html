@@ -507,6 +507,187 @@
 */
 
 /*
+    ag-header-3-start
+*/
+.ag-header-3 {
+    // laid over the hero: the logo and the menu sit 12px inside the panel, the button sits in the tab of its top right corner (1920 design)
+    &-area {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        width: 100%;
+        z-index: 3;
+
+        // the hero has 12px of the page around it from here down, so the row stays 12px inside the panel
+        @media #{$xl,$lg} {
+            top: 24px;
+        }
+
+        @media #{$md} {
+            top: 20px;
+        }
+
+        @media #{$sm,$xs} {
+            top: 16px;
+        }
+    }
+
+    // 20px of the page on each side, the same as the panel
+    &-wrap {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 0 20px;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            align-items: center;
+            padding: 0 24px;
+        }
+
+        @media #{$md} {
+            padding: 0 20px;
+        }
+
+        @media #{$sm,$xs} {
+            padding: 0 16px;
+        }
+    }
+
+    // the logo and the menu stand side by side, 20px in from the panel and 12px down
+    &-left {
+        display: flex;
+        align-items: center;
+        margin: 12px 0 0 20px;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            margin: 0;
+        }
+    }
+
+    // 62 x 54 pill: dark at the top, purple at the bottom, a thin purple edge, the mark is 40px
+    &-logo-box {
+        flex: none;
+        width: 62px;
+        height: 54px;
+        border-radius: 100px;
+        background: linear-gradient(0deg, #A234FD 0%, #46196A 39%, #0E0910 100%);
+        box-shadow: inset 0 0 0 1px rgb(162 52 253 / 70%);
+
+        @media #{$xs} {
+            width: 52px;
+            height: 46px;
+        }
+    }
+
+    &-logo-elm {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    &-logo-img {
+        width: 40px;
+        height: 40px;
+
+        @media #{$xs} {
+            width: 34px;
+            height: 34px;
+        }
+    }
+
+    // the white pill, 737 x 52 in the design (40px before the first link and after the last one), it gives way as the page gets narrower
+    &-menu {
+        height: 52px;
+        padding: 0 40px;
+        border-radius: 100px;
+        background: #fff;
+
+        @media #{$xxxl} {
+            padding: 0 36px;
+        }
+
+        @media #{$xxl} {
+            padding: 0 32px;
+        }
+
+        @media #{$xl} {
+            padding: 0 24px;
+        }
+
+        .ag-main-navigation,
+        .ag-main-navigation .navbar-nav {
+            height: 100%;
+        }
+
+        .ag-main-navigation .navbar-nav {
+            gap: 52px;
+
+            @media #{$xxxl} {
+                gap: 44px;
+            }
+
+            @media #{$xxl} {
+                gap: 36px;
+            }
+
+            @media #{$xl} {
+                gap: 28px;
+            }
+
+            // the links sit on the middle line of the pill, hover + current page are plain purple (not the gradient of the header 1)
+            > li > a {
+                padding-bottom: 0;
+            }
+
+            > li:hover > a .text,
+            > li.active > a .text {
+                background: none;
+                color: var(--ag-clr-pr-2);
+                -webkit-text-fill-color: var(--ag-clr-pr-2);
+            }
+
+            > li:hover > a .menu-arrow,
+            > li.active > a .menu-arrow {
+                background: var(--ag-clr-pr-2);
+            }
+
+            // the card of the sub menu opens just under the pill
+            .dropdown-menu {
+                top: calc(100% + 27px);
+
+                &::before {
+                    top: -28px;
+                    height: 28px;
+                }
+            }
+        }
+    }
+
+    &-action-link {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .ag-header-3-button {
+            @media (max-width: 575px) {
+                display: none;
+            }
+        }
+
+        .ag-offcanvas-btn-3 {
+            @media #{$over,$xxxl,$xxl,$xl} {
+                display: none;
+            }
+        }
+    }
+}
+/*
+    ag-header-3-end
+*/
+
+/*
     sticky-header-css-start
 */
 

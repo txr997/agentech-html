@@ -277,6 +277,49 @@
 }
 
 
+// the hero title of the home 3, three lines on the video: 9.3 of its own size wide so the lines break the same at every size
+.ag-hero-title-3 {
+    max-width: 9.3em;
+    font-family: var(--ag-font-2);
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 60px;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 0;
+
+    @media #{$xxl} {
+        font-size: 56px;
+        line-height: 56px;
+    }
+
+    @media #{$xl} {
+        font-size: 52px;
+        line-height: 52px;
+    }
+
+    @media #{$lg} {
+        font-size: 48px;
+        line-height: 48px;
+    }
+
+    @media #{$md} {
+        font-size: 42px;
+        line-height: 44px;
+    }
+
+    @media #{$xs} {
+        font-size: 32px;
+        line-height: 36px;
+    }
+
+    @media #{$sm} {
+        font-size: 38px;
+        line-height: 42px;
+    }
+}
+
+
 // the cta title, the marquee text
 .ag-title-1 {
     font-family: var(--ag-font-2);

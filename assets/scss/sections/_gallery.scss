@@ -1,0 +1,173 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-gallery-3-start
+*/
+// the 1920 design: five columns of 346px with 12px between them (1778px in all, 71px from the page on each side). Every picture has notched
+// corners, they are cut by the svg shapes at the top of the section (clip-path: url(#...)), made in units of the box of the picture, so they scale
+// with it. The columns are on the bottom line, the middle three start lower. From 1400 up it is laid out as drawn and scaled by --s, below 1400
+// the columns wrap
+.ag-gallery-3 {
+    &-area {
+        --s: 1;
+        position: relative;
+        padding: 70px 0 132px;
+        background-color: var(--ag-clr-bg-1);
+
+        @media #{$xxxl} {
+            --s: .88;
+            padding: 70px 0 110px;
+        }
+
+        @media #{$xxl} {
+            --s: .77;
+            padding: 70px 0 90px;
+        }
+
+        @media #{$xl} {
+            padding: 70px 0 80px;
+        }
+
+        @media #{$lg} {
+            padding: 70px 0 70px;
+        }
+
+        @media #{$md} {
+            padding: 70px 0 60px;
+        }
+
+        @media #{$xs} {
+            padding: 70px 0 48px;
+        }
+
+        @media #{$sm} {
+            padding: 70px 0 56px;
+        }
+    }
+
+    // the title stands over the top of the columns, they reach up behind it (the middle ones start lower, so nothing touches it)
+    &-sec-title {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        text-align: center;
+    }
+
+    // 667px wide in the design, two lines
+    &-title {
+        max-width: 667px;
+    }
+
+    // the columns reach 70px up behind the title (the two outer ones start at the top of the grid)
+    &-grid {
+        --w: calc(346px * var(--s));
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 12px;
+        margin-top: -70px;
+
+        @media #{$xxxl} {
+            margin-top: -60px;
+        }
+
+        @media #{$xxl} {
+            margin-top: -50px;
+        }
+
+        // the columns keep their own width (346px at most) and wrap, the number in a row follows the width of the page
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            --w: min(346px, calc((100% - 26px) / 3));
+            flex-wrap: wrap;
+            align-items: flex-start;
+            margin-top: 48px;
+            padding: 0 12px;
+        }
+
+        @media #{$md} {
+            --w: min(346px, calc((100% - 14px) / 2));
+        }
+
+        @media #{$sm} {
+            --w: min(346px, calc((100% - 14px) / 2));
+        }
+
+        @media (max-width: 575px) {
+            --w: min(346px, 100%);
+        }
+    }
+
+    &-col {
+        display: flex;
+        flex: none;
+        flex-direction: column;
+        gap: 12px;
+        width: var(--w);
+
+        // the one with the button: it stands 115px above the bottom line (876 in the design, the others end at 991) and the button hangs under it
+        &.is-3 {
+            position: relative;
+            margin-bottom: calc(115px * var(--s));
+
+            @media #{$xl,$lg,$md,$sm,$xs} {
+                margin-bottom: 0;
+                padding-bottom: 34px;
+            }
+        }
+    }
+
+    // the pictures keep the shape of the design at every width (aspect-ratio), the shape that cuts the corners is in units of the box
+    &-item {
+        width: 100%;
+
+        &.is-1,
+        &.is-6 {
+            aspect-ratio: 346 / 460;
+            clip-path: url(#ag-gallery-3-clip-1);
+        }
+
+        &.is-2 {
+            aspect-ratio: 346 / 231;
+            clip-path: url(#ag-gallery-3-clip-2);
+        }
+
+        &.is-3,
+        &.is-5 {
+            aspect-ratio: 346 / 605;
+            clip-path: url(#ag-gallery-3-clip-3);
+        }
+
+        &.is-4 {
+            aspect-ratio: 346 / 402;
+            clip-path: url(#ag-gallery-3-clip-4);
+        }
+
+        &.is-7 {
+            aspect-ratio: 346 / 231;
+            clip-path: url(#ag-gallery-3-clip-5);
+        }
+    }
+
+    // the button sits in the notch at the bottom of the picture (its top is 7px under the floor of the notch, 22px up from the bottom of the picture),
+    // the notch is a little left of the middle (7px)
+    &-btn {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        z-index: 2;
+        margin-left: -7px;
+        transform: translateX(-50%);
+
+        // the column has no room of its own under the picture from 1400 up
+        @media #{$over,$xxxl,$xxl} {
+            bottom: -34px;
+        }
+    }
+}
+/*
+    ag-gallery-3-end
+*/

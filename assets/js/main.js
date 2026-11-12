@@ -1007,6 +1007,164 @@ function agHero2Intro() {
 
 
 /*
+	hero-3 (AI Agentech) — built in order right after the preloader: the video fades up out of a zoom, the words of the title come up from behind
+	their line (the text and the button follow), the social links slide in from the left, then the two cards rise: the avatars, the number and the
+	plus pop in on the card of the clients
+*/
+var agHero3First = null;
+
+function agHero3Intro() {
+
+	var area = document.querySelector(".ag-hero-3-area");
+
+	if (!area || prefersReducedMotion()) return;
+
+	var q = function (selector) {
+		return area.querySelector(selector);
+	};
+
+	var title = q(".ag-hero-3-title");
+	var words = title ? agHeroWords(title, "ag-hero-3-word-mask", "ag-hero-3-word") : [];
+	var rest = gsap.utils.toArray(".ag-hero-3-text, .ag-pr-btn-3", area);
+	var panel = q(".ag-hero-3-panel");
+	var video = q(".ag-hero-3-video");
+	var social = gsap.utils.toArray(".ag-hero-3-social .title, .ag-hero-3-social .links a", area);
+	var line = q(".ag-hero-3-social .line");
+	var feature = q(".ag-hero-3-feature");
+	var items = gsap.utils.toArray(".ag-hero-3-feature-item", area);
+	var trust = q(".ag-hero-3-trust");
+	var avatars = gsap.utils.toArray(".ag-hero-3-trust-avatars .item", area);
+	var count = q(".ag-hero-3-trust-count");
+	var plus = q(".ag-hero-3-trust-count .plus");
+	var info = q(".ag-hero-3-trust-text");
+
+	var all = [].concat(words, rest, social, items, avatars, [panel, video, line, feature, trust, count, plus, info]).filter(Boolean);
+
+	// parked: everything waits for its turn
+	gsap.set(panel, { opacity: 0 });
+	gsap.set(video, { scale: 1.2 });
+	gsap.set(words, { yPercent: 115, rotate: 5, opacity: 0, filter: "blur(10px)", transformOrigin: "0% 100%" });
+	gsap.set(rest, { y: 28, opacity: 0, filter: "blur(6px)" });
+	gsap.set(social, { x: -24, opacity: 0 });
+	gsap.set(line, { scaleY: 0, transformOrigin: "50% 0%" });
+	gsap.set(feature, { y: 80, opacity: 0 });
+	gsap.set(items, { y: 16, opacity: 0 });
+	gsap.set(trust, { y: 110, opacity: 0 });
+	gsap.set(avatars, { scale: .4, x: -18, opacity: 0 });
+	gsap.set(count, { y: 24, opacity: 0 });
+	gsap.set(plus, { scale: 0 });
+	gsap.set(info, { y: 20, opacity: 0 });
+
+	agHero3First = {
+		play: function () {
+			gsap.timeline({
+				defaults: { ease: "power3.out" },
+				onComplete: function () {
+					gsap.set(all, { clearProps: "transform,opacity,filter" });
+				}
+			})
+				.to(panel, { opacity: 1, duration: 1, ease: "power2.out" }, 0)
+				.to(video, { scale: 1, duration: 2.4, ease: "power2.out" }, 0)
+				.to(words, { yPercent: 0, rotate: 0, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "power4.out", stagger: .08 }, .4)
+				.to(rest, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: .15 }, 1)
+				.to(social, { x: 0, opacity: 1, duration: .9, stagger: .08 }, 1)
+				.to(line, { scaleY: 1, duration: 1 }, 1.1)
+				.to(feature, { y: 0, opacity: 1, duration: 1.2 }, 1.1)
+				.to(trust, { y: 0, opacity: 1, duration: 1.3 }, 1.3)
+				.to(items, { y: 0, opacity: 1, duration: .8, stagger: .12 }, 1.5)
+				.to(avatars, { scale: 1, x: 0, opacity: 1, duration: .8, stagger: .1, ease: "back.out(1.7)" }, 1.9)
+				.to(count, { y: 0, opacity: 1, duration: 1 }, 2.05)
+				.to(info, { y: 0, opacity: 1, duration: .9 }, 2.2)
+				.to(plus, { scale: 1, duration: .8, ease: "back.out(2)" }, 2.4);
+		}
+	};
+}
+
+
+/*
+	gallery-3 (AI Agentech) — when the pictures scroll into view they come up one after another, from the middle column out to the two outer ones (a
+	picture rises, grows from a little smaller and fades in while the photo inside it settles from a zoom), then the button of the middle picture pops
+	in. From 1400 up the grid plays as a whole when it comes into view, below it every picture waits for its own turn on the screen (the rows that wrap
+	are not played before they are seen). The tag over the title comes up first, the title has its own effect (wa_text_effect)
+*/
+function agGallery3In() {
+
+	var area = document.querySelector(".ag-gallery-3-area");
+
+	if (!area || prefersReducedMotion()) return;
+
+	var tag = area.querySelector(".ag-gallery-3-sec-title > .ag-subtitle-1");
+	var grid = area.querySelector(".ag-gallery-3-grid");
+	var cols = gsap.utils.toArray(".ag-gallery-3-col", area);
+	var items = gsap.utils.toArray(".ag-gallery-3-item", area);
+	var mid = area.querySelector(".ag-gallery-3-item.is-4");
+	var btn = area.querySelector(".ag-gallery-3-btn .ag-pr-btn-3");
+
+	if (!grid || !items.length) return;
+
+	// the turn of a picture: the middle column first, then the two next to it, then the outer two; the pictures of a column follow one another from the top
+	cols.forEach(function (col, c) {
+		gsap.utils.toArray(".ag-gallery-3-item", col).forEach(function (item, i) {
+			item._turn = Math.abs(c - (cols.length - 1) / 2) * 2 + i * .5;
+		});
+	});
+
+	var imgs = items.map(function (item) {
+		return item.querySelector("img");
+	});
+
+	// parked: the pictures wait low and small, the photos inside them zoomed in (the box cuts the zoom off), the button waits small
+	gsap.set(items, { y: 90, scale: .9, opacity: 0, transformOrigin: "50% 100%" });
+	gsap.set(imgs, { scale: 1.3 });
+	if (btn) gsap.set(btn, { scale: .5, opacity: 0 });
+
+	function play(batch) {
+		var first = Math.min.apply(null, batch.map(function (item) {
+			return item._turn;
+		}));
+		var wait = function (i, item) {
+			return (item._turn - first) * .09;
+		};
+
+		gsap.to(batch, { y: 0, scale: 1, opacity: 1, duration: 1.2, ease: "power3.out", delay: wait, clearProps: "transform,opacity" });
+		gsap.to(batch.map(function (item) {
+			return item.querySelector("img");
+		}), { scale: 1, duration: 1.8, ease: "power2.out", delay: function (i) {
+			return wait(i, batch[i]);
+		}, clearProps: "transform" });
+
+		if (btn && batch.indexOf(mid) > -1) {
+			gsap.to(btn, { scale: 1, opacity: 1, duration: .8, ease: "back.out(1.7)", delay: wait(0, mid) + .9, clearProps: "transform,opacity" });
+		}
+	}
+
+	var mm = gsap.matchMedia();
+
+	mm.add("(min-width: 1400px)", function () {
+		ScrollTrigger.create({ trigger: grid, start: "top 75%", once: true, onEnter: function () {
+			play(items);
+		} });
+	});
+
+	mm.add("(max-width: 1399px)", function () {
+		ScrollTrigger.batch(items, { start: "top 88%", once: true, onEnter: play });
+	});
+
+	if (tag) {
+		gsap.from(tag, {
+			y: 24,
+			opacity: 0,
+			filter: "blur(8px)",
+			duration: 1,
+			ease: "power3.out",
+			clearProps: "transform,opacity,filter",
+			scrollTrigger: { trigger: tag, start: "top 85%", once: true }
+		});
+	}
+}
+
+
+/*
 	clients-2 (AI Agentech) — when the section comes into view the glass ribbon slides in from the upper right (turning, out of a blur) and settles
 	over the end of the title, then it floats a little all the time
 */
@@ -1281,6 +1439,7 @@ function agLiquidImg2() {
 function afterPreloader() {
 	if (agHero1First) agHero1First.play();
 	if (agHero2First) agHero2First.play();
+	if (agHero3First) agHero3First.play();
 	if (agHero1Swiper && !prefersReducedMotion()) agHero1Swiper.autoplay.start();
 
 	// the titles that waited behind the curtain (wa_text_effect with data-wa-text-wait, see main-common.js) come in now
@@ -1322,6 +1481,8 @@ ScrollTrigger.refresh();
 agHero1Slider();
 agHero2Slider();
 agHero2Intro();
+agHero3Intro();
+agGallery3In();
 agClients2Shape();
 agAbout2Collage();
 agAbout1In();

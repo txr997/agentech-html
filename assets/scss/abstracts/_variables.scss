@@ -40,6 +40,14 @@
   --ag-clr-gd-5: linear-gradient(90deg, #EC04FB 0%, #5259EB 100%);
   // the pill with the dark and the lit parts swapped, it fades in over it on hover
   --ag-clr-gd-6: linear-gradient(90deg, #370C57 0%, #A234FD 37%, #A234FD 62%, #370C57 96%);
+  // the pill of the header 3 and the round menu button: dark at the left, lit purple at the right
+  --ag-clr-gd-7: linear-gradient(90deg, #0E0910 0%, #A234FD 100%);
+  // the same run backwards, it fades in over them on hover
+  --ag-clr-gd-8: linear-gradient(90deg, #A234FD 0%, #0E0910 100%);
+  // the pill of the hero 3: purple > violet > teal
+  --ag-clr-gd-9: linear-gradient(90deg, #A234FD 0%, #6D1BFB 49%, #1BDAD6 100%);
+  // the same run backwards, it fades in over it on hover
+  --ag-clr-gd-10: linear-gradient(90deg, #1BDAD6 0%, #6D1BFB 51%, #A234FD 100%);
 
   --ag-cube-1: all .4s cubic-bezier(.18,.82,.41,1);
 

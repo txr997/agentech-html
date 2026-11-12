@@ -1608,3 +1608,610 @@
 /*
     ag-hero-2-end
 */
+
+/*
+    ag-hero-3-start
+*/
+// the 1920 design is one stage: a dark panel with the video (20px in from every side) with two places carved out of it, the notch on the left (the
+// social links) and the tab on the top right (the button of the header), and the cards across its lower edge. From 1400 up it is laid out as drawn
+// (the cards are anchored to the right), below 1400 the panel is a plain box and the cards flow under it
+.ag-hero-3 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        height: 948px;
+        background-color: var(--ag-clr-bg-1);
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            height: auto;
+            padding: 12px;
+        }
+    }
+
+    // the lower edge of the panel is 816px down, the feature card (132px) starts there
+    &-panel {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        bottom: 132px;
+        left: 20px;
+        z-index: 1;
+        overflow: hidden;
+        border-radius: 20px;
+        background-color: var(--ag-clr-h-1);
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            inset: auto;
+            height: 600px;
+
+            // the text lies over the picture of the video from here down, a dark fade keeps it readable
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(90deg, rgb(7 0 14 / 60%) 0%, rgb(7 0 14 / 10%) 100%);
+            }
+        }
+
+        @media #{$lg} {
+            height: 580px;
+        }
+
+        @media #{$md} {
+            height: 560px;
+        }
+
+        @media #{$xs} {
+            height: 520px;
+
+            &::after {
+                background: rgb(7 0 14 / 50%);
+            }
+        }
+
+        @media #{$sm} {
+            height: 540px;
+        }
+    }
+
+    &-video {
+        position: absolute;
+        inset: 0;
+        background-color: #000;
+
+        video {
+            opacity: 72%;
+        }
+    }
+
+    // cut-outs: light shapes over the panel. The left one is the notch (77px wide, the slanted top starts 298.5px down the panel, the rounded ends of
+    // the slant are in the polygon) and the 20px rounding of the lower corner of the panel (::before). The right one is the tab (190 x 65, its lower
+    // left corner is rounded) with the two corners of the panel around it (::before the upper one, ::after the lower one)
+    &-cut {
+        position: absolute;
+        z-index: 2;
+
+        &.is-left {
+            top: 318.5px;
+            bottom: 132px;
+            left: 20px;
+            width: 97px;
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 77px;
+                background: var(--ag-clr-bg-1);
+                clip-path: polygon(0 0, 0.61px 4.91px, 2.38px 9.46px, 5.2px 13.45px, 8.95px 16.67px, 68.05px 55.83px, 71.81px 59.06px, 74.62px 63.04px, 76.4px 67.59px, 77px 72.5px, 77px 100%, 0 100%);
+            }
+
+            &::before {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 77px;
+                width: 20px;
+                height: 20px;
+                background: radial-gradient(circle 20px at 100% 0, transparent 19.5px, var(--ag-clr-bg-1) 20px);
+            }
+        }
+
+        &.is-right {
+            top: 20px;
+            right: 20px;
+            width: 190px;
+            height: 65px;
+            border-radius: 0 0 0 20px;
+            background: var(--ag-clr-bg-1);
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                background: radial-gradient(circle 20px at 0 100%, transparent 19.5px, var(--ag-clr-bg-1) 20px);
+            }
+
+            &::before {
+                top: 0;
+                right: 100%;
+            }
+
+            &::after {
+                top: 100%;
+                right: 0;
+            }
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            display: none;
+        }
+    }
+
+    // social: the standing text, a thin line and the four boxes, in the notch (44px wide, 36px from the left of the page)
+    &-social {
+        position: absolute;
+        top: 400px;
+        left: 36px;
+        z-index: 4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        width: 44px;
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            display: none;
+        }
+
+        .title {
+            margin: 0;
+            font-family: var(--ag-font-2);
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 28px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            writing-mode: vertical-rl;
+            color: var(--ag-clr-p-1);
+        }
+
+        .line {
+            width: 1px;
+            height: 77px;
+            background: rgb(7 0 14 / 20%);
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            a {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                border-radius: 8px;
+                background: var(--ag-clr-bg-1);
+                font-size: 18px;
+                line-height: 1;
+                color: var(--ag-clr-h-1);
+                transition: var(--ag-cube-1);
+
+                // the 2px edge: purple at the upper left and the lower right corner, it fades out in between
+                &::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    padding: 2px;
+                    border-radius: inherit;
+                    background: linear-gradient(135deg, var(--ag-clr-pr-2) 0%, rgb(162 52 253 / 12%) 36%, rgb(162 52 253 / 12%) 64%, var(--ag-clr-pr-2) 100%);
+                    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                    -webkit-mask-composite: xor;
+                    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                    mask-composite: exclude;
+                    pointer-events: none;
+                }
+
+                &:nth-child(4) {
+                    font-size: 16px;
+                }
+
+                &:hover,
+                &.is-active {
+                    background: linear-gradient(90deg, #9F20EF 0%, #1BDAD6 100%);
+                    box-shadow: 5px 5px 20px rgb(162 52 253 / 70%);
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    // content: the left edge is the container (260px at 1920), 178px from the top of the section (the header is over the panel from 1400 down)
+    &-wrap {
+        position: absolute;
+        top: 178px;
+        right: 0;
+        left: 0;
+        z-index: 4;
+
+        @media #{$xl,$lg} {
+            top: 130px;
+        }
+
+        @media #{$md} {
+            top: 118px;
+        }
+
+        @media #{$sm,$xs} {
+            top: 108px;
+        }
+    }
+
+    // the notch is 97px wide, the content keeps clear of it while the container is close to the edge
+    &-content {
+        max-width: 557px;
+
+        @media #{$xxxl} {
+            margin-left: 40px;
+        }
+
+        @media #{$xxl} {
+            margin-left: 90px;
+        }
+
+        @media #{$xs} {
+            padding: 0 12px;
+        }
+    }
+
+    // 557px wide in the design = 9.3 of its own size, so the three lines break the same at every size (in the title class)
+    &-title {
+        margin-bottom: 20px;
+    }
+
+    // the words of the title (made by main.js): every word rises out of its own mask, the lower part of the letters has some room so it is not cut
+    &-word-mask {
+        display: inline-block;
+        padding-bottom: .12em;
+        margin-bottom: -.12em;
+        overflow: hidden;
+        vertical-align: top;
+    }
+
+    &-word {
+        display: inline-block;
+    }
+
+    &-text {
+        max-width: 557px;
+        margin-bottom: 32px;
+
+        @media #{$xs} {
+            font-size: 17px;
+            line-height: 26px;
+        }
+    }
+
+    // the cards: 1220 x 488 in the design, 140px from the right of the page. The feature card (780 x 132, white) is under the panel, on the left,
+    // the trust card (440 x 488) stands up across the lower edge of the panel on the right of it
+    &-down {
+        position: absolute;
+        right: 140px;
+        bottom: 0;
+        z-index: 3;
+        width: 1220px;
+        height: 488px;
+
+        @media #{$xxxl} {
+            right: 100px;
+        }
+
+        @media #{$xxl} {
+            right: 40px;
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            right: auto;
+            bottom: auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            height: auto;
+            margin-top: 12px;
+        }
+    }
+
+    &-feature {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        width: 780px;
+        height: 132px;
+        border-radius: 0 0 0 16px;
+        background: #fff;
+
+        // three items of 260 x 132, a thin line after the first two
+        &-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 260px;
+            height: 132px;
+            padding: 0 32px;
+
+            &:not(:last-child) {
+                border-right: 1px solid rgb(7 0 14 / 8%);
+            }
+
+            // the ring is 60px (1px edge, 5px of room), the pale disc inside it is 48px
+            .icon {
+                flex: none;
+                width: 60px;
+                height: 60px;
+                padding: 5px;
+                border: 1px solid var(--ag-clr-pr-2);
+                border-radius: 50%;
+            }
+
+            .disc {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background: rgb(162 52 253 / 12%);
+                color: var(--ag-clr-pr-2);
+
+                svg {
+                    display: block;
+                }
+            }
+
+            .text {
+                margin: 0;
+                font-family: var(--ag-font-1);
+                font-size: 18px;
+                line-height: 24px;
+                white-space: nowrap;
+                color: var(--ag-clr-h-1);
+            }
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            bottom: auto;
+            left: auto;
+            flex: 1 1 560px;
+            flex-wrap: wrap;
+            width: auto;
+            height: auto;
+            border-radius: 16px;
+
+            &-item {
+                flex: 1 1 200px;
+                width: auto;
+                height: auto;
+                padding: 28px 24px;
+            }
+        }
+
+        @media #{$xs} {
+            flex-direction: column;
+
+            &-item {
+                flex: none;
+
+                &:not(:last-child) {
+                    border-right: 0;
+                    border-bottom: 1px solid rgb(7 0 14 / 8%);
+                }
+            }
+        }
+    }
+
+    &-trust {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 440px;
+        height: 488px;
+
+        // the purple tag stands behind the cut corner of the card (83 x 89, 339px in from the left, 18px down), only its upper right shows
+        &-tag {
+            position: absolute;
+            top: 18px;
+            left: 339px;
+            width: 83px;
+            height: 89px;
+            border-radius: 8px;
+            background: var(--ag-clr-pr-2);
+        }
+
+        // the white card with the cut corner
+        .shape {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        // the pale mark of the logo, 106 x 108, 280px in from the left and 61px down
+        &-mark {
+            position: absolute;
+            top: 61px;
+            left: 280px;
+            width: 106px;
+            height: 108px;
+            opacity: .6;
+        }
+
+        &-content {
+            position: absolute;
+            top: 48px;
+            left: 48px;
+            width: 344px;
+        }
+
+        &-avatars {
+            display: flex;
+            align-items: center;
+            margin-bottom: 48px;
+
+            .item {
+                flex: none;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                box-shadow: 0 0 0 2px #fff;
+            }
+
+            .item + .item {
+                margin-left: -16px;
+            }
+        }
+
+        // the 4k is 56px high (the caps), the plus is a 36px disc with a 3px white ring that overlaps its right end
+        &-count {
+            position: relative;
+            width: 113px;
+            height: 56px;
+            margin-bottom: 40px;
+            font-family: var(--ag-font-2);
+            font-size: 80px;
+            font-weight: 500;
+            line-height: 56px;
+            letter-spacing: -0.03em;
+            color: var(--ag-clr-h-1);
+
+            .plus {
+                position: absolute;
+                top: 0;
+                left: 77px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background: var(--ag-clr-gd-7);
+                box-shadow: 0 0 0 3px #fff;
+                color: #fff;
+
+                svg {
+                    display: block;
+                }
+            }
+        }
+
+        &-text {
+            max-width: 344px;
+        }
+
+        // the dark button that closes the card, 440 x 132, the lit purple in the middle
+        &-btn {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            isolation: isolate;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 132px;
+            border-radius: 0 0 16px 0;
+            background: linear-gradient(90deg, #0E0910 0%, #A234FD 51%, #0E0910 100%);
+            font-family: var(--ag-font-2);
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 28px;
+            letter-spacing: -0.02em;
+            text-align: center;
+            color: #fff;
+
+            // the swapped run fades in on hover
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                border-radius: inherit;
+                background: linear-gradient(90deg, #A234FD 0%, #0E0910 51%, #A234FD 100%);
+                opacity: 0;
+                transition: var(--ag-cube-1);
+            }
+
+            &:hover {
+                color: #fff;
+
+                &::before {
+                    opacity: 1;
+                }
+            }
+        }
+
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            position: relative;
+            right: auto;
+            bottom: auto;
+            flex: 1 1 340px;
+            width: auto;
+            max-width: 440px;
+            height: auto;
+            padding: 32px 32px 0;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #fff;
+
+            &-tag,
+            .shape,
+            &-mark {
+                display: none;
+            }
+
+            &-content {
+                position: static;
+                width: auto;
+            }
+
+            &-avatars {
+                margin-bottom: 28px;
+            }
+
+            &-count {
+                margin-bottom: 24px;
+            }
+
+            &-btn {
+                position: relative;
+                margin: 28px -32px 0;
+                height: 100px;
+                border-radius: 0;
+            }
+        }
+
+        @media #{$xs} {
+            flex: none;
+            width: 100%;
+            max-width: none;
+        }
+    }
+}
+/*
+    ag-hero-3-end
+*/
