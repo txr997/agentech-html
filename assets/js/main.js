@@ -727,7 +727,8 @@ function agProjects1Slider() {
 */
 function agProjects2Stack() {
 
-	var list = document.querySelector(".ag-projects-2-list");
+	// the section of the home 3 (.is-flow) is a plain list, it is not stacked
+	var list = document.querySelector(".ag-projects-2-area:not(.is-flow) .ag-projects-2-list");
 	var items = gsap.utils.toArray(".ag-projects-2-item");
 	if (!list || items.length < 2 || prefersReducedMotion()) return;
 

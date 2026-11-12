@@ -1,0 +1,266 @@
+@use '../abstracts/variables' as *;
+
+
+/*
+    ag-breadcrumb-1-start
+*/
+// the title banner of the inner pages (1920 design): a dark purple panel, 12px in from every side, 600 high, 20px corners. The picture (1495 x 600) lies on the
+// right 79% of it and fades into the purple on the left, the waves (a png, 52%) lie on the left edge. The title stands on the left of the container, in the middle
+// of the panel. The light tab with the path hangs on the bottom edge in the middle (419 x 56): one clip-path (it is in the svg at the top of the section), the
+// two flared ends are 56px wide (the arcs that join the tab to the edge), the top corners 20px. The notch on top of the panel is the light tab of the header.
+// Below 992 the picture runs over the whole panel under a purple shade, so the title can be read
+.ag-breadcrumb-1 {
+    &-area {
+        position: relative;
+        isolation: isolate;
+        padding: 12px 12px 0;
+        background-color: var(--ag-clr-bg-1);
+    }
+
+    &-panel {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 600px;
+        overflow: hidden;
+        border-radius: 20px;
+        background: linear-gradient(180deg, #2B0B4E 0%, #1B0636 100%);
+
+        @media #{$xxl} {
+            height: 560px;
+        }
+
+        @media #{$xl} {
+            height: 520px;
+        }
+
+        @media #{$lg} {
+            height: 480px;
+        }
+
+        @media #{$md} {
+            height: 440px;
+        }
+
+        @media #{$xs} {
+            height: 340px;
+        }
+
+        @media #{$sm} {
+            height: 380px;
+        }
+    }
+
+    // picture: 1495 x 600, on the right edge
+    &-bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 78.85%;
+
+        @media #{$lg} {
+            width: 74%;
+        }
+
+        @media #{$md,$xs} {
+            width: 100%;
+        }
+    }
+
+    // the purple of the panel again, over the picture: solid up to the left edge of the picture (21.8%), gone by 56%
+    &-shade {
+        position: absolute;
+        inset: 0;
+        background: inherit;
+        -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 21.8%, rgb(0 0 0 / 40%) 38%, rgb(0 0 0 / 0%) 56%);
+        mask-image: linear-gradient(90deg, #000 0%, #000 21.8%, rgb(0 0 0 / 40%) 38%, rgb(0 0 0 / 0%) 56%);
+        pointer-events: none;
+
+        @media #{$lg} {
+            -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 26%, rgb(0 0 0 / 40%) 44%, rgb(0 0 0 / 0%) 64%);
+            mask-image: linear-gradient(90deg, #000 0%, #000 26%, rgb(0 0 0 / 40%) 44%, rgb(0 0 0 / 0%) 64%);
+        }
+
+        @media #{$md,$xs} {
+            -webkit-mask-image: linear-gradient(90deg, #000 0%, rgb(0 0 0 / 80%) 40%, rgb(0 0 0 / 35%) 100%);
+            mask-image: linear-gradient(90deg, #000 0%, rgb(0 0 0 / 80%) 40%, rgb(0 0 0 / 35%) 100%);
+        }
+    }
+
+    // waves (613 x 871 png), 84% of it, the arcs run over the top left corner and the ribbon over the bottom left one
+    &-shape {
+        position: absolute;
+        top: -50px;
+        left: -153px;
+        width: 515px;
+        height: 732px;
+        opacity: 0.52;
+        pointer-events: none;
+
+        @media #{$xxl} {
+            top: -40px;
+            left: -130px;
+            width: 440px;
+            height: 625px;
+        }
+
+        @media #{$xl} {
+            top: -30px;
+            left: -110px;
+            width: 380px;
+            height: 540px;
+        }
+
+        @media #{$lg} {
+            top: -30px;
+            left: -100px;
+            width: 340px;
+            height: 483px;
+        }
+
+        @media #{$md} {
+            top: -30px;
+            left: -90px;
+            width: 300px;
+            height: 426px;
+        }
+
+        @media #{$xs} {
+            top: -20px;
+            left: -80px;
+            width: 240px;
+            height: 341px;
+        }
+    }
+
+    // container with the title, above the picture
+    &-wrap {
+        position: relative;
+        z-index: 2;
+    }
+
+    &-title {
+        margin: 0;
+        font-family: var(--ag-font-2);
+        font-weight: 500;
+        font-size: 64px;
+        line-height: 68px;
+        letter-spacing: -0.02em;
+        color: #fff;
+
+        @media #{$xxl} {
+            font-size: 60px;
+            line-height: 64px;
+        }
+
+        @media #{$xl} {
+            font-size: 56px;
+            line-height: 60px;
+        }
+
+        @media #{$lg} {
+            font-size: 48px;
+            line-height: 52px;
+        }
+
+        @media #{$md} {
+            font-size: 42px;
+            line-height: 46px;
+        }
+
+        @media #{$xs} {
+            font-size: 32px;
+            line-height: 36px;
+        }
+
+        @media #{$sm} {
+            font-size: 38px;
+            line-height: 42px;
+        }
+    }
+
+    // the tab with the path: --ph is its height, the flared ends are as wide as that, 28px of space inside (so the content is 251 wide: 48 + 8 + 16 + 8 + 171)
+    &-page {
+        --ph: 56px;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: var(--ph);
+        padding: 0 calc(var(--ph) * 1.5);
+        background-color: var(--ag-clr-bg-1);
+        clip-path: url(#ag-breadcrumb-1-page-clip);
+        transform: translateX(-50%);
+        font-family: var(--ag-font-2);
+        font-size: 18px;
+        line-height: 26px;
+        white-space: nowrap;
+        color: var(--ag-clr-h-1);
+
+        @media #{$lg} {
+            --ph: 52px;
+            font-size: 17px;
+        }
+
+        @media #{$md} {
+            --ph: 48px;
+            font-size: 16px;
+        }
+
+        @media #{$xs} {
+            --ph: 40px;
+            gap: 6px;
+            padding: 0 52px;
+            font-size: 14px;
+            line-height: 22px;
+        }
+
+        @media #{$sm} {
+            --ph: 46px;
+            gap: 8px;
+            padding: 0 calc(var(--ph) * 1.5);
+            font-size: 15px;
+            line-height: 24px;
+        }
+    }
+
+    &-link {
+        color: inherit;
+        transition: var(--ag-cube-1);
+
+        &:hover {
+            color: var(--ag-clr-pr-1);
+        }
+    }
+
+    // the double arrow: dark on the left, purple on the right
+    &-sep {
+        flex: none;
+        font-size: 16px;
+        line-height: 1;
+        background: linear-gradient(90deg, #0E0910 0%, var(--ag-clr-pr-2) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        @media #{$xs} {
+            font-size: 13px;
+        }
+
+        @media #{$sm} {
+            font-size: 14px;
+        }
+    }
+
+    // the page you are on, 52% of the dark
+    &-current {
+        opacity: 0.52;
+    }
+}
+/*
+    ag-breadcrumb-1-end
+*/

@@ -530,6 +530,37 @@
         @media #{$xs} {
             --fs: 13.5vw;
         }
+
+        // home 3: a plain list, nothing sticks or shrinks (main.js skips it). The lit card is the deep purple (#6D1BFB) of that design and has its picture
+        // on the right; from 992 up the picture sits square in the outer corner of the first and the last card, only the right corners are round
+        &.is-flow {
+            .ag-projects-2-item {
+                position: static;
+
+                &:nth-child(2) .ag-projects-2-card {
+                    --ag-pj-box-a: #6d1bfb;
+                    --ag-pj-box-b: #843dff;
+                    --ag-pj-ring-a: #ce97fd;
+                    --ag-pj-ring-b: #6d1bfb;
+                    --c-btn: #843dff;
+                    background-color: var(--ag-clr-pr-1);
+                }
+
+                @media (min-width: 992px) {
+                    &:first-child .ag-projects-2-card {
+                        border-radius: 0 16px 0 0;
+                    }
+
+                    &:last-child .ag-projects-2-card {
+                        border-radius: 0 0 16px 0;
+                    }
+
+                    &:nth-child(2) .ag-projects-2-card-media {
+                        order: 1;
+                    }
+                }
+            }
+        }
     }
 
     // the big word behind the cards: white at the top, it fades into the page colour (the gradient runs over the 0.7 line box)

@@ -42,6 +42,7 @@
             margin-top: -150px;
             padding-top: 230px;
         }
+
     }
 
     &-bg {
@@ -575,6 +576,16 @@
 
         @media #{$sm} {
             justify-content: flex-start;
+        }
+    }
+}
+
+
+.ag-footer-1 {
+    &-area {
+        &:is(.has-inner-page) {
+            margin-top: 0;
+            padding-top: 135px;
         }
     }
 }
